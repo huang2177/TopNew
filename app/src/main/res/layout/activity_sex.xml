@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/image_bg"
+    >
+
+    <include layout="@layout/layout_title"/>
+
+    <RelativeLayout
+        android:layout_width="210dp"
+        android:layout_height="87dp"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="240dp"
+        android:background="@drawable/shape_white"
+        >
+
+        <TextView
+            android:layout_width="85dp"
+            android:layout_height="87dp"
+            android:background="@drawable/shape_yellow"
+            android:id="@+id/tv_man_bg"
+            android:visibility="invisible"
+            />
+
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="52dp"
+            android:src="@mipmap/icon_man_slt"
+            android:layout_marginLeft="22dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/iv_man"
+            />
+
+        <TextView
+            android:id="@+id/tv_woman_bg"
+            android:layout_width="85dp"
+            android:layout_height="87dp"
+            android:background="@drawable/shape_yellow"
+            android:layout_alignParentRight="true"
+            android:visibility="invisible"
+            />
+
+        <ImageView
+            android:id="@+id/iv_woman"
+            android:layout_width="40dp"
+            android:layout_height="62dp"
+            android:src="@mipmap/icon_woman_slt"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="22dp"
+            android:layout_centerVertical="true"
+            />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:text="确定"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:gravity="center"
+        android:layout_marginLeft="47dp"
+        android:layout_marginRight="47dp"
+        android:background="@drawable/tv_login"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="97dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="性别一旦选择则不可更改"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="65dp"
+        />
+
+
+</RelativeLayout>

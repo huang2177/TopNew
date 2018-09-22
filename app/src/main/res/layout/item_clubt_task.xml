@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/black_606060">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:background="@color/black_bg"
+        android:elevation="4dp"
+        android:layout_marginTop="8dp"
+        android:id="@+id/rl_task_item"
+        >
+
+        <ImageView
+            android:id="@+id/iv_image"
+            android:layout_width="80dp"
+            android:layout_height="100dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_task_image"
+            android:scaleType="centerCrop"
+            android:layout_marginLeft="8dp"
+            />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/iv_image"
+            android:layout_toLeftOf="@+id/ci_head"
+            android:layout_marginTop="10dp"
+            tools:text="展现自己的拿手才艺，不低于两分钟"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="20dp"
+            android:id="@+id/tv_desc"
+            android:maxLines="3"
+            android:ellipsize="end"
+            />
+
+
+
+        <TextView
+            android:layout_width="67dp"
+            android:layout_height="27dp"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/white"
+            android:textSize="9sp"
+            tools:text="去完成"
+            android:gravity="center"
+            android:background="@drawable/shape_yellow_bg"
+            android:id="@+id/tv_complete"
+            android:layout_marginRight="9dp"
+            android:layout_alignBottom="@+id/iv_image"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_toRightOf="@+id/iv_image"
+            android:layout_marginLeft="4dp"
+            android:layout_alignBottom="@+id/iv_image"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="@color/yellow_DEAC6A"
+                tools:text="Y1000"
+                android:id="@+id/tv_money"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="9sp"
+                android:textColor="@color/white"
+                android:text="/每人"
+                android:layout_marginLeft="4dp"
+                />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

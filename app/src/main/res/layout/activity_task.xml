@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black_bg"
+    android:clickable="true"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="TOP任务"
+            android:textColor="@color/white"
+            android:textSize="18.0sp" />
+
+        <ImageView
+            android:id="@+id/toptask_iamge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="10dp"
+            android:src="@mipmap/icon_title_task" />
+
+
+    </RelativeLayout>
+
+
+    <RadioGroup
+        android:id="@+id/radio_group_task"
+        style="@style/top_radio_group">
+
+        <RadioButton
+            android:id="@+id/rb_left"
+            style="@style/top_radio_button"
+            android:background="@drawable/rb_top_left"
+            android:checked="true"
+            android:text="任务大厅" />
+
+        <RadioButton
+            android:id="@+id/rb_right"
+            style="@style/top_radio_button"
+            android:background="@drawable/rb_top_right"
+            android:text="我的任务" />
+
+    </RadioGroup>
+
+    <FrameLayout
+        android:id="@+id/frame_layout_task"
+        style="@style/frame_layout_content" />
+
+</LinearLayout>

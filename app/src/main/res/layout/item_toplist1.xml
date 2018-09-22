@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/iv_image1"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="6dp"
+        android:scaleType="fitXY" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_alignBottom="@+id/iv_image1"
+        android:paddingBottom="4dp"
+        android:background="@mipmap/icon_list_bottom_bg"
+        >
+
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:src="@mipmap/icon_crown1"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="6dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/tv_type1_name"
+            android:layout_marginLeft="4dp"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            tools:text="Nice"
+            android:layout_gravity="bottom"
+            />
+
+        <ImageView
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:src="@mipmap/icon_gift"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="2dp"
+            android:id="@+id/iv_gift"
+            />
+
+        <TextView
+            android:id="@+id/tv_type1_gift"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            tools:text="6666"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="6dp"
+            android:gravity="bottom"
+            />
+    </LinearLayout>
+
+</RelativeLayout>

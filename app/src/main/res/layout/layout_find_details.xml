@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/black_bg">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ci_head"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp"
+            tools:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/tv_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@+id/ci_head"
+            tools:text="nice"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/iv_vip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/tv_nickname"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/tv_nickname"
+            android:scaleType="centerCrop"
+            tools:src="@mipmap/icon_vip1_s" />
+
+        <TextView
+            android:id="@+id/tv_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_nickname"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="8dp"
+            android:layout_toRightOf="@+id/ci_head"
+            tools:text="12  上海  天蝎座"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="60dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="35dp"
+            android:id="@+id/tv_send_news"
+            android:background="@drawable/tv_add_friend"
+            android:gravity="center"
+            android:text="发送消息"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            android:layout_toLeftOf="@+id/tv_add_friend"
+            android:layout_marginRight="6dp"
+            android:visibility="gone"
+            />
+
+        <TextView
+            android:id="@+id/tv_add_friend"
+            android:layout_width="60dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="35dp"
+            android:background="@drawable/tv_add_friend"
+            android:gravity="center"
+            android:text="+添加好友"
+            android:textColor="@color/white"
+            android:textSize="10sp" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="40dp"
+        >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="个人职业"
+                android:textColor="@color/gray_c1c1c1"
+                android:textSize="10sp" />
+
+            <TextView
+                android:layout_width="48dp"
+                android:layout_height="1dp"
+                android:background="#838383"
+                android:layout_marginTop="4dp"
+                />
+            
+            <TextView
+                android:id="@+id/tv_job"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                tools:text="学生"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="个人学历"
+                android:textColor="@color/gray_c1c1c1"
+                android:textSize="10sp"
+                android:layout_marginTop="20dp"
+                />
+
+            <TextView
+                android:layout_width="48dp"
+                android:layout_height="1dp"
+                android:background="#838383"
+                android:layout_marginTop="4dp"
+                />
+
+            <TextView
+                android:id="@+id/tv_education"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                tools:text="本科"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="生活品质"
+                android:textColor="@color/gray_c1c1c1"
+                android:textSize="10sp" />
+
+            <TextView
+                android:layout_width="48dp"
+                android:layout_height="1dp"
+                android:background="#838383"
+                android:layout_marginTop="4dp"
+                />
+
+            <TextView
+                android:id="@+id/tv_life"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                tools:text="学生"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="个人身高"
+                android:textColor="@color/gray_c1c1c1"
+                android:textSize="10sp"
+                android:layout_marginTop="20dp"
+                />
+
+            <TextView
+                android:layout_width="48dp"
+                android:layout_height="1dp"
+                android:background="#838383"
+                android:layout_marginTop="4dp"
+                />
+
+            <TextView
+                android:id="@+id/tv_height"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                tools:text="本科"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="收入水平"
+                android:textColor="@color/gray_c1c1c1"
+                android:textSize="10sp" />
+
+            <TextView
+                android:layout_width="48dp"
+                android:layout_height="1dp"
+                android:background="#838383"
+                android:layout_marginTop="4dp"
+                />
+
+            <TextView
+                android:id="@+id/tv_income"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                tools:text="学生"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="身家资产"
+                android:textColor="@color/gray_c1c1c1"
+                android:textSize="10sp"
+                android:layout_marginTop="20dp"
+                />
+
+            <TextView
+                android:layout_width="48dp"
+                android:layout_height="1dp"
+                android:background="#838383"
+                android:layout_marginTop="4dp"
+                />
+
+            <TextView
+                android:id="@+id/tv_treasure"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                tools:text="本科"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="抽烟习惯"
+                android:textColor="@color/gray_c1c1c1"
+                android:textSize="10sp" />
+
+            <TextView
+                android:layout_width="48dp"
+                android:layout_height="1dp"
+                android:background="#838383"
+                android:layout_marginTop="4dp"
+                />
+
+            <TextView
+                android:id="@+id/tv_smoke"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                tools:text="学生"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="饮酒习惯"
+                android:textColor="@color/gray_c1c1c1"
+                android:textSize="10sp"
+                android:layout_marginTop="20dp"
+                />
+
+            <TextView
+                android:layout_width="48dp"
+                android:layout_height="1dp"
+                android:background="#838383"
+                android:layout_marginTop="4dp"
+                />
+
+            <TextView
+                android:id="@+id/tv_drink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                tools:text="本科"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="20dp"
+        android:gravity="center_horizontal"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="交友目的"
+            android:textColor="@color/gray_c1c1c1"
+            android:textSize="10sp"
+            android:layout_marginTop="20dp"
+            />
+
+        <TextView
+            android:layout_width="48dp"
+            android:layout_height="1dp"
+            android:background="#838383"
+            android:layout_marginTop="4dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_object"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            tools:text="学生"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

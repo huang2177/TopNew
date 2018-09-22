@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/black_606060"
+    android:id="@+id/ll_item"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:id="@+id/ci_head"
+            android:layout_marginTop="7dp"
+            android:layout_marginLeft="8dp"
+            android:src="@mipmap/ic_launcher"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="nice"
+            android:textSize="15sp"
+            android:textColor="@color/yellow_DEAC6A"
+            android:layout_toRightOf="@+id/ci_head"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="6dp"
+            android:id="@+id/tv_nickname"
+            />
+
+        <ImageView
+            android:id="@+id/tv_vip"
+            android:layout_width="12dp"
+            android:layout_height="11dp"
+            tools:src="@mipmap/icon_vip1_s"
+            android:layout_toRightOf="@+id/tv_nickname"
+            android:layout_marginTop="14dp"
+            android:layout_marginLeft="5dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/ci_head"
+            android:layout_below="@+id/tv_nickname"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="10dp"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            tools:text="你知道我在等你么"
+            android:layout_marginRight="20dp"
+            tools:background="#662255"
+            />
+
+        <RelativeLayout
+            android:id="@+id/rl_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tv_content"
+            android:layout_below="@+id/tv_content"
+            android:layout_marginTop="15dp"
+            tools:background="#864666"
+            android:layout_marginRight="20dp"
+            >
+
+            <ImageView
+                android:id="@+id/iv_circle"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/image_loading"
+                />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ease_video_play_btn_small_nor"
+                android:visibility="gone"
+                android:layout_centerInParent="true"
+                android:id="@+id/iv_video"
+                />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_marginRight="20dp"
+                />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:textColor="@color/white"
+            android:layout_alignLeft="@+id/rl_image"
+            android:layout_below="@+id/rl_image"
+            android:layout_marginTop="6dp"
+            tools:text="2018年6月1号"
+            android:id="@+id/tv_des"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/rl_image"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="17dp"
+            android:gravity="center_vertical"
+            tools:background="#df0ec3"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:textColor="@color/yellow_DEAC6A"
+                tools:text="500"
+                android:id="@+id/tv_num_diamon"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_diamond_small"
+                android:scaleType="centerCrop"
+                android:layout_marginLeft="2dp"
+                />
+
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="13dp"
+                android:src="@mipmap/icon_comment"
+                android:layout_marginLeft="5dp"
+                />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="13dp"
+        android:background="@color/black_bg"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:layout_marginTop="6dp"
+        android:id="@+id/rl_zan"
+        >
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@mipmap/icon_heart_yellow"
+            android:layout_marginLeft="11dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:textColor="@color/yellow_DEAC6A"
+            tools:text="14人赞了该条动态"
+            android:layout_marginLeft="8dp"
+            android:id="@+id/tv_zan_num"
+            />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/yellow_E7C375"
+        android:layout_marginTop="10dp"
+        />
+</LinearLayout>

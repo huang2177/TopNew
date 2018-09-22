@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:swipe="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/image_bg"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <include layout="@layout/layout_title" />
+
+    <RelativeLayout
+        android:id="@+id/ll_heads"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:layout_below="@+id/relative_title"
+        >
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:scaleType="centerCrop"
+            tools:src="@mipmap/ic_launcher"
+            android:id="@+id/ci1"
+            android:layout_marginLeft="8dp"
+            />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:scaleType="centerCrop"
+            tools:src="@mipmap/ic_launcher"
+            android:layout_marginLeft="-17dp"
+            android:id="@+id/ci2"
+            android:layout_toRightOf="@+id/ci1"
+            />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:scaleType="centerCrop"
+            tools:src="@mipmap/ic_launcher"
+            android:layout_marginLeft="-17dp"
+            android:id="@+id/ci3"
+            android:layout_toRightOf="@+id/ci2"
+            />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:scaleType="centerCrop"
+            tools:src="@mipmap/ic_launcher"
+            android:layout_marginLeft="-17dp"
+            android:id="@+id/ci4"
+            android:layout_toRightOf="@+id/ci3"
+            />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:scaleType="centerCrop"
+            tools:src="@mipmap/ic_launcher"
+            android:layout_marginLeft="-17dp"
+            android:id="@+id/ci5"
+            android:layout_toRightOf="@+id/ci4"
+            />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:scaleType="centerCrop"
+            tools:src="@mipmap/ic_launcher"
+            android:layout_marginLeft="-17dp"
+            android:id="@+id/ci6"
+            android:layout_toRightOf="@+id/ci5"
+            />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:scaleType="centerCrop"
+            tools:src="@mipmap/ic_launcher"
+            android:layout_marginLeft="-17dp"
+            android:id="@+id/ci7"
+            android:layout_toRightOf="@+id/ci6"
+            />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:scaleType="centerCrop"
+            tools:src="@mipmap/ic_launcher"
+            android:layout_marginLeft="-17dp"
+            android:id="@+id/ci8"
+            android:layout_toRightOf="@+id/ci7"
+            />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:scaleType="centerCrop"
+            tools:src="@mipmap/ic_launcher"
+            android:layout_marginLeft="-17dp"
+            android:id="@+id/ci9"
+            android:layout_toRightOf="@+id/ci8"
+            />
+
+        <TextView
+            android:id="@+id/tv_like_num"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/round_bg_3f3f3f"
+            android:gravity="center"
+            android:layout_marginRight="15dp"
+            android:textColor="@color/yellow_DEAC6A"
+            android:text="0/10"
+            android:translationZ="2dp"
+            tools:background="#e90e19"
+            android:textSize="12sp"
+            />
+
+    </RelativeLayout>
+
+
+    <com.kw.top.view.flingswipe.SwipeFlingAdapterView
+        tools:background="@color/colorPrimaryDark"
+        android:layout_width="match_parent"
+        android:layout_height="360dp"
+        swipe:max_visible="4"
+        swipe:min_adapter_stack="4"
+        swipe:y_offset_step="20dp"
+        android:id="@+id/swipe_fling_view"
+        android:layout_below="@+id/ll_heads"
+        android:layout_marginTop="20dp"
+        ></com.kw.top.view.flingswipe.SwipeFlingAdapterView>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:id="@+id/ll_swipe_lift"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="43dp"
+        android:layout_marginBottom="16dp"
+        >
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:textColor="#ffffff"
+            android:src="@mipmap/icon_lose_heart"
+            android:background="@color/transparent"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="没兴趣"
+            android:textSize="12sp"
+            android:textColor="@color/black_868686"
+            android:layout_marginTop="6dp"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="53dp"
+        android:id="@+id/ll_swipe_right"
+        >
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="34dp"
+            android:src="@mipmap/icon_heart_beat"
+            android:scaleType="centerCrop"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我喜欢"
+            android:textSize="12sp"
+            android:textColor="@color/black_868686"
+            android:layout_marginTop="6dp"
+            />
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>

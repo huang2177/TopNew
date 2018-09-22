@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/black_5a5a5a">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="@color/white"
+        android:id="@+id/tv_notice"
+        android:layout_marginLeft="26dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="12dp"
+        tools:text="放大看的肌肤独家开发看电视剧阿克苏觉得浪费就啊三等奖拉开的肌肤看上课的肌肤阿里的肌肤klajd"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:layout_below="@+id/tv_notice"
+        android:id="@+id/tv_time"
+        android:textColor="@color/white"
+        android:textSize="11sp"
+        android:layout_marginTop="4dp"
+        tools:text="fddd"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#bebebe"
+        android:layout_below="@+id/tv_time"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        />
+
+</RelativeLayout>

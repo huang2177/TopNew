@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black_bg"
+    android:clickable="true"
+    >
+
+    <RadioGroup
+        android:id="@+id/radio_group_circle"
+        style="@style/top_radio_group">
+
+        <RadioButton
+            android:id="@+id/rb_three_left"
+            style="@style/top_radio_button"
+            android:background="@drawable/rb_top_left"
+            android:checked="true"
+            android:text="公共圈" />
+
+        <RadioButton
+            android:id="@+id/rb_three_center"
+            style="@style/top_radio_button"
+            android:background="@drawable/rb_top_center"
+            android:text="私密圈" />
+
+        <RadioButton
+            android:id="@+id/rb_three_right"
+            style="@style/top_radio_button"
+            android:background="@drawable/rb_top_right"
+            android:text="好友圈" />
+
+    </RadioGroup>
+
+    <FrameLayout
+        android:id="@+id/frame_layout_circle"
+        style="@style/frame_layout_content"
+        android:layout_below="@+id/radio_group_circle"></FrameLayout>
+
+    <ImageView
+        android:id="@+id/iv_send_circle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="50dp"
+        android:layout_marginRight="20dp"
+        android:src="@mipmap/icon_send_cirrle" />
+
+
+</RelativeLayout>

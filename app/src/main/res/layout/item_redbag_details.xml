@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="14dp"
+        android:id="@+id/ci_head"
+        tools:src="@mipmap/ic_launcher"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:textColor="@color/yellow_DEAC6A"
+        android:layout_toRightOf="@+id/ci_head"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        tools:text="Nice"
+        android:id="@+id/tv_nickname"
+        android:drawableRight="@mipmap/icon_vip1_s"
+        android:gravity="center_vertical"
+        android:drawablePadding="10dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="@color/white"
+        android:layout_alignLeft="@+id/tv_nickname"
+        android:layout_below="@+id/tv_nickname"
+        tools:text="2月8号"
+        android:layout_marginTop="2dp"
+        android:id="@+id/tv_time"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="@color/white"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="15dp"
+        tools:text="33元"
+        android:drawableRight="@mipmap/icon_diamond_small"
+        android:gravity="center_vertical"
+        android:drawablePadding="6dp"
+        android:id="@+id/tv_amount"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black_888888"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="13dp"
+        />
+
+</RelativeLayout>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/image_bg"
+    >
+
+    <include layout="@layout/layout_title"/>
+
+    <RelativeLayout
+        android:layout_width="130dp"
+        android:layout_height="175dp"
+        android:layout_below="@+id/relative_title"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="40dp"
+        android:id="@+id/rl_add"
+        android:background="@drawable/bg_add"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_add_round"
+            android:layout_centerInParent="true"
+            />
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/recycler_view_uppic"
+        android:layout_below="@+id/rl_add"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="40dp"
+        ></android.support.v7.widget.RecyclerView>
+
+    <TextView
+        android:layout_width="282dp"
+        android:layout_height="42dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:text="确认上传"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:background="@drawable/shape_yellow_light_bg"
+        android:layout_marginBottom="66dp"
+        android:id="@+id/tv_confirm_up"
+        />
+
+</RelativeLayout>

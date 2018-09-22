@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/black_5a5a5a"
+    android:id="@+id/rl_item"
+    >
+
+    <ImageView
+        android:layout_width="27dp"
+        android:layout_height="40dp"
+        android:src="@mipmap/icon_red_packet"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="24dp"
+        android:id="@+id/iv_red"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:textColor="@color/yellow_DEAC6A"
+        android:layout_toRightOf="@+id/iv_red"
+        android:layout_alignTop="@+id/iv_red"
+        tools:text="8000"
+        android:layout_marginLeft="9dp"
+        android:id="@+id/tv_amount"
+        android:drawableRight="@mipmap/icon_diamond_small"
+        android:drawablePadding="4dp"
+        android:gravity="center_vertical"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="@color/white"
+        android:layout_alignLeft="@+id/tv_amount"
+        android:layout_below="@+id/tv_amount"
+        tools:text="已抢光"
+        android:id="@+id/tv_red_state"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:src="@mipmap/icon_arrow_right"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/black_888888"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        />
+
+</RelativeLayout>

@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">TOP</string>
+
+
+    <!--底部导航栏-->
+    <string name="title_home">推荐</string>
+    <string name="title_mall">消息</string>
+    <string name="title_mine">TOP圈</string>
+    <string name="title_hall">活动</string>
+    <string name="title_jewelry">我</string>
+
+
+    <string name="back_again">在按一次退出程序</string>
+    <string name="choose_phone">选择图片</string>
+    <string name="file_io_error">文件I/O错误</string>
+    <string name="decoding_error">解码错误</string>
+    <string name="internal_storage_lack_error">内存不足</string>
+    <string name="net_error">请检查您的网络连接...</string>
+
+    <string name="navigation_drawer_open">navigation_drawer_open</string>
+    <string name="navigation_drawer_close">navigation_drawer_close</string>
+    <string name="login_out">登陆超时,请重新登录</string>
+    <string name="delete_contact">Delete conversation</string>
+    <string name="multi_device_logged_in_device_kick_item">multi device</string>
+
+    <string name="at_your_in_group">%s @ you in group chat</string>
+    <string name="msg_recall_by_user">This message has been recalled by %1$s</string>
+    <string name="recall">Recall</string>
+    <string name="msg_recall_by_self">This message has been recalled by myself</string>
+</resources>

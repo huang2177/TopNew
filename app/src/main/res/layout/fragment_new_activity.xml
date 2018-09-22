@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black_bg_light"
+    android:orientation="vertical">
+
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/status_color"
+                android:gravity="center"
+                android:text="活动"
+                android:textColor="@color/white"
+                android:textSize="18.0sp" />
+
+            <RelativeLayout
+                android:id="@+id/activity_jlb"
+                android:layout_width="match_parent"
+                android:layout_height="55dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:paddingLeft="10dp"
+                    android:text="俱乐部列表"
+                    android:textColor="@color/white"
+                    android:textSize="16.0sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:paddingRight="10dp"
+                    android:src="@drawable/ic_me_more" />
+            </RelativeLayout>
+
+            <TextView style="@style/line_white" />
+
+            <RelativeLayout
+                android:id="@+id/activity_jchd"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:paddingLeft="10dp"
+                    android:text="精彩活动"
+                    android:textColor="@color/white"
+                    android:textSize="16.0sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:paddingRight="10dp"
+                    android:src="@drawable/ic_me_more" />
+            </RelativeLayout>
+
+            <TextView style="@style/line_white" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:paddingLeft="10dp"
+                    android:text="线下活动"
+                    android:textColor="@color/white"
+                    android:textSize="16.0sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:paddingRight="10dp"
+                    android:src="@drawable/ic_me_more" />
+            </RelativeLayout>
+
+            <TextView
+                style="@style/line_white"
+                android:visibility="gone" />
+
+            <RelativeLayout
+                android:id="@+id/activity_rw"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:paddingLeft="10dp"
+                    android:text="TOP任务"
+                    android:textColor="@color/white"
+                    android:textSize="16.0sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:paddingRight="10dp"
+                    android:src="@drawable/ic_me_more" />
+            </RelativeLayout>
+
+            <TextView style="@style/line_white" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_horizontal"
+                    android:text="名人堂"
+                    android:textColor="@color/white"
+                    android:textSize="16.0sp" />
+
+
+                <TextView
+                    android:id="@+id/activity_gd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/shape_lable"
+                    android:paddingBottom="3dp"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:paddingTop="3dp"
+                    android:text="更多"
+                    android:textColor="@color/white"
+                    android:textSize="12.0sp" />
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="魅力榜"
+                        android:textColor="#D8bf5c"
+                        android:textSize="14.0sp" />
+
+                    <TextView
+                        android:layout_width="45dp"
+                        android:layout_height="3dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/shape_lable" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="8dp">
+
+                        <ImageView
+                            android:id="@+id/activity_slb_image"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:layout_gravity="bottom"
+                            android:alpha="0.7"
+                            android:background="@color/default_black">
+
+                            <TextView
+                                android:id="@+id/activity_slb_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="5dp"
+                                android:drawableLeft="@drawable/ic_activity_hg"
+                                android:drawablePadding="8dp"
+                                android:textColor="@color/white"
+                                android:textSize="12.0sp" />
+
+                            <TextView
+                                android:id="@+id/activity_slb_zs"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="5dp"
+                                android:drawablePadding="8dp"
+                                android:drawableRight="@drawable/ic_activity_zs"
+                                android:textColor="@color/white"
+                                android:textSize="12.0sp" />
+                        </RelativeLayout>
+
+
+                    </FrameLayout>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="12dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="实力榜"
+                            android:textColor="#7A91E7"
+                            android:textSize="14.0sp" />
+
+                        <TextView
+                            android:layout_width="45dp"
+                            android:layout_height="3dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/shape_linle" />
+
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="180dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginTop="8dp">
+
+                            <ImageView
+                                android:id="@+id/activity_mlb_image"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="centerCrop" />
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="20dp"
+                                android:layout_gravity="bottom"
+                                android:alpha="0.7"
+                                android:background="@color/default_black">
+
+                                <TextView
+                                    android:id="@+id/activity_mlb_name"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="5dp"
+                                    android:drawableLeft="@drawable/ic_activity_hg"
+                                    android:drawablePadding="8dp"
+                                    android:textColor="@color/white"
+                                    android:textSize="12.0sp" />
+
+                                <TextView
+                                    android:id="@+id/activity_mlb_zs"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginRight="5dp"
+                                    android:drawablePadding="8dp"
+                                    android:drawableRight="@drawable/ic_activity_zs"
+                                    android:textColor="@color/white"
+                                    android:textSize="12.0sp" />
+                            </RelativeLayout>
+
+
+                        </FrameLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+</LinearLayout>

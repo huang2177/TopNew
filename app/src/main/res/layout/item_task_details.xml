@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/black_5a5a5a">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:src="@mipmap/ic_launcher"
+        android:layout_marginTop="23dp"
+        android:layout_marginLeft="32dp"
+        android:id="@+id/ci_head"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="nice"
+        android:id="@+id/tv_nickname"
+        android:layout_toRightOf="@+id/ci_head"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="15dp"
+        android:textSize="15sp"
+        android:textColor="@color/yellow_DEAC6A"
+        />
+    
+    <ImageView
+        android:layout_width="12dp"
+        android:layout_height="11dp"
+        android:scaleType="centerCrop"
+        tools:src="@mipmap/icon_vip1_s"
+        android:layout_toRightOf="@+id/tv_nickname"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/iv_vip"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_date"
+        android:textSize="10sp"
+        android:textColor="@color/white"
+        tools:text="1018年12月1号"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="23dp"
+        android:layout_marginTop="20dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/ci_head"
+        android:layout_below="@+id/tv_nickname"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:textSize="12sp"
+        android:textColor="@color/white"
+        tools:text="做一个任务"
+        />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tv_content"
+        android:layout_below="@+id/tv_content"
+        android:id="@+id/rl_image"
+        android:layout_marginTop="14dp"
+        >
+
+        <ImageView
+            android:id="@+id/iv_image"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@mipmap/image_loading"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/iv_video"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/ic_video"
+            android:visibility="gone"
+            />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_reject"
+        android:layout_width="wrap_content"
+        android:layout_height="31dp"
+        android:layout_alignLeft="@+id/rl_image"
+        android:layout_marginTop="20dp"
+        android:textSize="12sp"
+        android:textColor="@color/white"
+        android:layout_below="@+id/rl_image"
+        android:text="拒绝"
+        android:gravity="center"
+        android:background="@drawable/shape_9a9a9a"
+        android:paddingLeft="19dp"
+        android:paddingRight="19dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_award"
+        android:layout_width="96dp"
+        android:layout_height="31dp"
+        android:layout_alignBottom="@+id/tv_reject"
+        android:layout_toRightOf="@+id/tv_reject"
+        android:layout_marginLeft="22dp"
+        android:textSize="12sp"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:text="赞赏"
+        android:background="@drawable/shape_yellow_bg"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black_9a9a9a"
+        android:layout_marginLeft="32dp"
+        android:layout_below="@+id/tv_reject"
+        android:layout_marginTop="22dp"
+        />
+
+</RelativeLayout>

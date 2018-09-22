@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/black_606060">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:background="@color/black_bg"
+        android:elevation="4dp"
+        android:layout_marginTop="8dp"
+        android:id="@+id/rl_task_item"
+        >
+
+        <ImageView
+            android:id="@+id/iv_image"
+            android:layout_width="80dp"
+            android:layout_height="100dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_task_image"
+            android:scaleType="centerCrop"
+            android:layout_marginLeft="8dp"
+            />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="9dp"
+            android:layout_marginRight="15dp"
+            android:id="@+id/ci_head"
+            tools:src="@mipmap/ic_launcher"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/iv_image"
+            android:layout_toLeftOf="@+id/ci_head"
+            android:layout_marginTop="10dp"
+            tools:text="展现自己的拿手才艺，不低于两分钟"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="20dp"
+            android:id="@+id/tv_desc"
+            android:maxLines="3"
+            android:ellipsize="end"
+            />
+
+
+        <ImageView
+            android:layout_width="14dp"
+            android:layout_height="13dp"
+            android:id="@+id/iv_vip"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="11dp"
+            android:layout_below="@+id/ci_head"
+            tools:src="@mipmap/icon_vip1_s"
+            android:layout_marginTop="4dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            android:layout_toLeftOf="@+id/iv_vip"
+            android:layout_below="@+id/ci_head"
+            tools:text="Nice"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="2dp"
+            android:id="@+id/tv_nickname"
+            />
+
+        <TextView
+            android:layout_width="67dp"
+            android:layout_height="27dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/white"
+            android:textSize="9sp"
+            tools:text="去完成"
+            android:gravity="center"
+            android:background="@drawable/shape_yellow_bg"
+            android:id="@+id/tv_complete"
+            android:layout_marginRight="9dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="9sp"
+            android:textColor="@color/white"
+            android:layout_toLeftOf="@+id/tv_complete"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="8dp"
+            android:layout_marginRight="4dp"
+            tools:text="30"
+            android:id="@+id/tv_complete_num"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="@color/yellow_DEAC6A"
+            android:layout_toRightOf="@+id/iv_image"
+            android:layout_marginLeft="4dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="26dp"
+            tools:text="Y1000"
+            android:id="@+id/tv_money"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="9sp"
+            android:textColor="@color/white"
+            android:text="红包奖励"
+            android:layout_toRightOf="@+id/tv_money"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="28dp"
+            android:layout_marginLeft="4dp"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="9dp"
+            android:visibility="gone"
+            android:id="@+id/ll_my_task"
+            >
+
+            <TextView
+                android:layout_width="67dp"
+                android:layout_height="27dp"
+                android:textSize="9sp"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:background="@drawable/shape_yellow_bg"
+                android:text="任务详情"
+                android:id="@+id/tv_task_details"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="9sp"
+                android:textColor="@color/white"
+                android:id="@+id/tv_my_complete_num"
+                android:layout_gravity="center_horizontal"
+                tools:text="22222"
+                android:layout_marginTop="2dp"
+                />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

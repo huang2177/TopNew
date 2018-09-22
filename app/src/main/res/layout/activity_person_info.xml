@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black_5a5a5a"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_title"
+        />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <RelativeLayout style="@style/relative_person_info"
+                android:id="@+id/ll_nickname"
+                >
+
+                <TextView
+                    style="@style/tv_person_info_left"
+                    android:text="昵称" />
+
+                <EditText
+                    android:id="@+id/et_nickname"
+                    style="@style/et_person_info_right"
+                    android:hint="请填写昵称" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray_"
+                android:id="@+id/view_lin"
+                />
+
+            <RelativeLayout
+                android:id="@+id/rl_sex"
+                style="@style/relative_person_info"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/tv_person_info_left"
+                    android:text="性别" />
+
+                <TextView
+                    android:id="@+id/tv_sex"
+                    style="@style/tv_person_info_right"
+                    android:text="请选择性别" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray_"
+                android:visibility="gone" />
+
+            <RelativeLayout style="@style/relative_person_info">
+
+                <TextView
+                    style="@style/tv_person_info_left"
+                    android:text="职业" />
+
+                <EditText
+                    android:id="@+id/et_profession"
+                    style="@style/et_person_info_right"
+                    android:hint="请填写职业" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray_" />
+
+            <RelativeLayout
+                android:id="@+id/rl_birthday"
+                style="@style/relative_person_info">
+
+                <TextView
+                    style="@style/tv_person_info_left"
+                    android:text="生日" />
+
+                <TextView
+                    android:id="@+id/tv_birthday"
+                    style="@style/tv_person_info_right"
+                    android:text="请选择生日" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray_" />
+
+            <RelativeLayout style="@style/relative_person_info">
+
+                <TextView
+                    style="@style/tv_person_info_left"
+                    android:text="学历" />
+
+                <EditText
+                    android:id="@+id/et_education"
+                    style="@style/et_person_info_right"
+                    android:hint="请填写学历" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray_" />
+
+            <RelativeLayout
+                android:id="@+id/rl_height"
+                style="@style/relative_person_info">
+
+                <TextView
+                    style="@style/tv_person_info_left"
+                    android:text="身高" />
+
+                <TextView
+                    android:id="@+id/tv_height"
+                    style="@style/tv_person_info_right"
+                    android:text="请选择身高" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray_" />
+
+            <RelativeLayout
+                android:id="@+id/rl_income"
+                style="@style/relative_person_info">
+
+                <TextView
+                    style="@style/tv_person_info_left"
+                    android:text="年收入" />
+
+                <TextView
+                    android:id="@+id/tv_income"
+                    style="@style/tv_person_info_right"
+                    android:text="请选择年收入" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray_" />
+
+            <RelativeLayout
+                android:id="@+id/rl_treasure"
+                style="@style/relative_person_info">
+
+                <TextView
+                    style="@style/tv_person_info_left"
+                    android:text="总资产" />
+
+                <TextView
+                    android:id="@+id/tv_treasure"
+                    style="@style/tv_person_info_right"
+                    android:text="请选择总资产" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray_" />
+
+            <RelativeLayout
+                android:id="@+id/rl_life"
+                style="@style/relative_person_info">
+
+                <TextView
+                    style="@style/tv_person_info_left"
+                    android:text="生活品质" />
+
+                <TextView
+                    android:id="@+id/tv_life"
+                    style="@style/tv_person_info_right"
+                    android:text="请选择生活品质" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray_" />
+
+            <RelativeLayout
+                android:id="@+id/rl_smoking"
+                style="@style/relative_person_info">
+
+                <TextView
+                    style="@style/tv_person_info_left"
+                    android:text="抽烟习惯" />
+
+                <TextView
+                    android:id="@+id/tv_smoking"
+                    style="@style/tv_person_info_right"
+                    android:text="请选择抽烟习惯" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray_" />
+
+            <RelativeLayout
+                android:id="@+id/rl_drink"
+                style="@style/relative_person_info">
+
+                <TextView
+                    style="@style/tv_person_info_left"
+                    android:text="饮酒习惯" />
+
+                <TextView
+                    android:id="@+id/tv_drink"
+                    style="@style/tv_person_info_right"
+                    android:text="请选择喝酒习惯" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray_" />
+
+            <RelativeLayout
+                android:id="@+id/ll_objective"
+                style="@style/relative_person_info">
+
+                <TextView
+                    style="@style/tv_person_info_left"
+                    android:text="交友目的" />
+
+                <EditText
+                    android:id="@+id/et_objective"
+                    style="@style/et_person_info_right"
+                    android:layout_marginLeft="60dp"
+                    android:hint="请输入交友目的"
+                    android:maxLength="50"
+                    android:maxLines="3" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>

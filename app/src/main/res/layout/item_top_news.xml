@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="66dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_item"
+    >
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:id="@+id/ci_head"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        tools:src="@mipmap/ic_launcher"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/yellow_DEAC6A"
+        android:textSize="15sp"
+        android:layout_toRightOf="@+id/ci_head"
+        android:layout_marginLeft="10dp"
+        tools:text="Nice"
+        android:layout_marginTop="10dp"
+        android:id="@+id/tv_nickname"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="@color/white"
+        android:layout_alignLeft="@+id/tv_nickname"
+        android:layout_below="@+id/tv_nickname"
+        tools:text="每天都很好可发快到家打开金发科技打开积分卡啊接口地方将卡的肌肤"
+        android:id="@+id/tv_content"
+        android:singleLine="true"
+        android:maxLength="15"
+        android:ellipsize="end"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="9sp"
+        android:textColor="@color/white"
+        tools:text="3分钟前"
+        android:layout_alignLeft="@+id/tv_content"
+        android:layout_below="@+id/tv_content"
+        android:id="@+id/tv_time"
+        android:layout_marginTop="2dp"
+        />
+    
+    <ImageView
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:id="@+id/iv_image"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:src="@mipmap/image_loading"
+        />
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="21dp"
+        android:id="@+id/iv_video"
+        android:src="@mipmap/icon_video_white"
+        android:visibility="invisible"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/black_bg"
+        android:layout_alignParentBottom="true"
+        />
+</RelativeLayout>

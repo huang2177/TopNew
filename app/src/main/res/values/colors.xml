@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="white">#ffffff</color>
+    <color name="transparent">#00000000</color>
+
+    <color name="status_color">#505050</color>
+    <color name="black_000000">#DE000000</color>
+    <color name="black">#000000</color>
+    <color name="black_5a5a5a">#5A5A5A</color>
+    <color name="black_bg">#505050</color>
+    <color name="yellow_E7C375">#E7C375</color>
+    <color name="yellow_F7BF76">#F7BF76</color>
+    <color name="yellow_DEAC6A">#DEAC6A</color>
+    <color name="default_grey_dark">#7b7a87</color>
+    <color name="gray_">#e6e5e5</color>
+    <color name="menu_bg">#505050</color>
+    <color name="menu_line">#626262</color>
+    <color name="black_585858">#585858</color>
+    <color name="black_bg_light">#606060</color>
+    <color name="black_888888">#888888</color>
+    <color name="red_ff0000">#ff0000</color>
+    <color name="gray_c1c1c1">#c1c1c1</color>
+    <color name="black_606060">#606060</color>
+    <color name="grey_d1d1d1">#d1d1d1</color>
+    <color name="black_9a9a9a">#9a9a9a</color>
+    <color name="black_868686">#868686</color>
+
+    <color name="half_transparent">#0e000000</color>
+    <color name="color_e8e8e8">#e8e8e8</color>
+    <color name="default_black">#46464B</color>
+    <color name="light_black">#999999</color>
+
+    <!-- default -->
+    <color name="black_mask">#A2000000</color><!--黑色蒙版-->
+</resources>

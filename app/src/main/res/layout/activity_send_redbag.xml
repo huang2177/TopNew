@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/bg_red_packet_details"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_title" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/ci_head"
+        android:layout_width="61dp"
+        android:layout_height="61dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:scaleType="centerCrop"
+        tools:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/tv_nickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/yellow_DEAC6A"
+        android:textSize="16sp"
+        tools:text="andy" />
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/shape_white_4dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="金额"
+            android:textColor="@color/yellow_DEAC6A"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/et_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/et_white_line"
+            android:hint="0"
+            android:inputType="number"
+            android:maxLength="9"
+            android:singleLine="true"
+            android:textColor="@color/yellow_DEAC6A"
+            android:textColorHint="@color/yellow_DEAC6A"
+            android:textSize="15sp"
+            android:gravity="right"
+            />
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="12dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            android:src="@mipmap/icon_diamond_small" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_num"
+        android:layout_width="300dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/shape_white_4dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="数量"
+            android:textColor="@color/yellow_DEAC6A"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/et_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/et_white_line"
+            android:gravity="right"
+            android:hint="0"
+            android:inputType="number"
+            android:maxLength="2"
+            android:singleLine="true"
+            android:textColor="@color/yellow_DEAC6A"
+            android:textColorHint="@color/yellow_DEAC6A"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tv_send_redbag"
+        style="@style/tv_confirm"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"
+        android:text="发送红包" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:textSize="12sp"
+        android:textColor="@color/white"
+        android:text="未领取的红包,将于24小时之后发起退款"
+        android:layout_gravity="center_horizontal"
+        android:gravity="bottom"
+        android:paddingBottom="20dp"
+        />
+
+</LinearLayout>

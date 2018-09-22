@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:paddingLeft="20dp"
+    >
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="49dp"
+        android:layout_height="49dp"
+        tools:src="@mipmap/ic_launcher"
+        android:layout_marginTop="10dp"
+        android:id="@+id/ci_head"
+        />
+
+    <TextView
+        android:id="@+id/tv_nickname"
+        android:layout_width="wrap_content"
+        android:layout_height="49dp"
+        android:textSize="12sp"
+        android:textColorHint="@color/yellow_E7C375"
+        android:layout_toRightOf="@+id/ci_head"
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical"
+        tools:text="Nice"
+        android:layout_marginLeft="6dp"
+        android:textColor="@color/yellow_DEAC6A"
+        />
+
+    <TextView
+        android:id="@+id/tv_des"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="@color/white"
+        android:text=""
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_centerInParent="true"
+        >
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/iv_gift"
+            android:scaleType="fitCenter"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_gift_num"
+            android:textColor="@color/yellow_E7C375"
+            android:textSize="12sp"
+            tools:text="X1"
+            android:layout_gravity="bottom"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        >
+
+        <TextView
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:text="拒绝"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:id="@+id/tv_reject"
+            android:background="@drawable/tv_black_bg"
+            />
+        <TextView
+            android:id="@+id/tv_agree"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:text="同意"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:background="@drawable/tv_yellow_bg"
+            android:layout_marginTop="4dp"
+            />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_c1c1c1"
+        android:layout_alignParentBottom="true"
+        />
+
+</RelativeLayout>

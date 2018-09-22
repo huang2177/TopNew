@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black_5a5a5a"
+    >
+
+    <include layout="@layout/layout_title"/>
+
+    <EditText
+        android:id="@+id/et_club_desc"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@drawable/et_club"
+        android:gravity="left"
+        android:hint="请输入俱乐部公告"
+        android:paddingLeft="5dp"
+        android:paddingTop="10dp"
+        android:privateImeOptions="5dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="15sp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="10dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_confirm"
+        style="@style/tv_confirm"
+        android:layout_gravity="center_horizontal"
+        android:text="确定修改"
+        android:layout_marginTop="100dp"
+        />
+
+</LinearLayout>

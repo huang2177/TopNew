@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_filtrate"
+    android:orientation="vertical"
+    android:layout_marginLeft="9dp"
+    android:layout_marginRight="9dp"
+    >
+
+    <TextView
+        android:id="@+id/tv_only_man"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:gravity="center"
+        android:text="只看男生"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+
+    <TextView
+        style="@style/line_white"
+        android:background="#e8e8e8" />
+
+    <TextView
+        android:id="@+id/tv_only_gril"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:gravity="center"
+        android:text="只看女生"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+
+    <TextView
+        style="@style/line_white"
+        android:background="#e8e8e8" />
+
+    <TextView
+        android:id="@+id/tv_man_gril"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:gravity="center"
+        android:text="男女都看"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+
+    <TextView
+        style="@style/line_white"
+        android:background="#e8e8e8" />
+
+    <TextView
+        android:id="@+id/tv_cancle"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:gravity="center"
+        android:text="取消"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+
+</LinearLayout>

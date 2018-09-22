@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    xmlns:tool="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/apk/res-auto">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/ci_head"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="13dp"
+        tool:src="@mipmap/ic_launcher"
+        />
+
+    <TextView
+        android:id="@+id/tv_nickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:textColor="@color/yellow_DEAC6A"
+        tool:text="Andy"
+        android:layout_toRightOf="@+id/ci_head"
+        android:layout_marginLeft="4dp"
+        android:layout_alignTop="@+id/ci_head"
+        />
+
+    <ImageView
+        android:id="@+id/iv_vip"
+        android:layout_width="14dp"
+        android:layout_height="12dp"
+        tool:src="@mipmap/icon_vip1_s"
+        android:layout_toRightOf="@+id/tv_nickname"
+        android:layout_alignTop="@+id/tv_nickname"
+        android:layout_marginTop="6dp"
+        android:layout_marginLeft="10dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_date"
+        android:textSize="12sp"
+        android:textColor="@color/white"
+        tool:text="Andy"
+        android:layout_alignLeft="@+id/tv_nickname"
+        android:layout_alignBottom="@+id/ci_head"
+        />
+
+    <TextView
+        android:id="@+id/tv_flower_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="@color/yellow_DEAC6A"
+        tool:text="X1"
+        android:layout_alignParentRight="true"
+        android:layout_alignBottom="@+id/ci_head"
+        android:layout_marginRight="28dp"
+        android:layout_marginBottom="4dp"
+        />
+
+    <ImageView
+        android:id="@+id/iv_flower"
+        android:layout_width="30dp"
+        android:layout_height="32dp"
+        android:scaleType="centerCrop"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/tv_flower_num"
+
+        />
+
+
+    <View
+        style="@style/line_white"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:background="@color/black_888888"
+        />
+</RelativeLayout>

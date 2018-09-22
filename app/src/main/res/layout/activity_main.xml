@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    tools:context="com.kw.top.ui.activity.MainActivity">
+
+    <LinearLayout
+        android:id="@+id/ll_right"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical"
+        android:tag="right"
+        android:clickable="true"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:focusable="true"
+            >
+
+            <include layout="@layout/layout_toolbar" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/frame_layout"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_left"
+        android:layout_width="257dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        android:background="@color/menu_bg"
+        android:fitsSystemWindows="true"
+        android:clickable="true"
+        android:tag="Left">
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                >
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/civ_photo"
+                    android:layout_width="89dp"
+                    android:layout_height="89dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="26dp"
+                    android:src="@mipmap/ic_launcher"
+                    />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    >
+
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="cc"
+                        android:textColor="@color/white"
+                        android:textSize="15dp"
+                        android:layout_centerVertical="true"
+                        />
+
+                    <ImageView
+                        android:id="@+id/iv_vip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:layout_toRightOf="@+id/tv_name"
+                        android:layout_centerVertical="true"
+                        />
+
+                </RelativeLayout>
+
+                <LinearLayout style="@style/ll_menu"
+                    android:id="@+id/ll_find"
+                    >
+
+                    <ImageView
+                        android:id="@+id/iv_find"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/menu_find" />
+
+                    <TextView
+                        android:id="@+id/tv_find"
+                        style="@style/tv_menu"
+                        android:text="发现" />
+
+                </LinearLayout>
+
+                <View style="@style/line_mune" />
+
+                <LinearLayout style="@style/ll_menu"
+                    android:id="@+id/ll_organization"
+                    >
+
+                    <ImageView
+                        android:id="@+id/iv_organization"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/menu_organization" />
+
+                    <TextView
+                        android:id="@+id/tv_organization"
+                        style="@style/tv_menu"
+                        android:text="社团" />
+
+                </LinearLayout>
+
+                <View style="@style/line_mune" />
+
+                <LinearLayout style="@style/ll_menu"
+                    android:id="@+id/ll_top_circle"
+                    >
+
+                    <ImageView
+                        android:id="@+id/iv_top_circle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/menu_top_circle" />
+
+                    <TextView
+                        android:id="@+id/tv_top_circle"
+                        style="@style/tv_menu"
+                        android:text="TOP圈" />
+
+                </LinearLayout>
+
+                <View style="@style/line_mune" />
+
+                <LinearLayout style="@style/ll_menu"
+                    android:id="@+id/ll_top_list"
+                    >
+
+                    <ImageView
+                        android:id="@+id/iv_top_list"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/menu_top_list" />
+
+                    <TextView
+                        android:id="@+id/tv_top_list"
+                        style="@style/tv_menu"
+                        android:text="TOP榜" />
+
+                </LinearLayout>
+
+                <View style="@style/line_mune" />
+
+                <LinearLayout style="@style/ll_menu"
+                    android:id="@+id/ll_top_task"
+                    >
+
+                    <ImageView
+                        android:id="@+id/iv_top_task"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/menu_top_task" />
+
+                    <TextView
+                        android:id="@+id/tv_top_task"
+                        style="@style/tv_menu"
+                        android:text="TOP任务" />
+
+                </LinearLayout>
+
+                <View style="@style/line_mune" />
+
+                <LinearLayout style="@style/ll_menu"
+                    android:id="@+id/ll_class_room"
+                    >
+
+                    <ImageView
+                        android:id="@+id/iv_class_room"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/menu_classroom" />
+
+                    <TextView
+                        android:id="@+id/tv_class_room"
+                        style="@style/tv_menu"
+                        android:text="小课堂" />
+
+                </LinearLayout>
+
+                <View style="@style/line_mune" />
+
+                <LinearLayout style="@style/ll_menu"
+                    android:id="@+id/ll_active"
+                    >
+
+                    <ImageView
+                        android:id="@+id/iv_active"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/menu_active" />
+
+                    <TextView
+                        android:id="@+id/tv_active"
+                        style="@style/tv_menu"
+                        android:text="世界活动" />
+
+                </LinearLayout>
+
+                <View style="@style/line_mune" />
+
+                <LinearLayout style="@style/ll_menu"
+                    android:id="@+id/ll_news"
+                    >
+
+                    <ImageView
+                        android:id="@+id/iv_news"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/menu_news" />
+
+                    <TextView
+                        android:id="@+id/tv_news"
+                        style="@style/tv_menu"
+                        android:text="消息" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="18dp"
+                        android:textSize="10sp"
+                        android:textColor="@color/white"
+                        android:id="@+id/tv_news_count"
+                        android:background="@drawable/ease_unread_count_bg"
+                        android:gravity="center"
+                        android:layout_marginTop="3dp"
+                        />
+
+                </LinearLayout>
+
+                <View style="@style/line_mune" />
+
+                <LinearLayout style="@style/ll_menu"
+                    android:id="@+id/ll_setting"
+                    >
+
+                    <ImageView
+                        android:id="@+id/iv_setting"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/menu_setting" />
+
+                    <TextView
+                        android:id="@+id/tv_setting"
+                        style="@style/tv_menu"
+                        android:text="设置" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_login_out"
+                    android:layout_width="197dp"
+                    android:layout_height="37dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginTop="38dp"
+                    android:background="@drawable/tv_menu_login_out"
+                    android:gravity="center"
+                    android:text="退出登录"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+    </FrameLayout>
+
+</android.support.v4.widget.DrawerLayout>

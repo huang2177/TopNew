@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/black_bg"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    >
+
+    <include layout="@layout/layout_title" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="34dp"
+        android:layout_marginTop="60dp"
+        android:text="账户余额"
+        android:textColor="@color/white"
+        android:textSize="13sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal"
+        android:paddingLeft="35dp">
+
+        <TextView
+            android:id="@+id/tv_surplus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="--"
+            android:textColor="@color/white"
+            android:textSize="70sp"
+            />
+
+        <ImageView
+            android:layout_width="72dp"
+            android:layout_height="53dp"
+            android:layout_gravity="center_vertical"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/icon_diamond_big" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:layout_weight="1"
+        android:background="@color/black_5a5a5a">
+
+        <LinearLayout
+            android:id="@+id/ll_send_gift"
+            android:layout_width="match_parent"
+            android:layout_height="59dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="16dp"
+                android:layout_weight="1"
+                android:text="我送出的礼物"
+                android:textColor="@color/white"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tv_all_gift"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                tools:text="总计：250"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                android:drawableRight="@mipmap/icon_diamond_small"
+                android:layout_marginRight="10dp"
+                android:drawablePadding="4dp"
+                />
+
+            <ImageView
+                style="@style/iv_center_right"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="19dp" />
+
+        </LinearLayout>
+
+        <TextView
+            style="@style/line_white"
+            android:layout_below="@+id/ll_send_gift" />
+
+        <LinearLayout
+            android:id="@+id/ll_send_red_packet"
+            android:layout_width="match_parent"
+            android:layout_height="59dp"
+            android:orientation="horizontal"
+            android:layout_below="@+id/ll_send_gift"
+            android:layout_marginTop="1dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="16dp"
+                android:layout_weight="1"
+                android:text="我送出的红包"
+                android:textColor="@color/white"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tv_all_red_packet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                tools:text="总计：250"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                android:drawableRight="@mipmap/icon_diamond_small"
+                android:layout_marginRight="10dp"
+                android:drawablePadding="4dp"
+                />
+
+            <ImageView
+                style="@style/iv_center_right"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="19dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_take_out"
+            style="@style/tv_confirm"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="28dp"
+            android:layout_centerHorizontal="true"
+            android:text="提现"
+            android:visibility="gone"
+            />
+
+
+    </RelativeLayout>
+
+</LinearLayout>

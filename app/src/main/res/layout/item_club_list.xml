@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/black_5a5a5a"
+    android:id="@+id/rl_item"
+    >
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/ci_icon"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="13dp"
+        tools:src="@mipmap/ic_launcher"
+        />
+
+    <TextView
+        android:id="@+id/tv_club_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:textColor="@color/white"
+        android:layout_toRightOf="@+id/ci_icon"
+        tools:text="ben的社团"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="15dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_red_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="@color/white"
+        tools:text="每日红包"
+        android:layout_alignLeft="@+id/tv_club_name"
+        android:layout_below="@+id/tv_club_name"
+        android:layout_marginTop="8dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_all_amount"
+        android:layout_marginTop="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        tools:text="累计"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/tv_all_amount"
+        android:layout_below="@+id/tv_all_amount"
+        android:textSize="12sp"
+        android:textColor="@color/white"
+        tools:text="5人"
+        android:layout_marginTop="6dp"
+        android:id="@+id/tv_penple_num"
+        />
+
+</RelativeLayout>

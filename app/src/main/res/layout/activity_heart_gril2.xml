@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/image_bg"
+    >
+
+    <!--<ImageView-->
+        <!--android:id="@+id/iv_back"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:src="@mipmap/icon_back"-->
+        <!--android:padding="10dp"-->
+        <!--android:layout_marginTop="20dp"-->
+        <!--android:layout_marginLeft="10dp"-->
+        <!--android:visibility="gone"-->
+        <!--/>-->
+
+    <include layout="@layout/layout_title"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textSize="20sp"
+        android:textColor="@color/yellow_DEAC6A"
+        android:text="您已经选择了10位心动女生"
+        android:layout_marginTop="-20dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textSize="18sp"
+        android:textColor="@color/yellow_DEAC6A"
+        android:text="每位赠送¥50礼物,发送好友申请"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="他们拆开礼物后你们就可以聊天了"
+        android:textSize="13sp"
+        android:textColor="@color/white"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="9dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="所有1天内未拆开的礼物将自动退还给您"
+        android:textSize="11sp"
+        android:textColor="@color/white"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="196dp"
+        android:layout_marginTop="80dp"
+        />
+
+    <TextView
+        style="@style/tv_confirm"
+        android:text="发送好友申请"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="80dp"
+        android:id="@+id/tv_send_friend"
+        />
+
+</LinearLayout>

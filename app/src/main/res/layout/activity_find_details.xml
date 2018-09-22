@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black_bg"
+    >
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_iamge"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:src="@mipmap/image_loading"
+                android:scaleType="centerCrop"
+                android:layout_gravity="center_horizontal"
+                />
+
+            <include layout="@layout/layout_find_details"/>
+
+            <com.kw.top.view.ScrollGridView
+                android:id="@+id/grid_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fadeScrollbars="true"
+                android:horizontalSpacing="0dp"
+                android:verticalSpacing="0dp"
+                android:numColumns="3"
+                />
+        </LinearLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <include layout="@layout/layout_title" />
+
+</FrameLayout>

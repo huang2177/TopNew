@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_controller_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bbs_cover_shadow">
+    <ImageView
+        android:id="@+id/play_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_media_play"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/play_time_tv"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/play_time_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00:00" android:textColor="@color/white"
+        android:textSize="10sp" app:layout_constraintBottom_toBottomOf="@+id/play_iv"
+        app:layout_constraintEnd_toStartOf="@+id/seek_bar" app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/play_iv"
+        app:layout_constraintTop_toTopOf="@+id/play_iv"/>
+
+    <SeekBar
+        android:id="@+id/seek_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:maxHeight="2dp"
+        android:minHeight="2dp"
+        android:paddingLeft="10sp"
+        android:paddingRight="10sp"
+        android:progressDrawable="@drawable/ic_layer_video_seekbar"
+        android:thumb="@drawable/ic_selector_video_seekbar_thumb"
+        app:layout_constraintBottom_toBottomOf="@+id/play_time_tv"
+        app:layout_constraintEnd_toStartOf="@+id/total_time_tv"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/play_time_tv"
+        app:layout_constraintTop_toTopOf="@+id/play_time_tv"/>
+
+    <TextView
+        android:id="@+id/total_time_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00:00"
+        android:textColor="@color/white"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/seek_bar" app:layout_constraintEnd_toStartOf="@+id/full_screen_iv"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/seek_bar" app:layout_constraintTop_toTopOf="@+id/seek_bar"/>
+
+    <ImageView
+        android:id="@+id/full_screen_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_media_fullscreen"
+        app:layout_constraintBottom_toBottomOf="@+id/total_time_tv" app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/total_time_tv"
+        app:layout_constraintTop_toTopOf="@+id/total_time_tv"
+        android:visibility="gone"
+        />
+</android.support.constraint.ConstraintLayout>

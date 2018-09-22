@@ -1,0 +1,222 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:textAllCaps">false</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!--<item name="colorPrimary">@color/status_color</item>   状态栏底色(电池栏)-->
+        <item name="colorPrimaryDark">@color/status_color</item>  <!--工具栏(标题栏)颜色-->
+        <!--<item name="colorAccent">@color/green_app</item>  &lt;!&ndash;输入框 checkbox等颜色&ndash;&gt;-->
+        <!--<item name="android:textColorPrimary">@color/black_000000</item> &lt;!&ndash;返回键处文字颜色&ndash;&gt;-->
+        <item name="android:windowBackground">@color/transparent</item> <!--背景色-->
+    </style>
+
+    <style name="AppSplash" parent="AppTheme">
+        <!-- <item name="android:windowBackground">@drawable/start</item> -->
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <!-- ToolBar菜单样式  ThemeOverlay.AppCompat.ActionBar-->
+    <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <item name="actionMenuTextColor">@color/black_000000</item> <!--  menu颜色-->
+        <item name="android:textSize">16sp</item> <!--  menu字体大小-->
+    </style>
+
+    <style name="Trantheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@color/half_transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+    <!-- 拍照的pop动画 -->
+    <style name="popupAnimation">
+        <item name="android:windowEnterAnimation">@anim/push_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/push_bottom_out</item>
+    </style>
+
+    <!--个人信息-->
+    <style name="relative_person_info">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">55dp</item>
+        <item name="android:paddingLeft">18dp</item>
+        <item name="android:paddingRight">18dp</item>
+    </style>
+
+    <style name="tv_person_info_left">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
+    <style name="tv_person_info_right" parent="tv_person_info_left">
+        <item name="android:drawableRight">@mipmap/arrows_right</item>
+        <item name="android:drawablePadding">13dp</item>
+        <item name="android:layout_alignParentRight">true</item>
+    </style>
+
+    <style name="et_person_info_right" parent="tv_person_info_right">
+        <item name="android:background">@drawable/et_person_info</item>
+        <item name="android:textColorHint">@color/white</item>
+        <item name="android:gravity">right</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:maxLength">10</item>
+    </style>
+
+    <style name="tv_confirm">
+        <item name="android:layout_width">282dp</item>
+        <item name="android:layout_height">42dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/shape_yellow_light_bg</item>
+    </style>
+
+    <style name="tv_menu">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_marginLeft">20dp</item>
+    </style>
+
+    <style name="ll_menu">
+        <item name="android:layout_width">123dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+    </style>
+
+    <style name="top_radio_group">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:paddingLeft">14dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">14dp</item>
+        <item name="android:background">@color/black_bg</item>
+    </style>
+
+    <style name="top_radio_button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:button">@null</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@drawable/rb_text_color</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="frame_layout_content">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginTop">0dp</item>
+    </style>
+
+    <style name="rl_cenetr">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:paddingLeft">20dp</item>
+        <item name="android:paddingRight">40dp</item>
+    </style>
+
+    <style name="tv_center_left">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
+    <style name="tv_center_right">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_marginRight">18dp</item>
+    </style>
+
+    <style name="iv_center_right">
+        <item name="android:layout_width">10dp</item>
+        <item name="android:layout_height">19dp</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:src">@mipmap/icon_arraw_right</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
+    <style name="line_white">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/status_color</item>
+    </style>
+
+    <style name="line_mune">
+        <item name="android:layout_width">123dp</item>
+        <item name="android:layout_height">2dp</item>
+        <item name="android:background">@color/menu_line</item>
+        <!--<item name="android:layout_marginTop">10dp</item>-->
+        <!--<item name="android:layout_marginBottom">8dp</item>-->
+    </style>
+
+
+    <!-- shapeDialog style透明dialog-->
+    <style name="tran_dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:backgroundDimAmount">0.6</item>
+        <item name="android:windowTitleStyle">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+    </style>
+
+    <!-- 拍照或者选择照片的style -->
+    <style name="mydata_select_photo">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="charge_dialog_style">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
+
+    <style name="text_style1">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/yellow_DEAC6A</item>
+    </style>
+
+    <style name="text_style2">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/yellow_DEAC6A</item>
+    </style>
+
+
+    <style name="TablayoutStyle">
+        <item name="android:textSize">16.0sp</item>
+    </style>
+
+</resources>

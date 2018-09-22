@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="61dp"
+    android:orientation="horizontal"
+    android:paddingLeft="14dp"
+    android:paddingRight="13dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/ci_head"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/tv_nickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/ci_head"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@+id/ci_head"
+        android:text="nicheng"
+        android:textColor="@color/yellow_DEAC6A"
+        android:textSize="15sp" />
+
+    <ImageView
+        android:id="@+id/iv_vip"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_alignTop="@+id/tv_nickname"
+        android:layout_marginLeft="12dp"
+        android:layout_toRightOf="@id/tv_nickname"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/icon_vip1_s" />
+
+    <TextView
+        android:id="@+id/tv_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/ci_head"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@+id/ci_head"
+        android:text="xxxx"
+        android:textColor="@color/white"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tv_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="2dp"
+        android:drawablePadding="5dp"
+        android:drawableRight="@mipmap/icon_diamond_small"
+        android:text="100"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
+
+
+    <TextView
+        style="@style/line_white"
+        android:layout_alignParentBottom="true"
+        android:background="@color/black_888888" />
+</RelativeLayout>

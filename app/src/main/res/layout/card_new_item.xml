@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="360dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginLeft="18dp"
+    android:layout_marginRight="18dp"
+    android:background="@drawable/home01_bg_card">
+
+    <ImageView
+        android:contentDescription="@null"
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        android:scaleType="fitXY"
+        tools:background="@color/colorAccent"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_gravity="center_horizontal"
+        android:paddingLeft="12dp"
+        tools:background="@color/yellow_E7C375"
+        >
+
+        <TextView
+            android:id="@+id/tv_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            tools:text="nice"
+            android:layout_marginTop="10dp"
+            />
+
+        <ImageView
+            android:id="@+id/iv_vip"
+            android:layout_width="17dp"
+            android:layout_height="15dp"
+            android:layout_toRightOf="@+id/tv_nickname"
+            android:layout_marginTop="12dp"
+            android:scaleType="centerCrop"
+            tools:src="@mipmap/icon_vip1_s"
+            android:layout_marginLeft="10dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_des"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="11sp"
+            android:textColor="@color/black_585858"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="15dp"
+            tools:text="22岁 上海市 天蝎座"
+            />
+
+        <ImageView
+            android:id="@+id/iv_video"
+            android:layout_width="29dp"
+            android:layout_height="29dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            tools:src="@drawable/video_icon"
+            />
+
+    </RelativeLayout>
+
+</LinearLayout>

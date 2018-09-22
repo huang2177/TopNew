@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/image_bg">
+
+    <include layout="@layout/layout_title"/>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black_5a5a5a"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="@color/white"
+                android:layout_marginLeft="9dp"
+                android:layout_marginRight="9dp"
+                android:layout_marginTop="10dp"
+                tools:text="标题"
+                android:id="@+id/tv_active_title"
+                />
+
+            <TextView
+                android:id="@+id/tv_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                tools:text="你好大哦ID疯狂的卷发低价是的肌肤看奥迪家
+        里的啊接口地方将卡来得及看看啊"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:text="排名"
+                android:textColor="@color/yellow_E7C375"
+                android:background="#49ffffff"
+                android:layout_marginTop="30dp"
+                />
+
+            <com.kw.top.view.ScrollGridView
+                android:id="@+id/grid_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:cacheColorHint="@color/transparent"
+                android:layout_marginTop="10dp"
+                android:horizontalSpacing="9dp"
+                android:verticalSpacing="25dp"
+                android:numColumns="4"
+                android:gravity="center_horizontal"
+                android:fadeScrollbars="true"
+                android:layout_gravity="center_horizontal"
+                />
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>

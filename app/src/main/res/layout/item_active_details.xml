@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_rank"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:textColor="@color/yellow_F7BF76"
+        android:textSize="15sp"
+        tools:text="8" />
+
+    <ImageView
+        android:id="@+id/iv_crown"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_marginBottom="5dp"
+        android:scaleType="centerCrop"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/iv_image"
+        android:layout_width="77dp"
+        android:layout_height="102dp"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:layout_width="77dp"
+        android:layout_height="31dp"
+        style="@style/tv_confirm"
+        android:layout_marginTop="4dp"
+        android:text="赞赏"
+        android:textSize="12sp"
+        android:id="@+id/tv_admire"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:id="@+id/tv_admire_num"
+        android:textSize="12sp"
+        android:textColor="@color/yellow_DEAC6A"
+        tools:text="580 赞"
+        />
+
+</LinearLayout>

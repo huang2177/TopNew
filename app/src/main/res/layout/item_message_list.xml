@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="58dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/black_606060"
+    android:id="@+id/message_item"
+    >
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="41dp"
+        android:layout_height="41dp"
+        android:id="@+id/ci_head"
+        android:layout_marginTop="9dp"
+        android:layout_marginLeft="15dp"
+        tools:src="@mipmap/ic_launcher"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_nickname"
+        android:textSize="12sp"
+        android:textColor="@color/yellow_DEAC6A"
+        android:layout_toRightOf="@+id/ci_head"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="11dp"
+        tools:text="nice"
+        android:singleLine="true"
+        android:maxEms="20"
+        android:ellipsize="end"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_msg"
+        android:textSize="12sp"
+        android:textColor="@color/white"
+        android:layout_alignLeft="@+id/tv_nickname"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="12dp"
+        tools:text="我市政的呵呵,明天有暴雨.保重身体我爱你到樱花汇"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:layout_marginRight="50dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10sp"
+        android:textColor="@color/white"
+        android:id="@+id/tv_time"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="18dp"
+        android:layout_marginTop="18dp"
+        tools:text="18:00"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/black_585858"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        />
+
+</RelativeLayout>

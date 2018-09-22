@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/black_bg"
+    android:orientation="vertical"
+    android:paddingBottom="20dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
+        android:gravity="center"
+        android:text="展现你交朋友的诚意吧"
+        android:textColor="@color/yellow_DEAC6A"
+        android:textSize="15sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:text="若对方拒绝或24内小时无回应,礼金将全额退还"
+        android:textColor="@color/white"
+        android:textSize="12sp" />
+
+    <GridView
+        android:id="@+id/grid_view"
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
+        android:layout_marginTop="4dp"
+        android:gravity="center_horizontal"
+        android:horizontalSpacing="20dp"
+        android:numColumns="4"
+        android:verticalSpacing="10dp"
+        />
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:paddingLeft="16dp"-->
+    <!--android:paddingRight="16dp"-->
+    <!--android:layout_marginTop="20dp"-->
+    <!--&gt;-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="vertical"-->
+    <!--android:gravity="center_horizontal"-->
+    <!--android:layout_weight="1"-->
+    <!--&gt;-->
+
+    <!--<ImageView-->
+    <!--android:layout_width="55dp"-->
+    <!--android:layout_height="61dp"-->
+    <!--android:src="@mipmap/icon_gift1"-->
+    <!--android:scaleType="centerCrop"-->
+    <!--/>-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:gravity="center"-->
+    <!--android:layout_marginTop="10dp"-->
+    <!--android:paddingRight="10dp"-->
+    <!--&gt;-->
+
+    <!--<ImageView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:src="@mipmap/icon_diamond_small"-->
+    <!--android:layout_marginTop="3dp"-->
+    <!--/>-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="100"-->
+    <!--android:textSize="12sp"-->
+    <!--android:textColor="@color/white"-->
+    <!--/>-->
+
+    <!--</LinearLayout>-->
+
+
+    <!--</LinearLayout>-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="vertical"-->
+    <!--android:gravity="center_horizontal"-->
+    <!--android:layout_weight="1"-->
+    <!--&gt;-->
+
+    <!--<ImageView-->
+    <!--android:layout_width="55dp"-->
+    <!--android:layout_height="61dp"-->
+    <!--android:src="@mipmap/icon_gift_2"-->
+    <!--android:scaleType="centerCrop"-->
+    <!--/>-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:gravity="center"-->
+    <!--android:layout_marginTop="10dp"-->
+    <!--android:paddingRight="10dp"-->
+    <!--&gt;-->
+
+    <!--<ImageView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:src="@mipmap/icon_diamond_small"-->
+    <!--android:layout_marginTop="3dp"-->
+    <!--/>-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="200"-->
+    <!--android:textSize="12sp"-->
+    <!--android:textColor="@color/white"-->
+    <!--/>-->
+
+    <!--</LinearLayout>-->
+
+
+    <!--</LinearLayout>-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="vertical"-->
+    <!--android:gravity="center_horizontal"-->
+    <!--android:layout_weight="1"-->
+    <!--android:scaleType="centerCrop"-->
+    <!--&gt;-->
+
+    <!--<ImageView-->
+    <!--android:layout_width="55dp"-->
+    <!--android:layout_height="61dp"-->
+    <!--android:src="@mipmap/icon_gift3"-->
+    <!--/>-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:gravity="center"-->
+    <!--android:layout_marginTop="10dp"-->
+    <!--&gt;-->
+
+    <!--<ImageView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:src="@mipmap/icon_diamond_small"-->
+    <!--android:layout_marginTop="3dp"-->
+    <!--/>-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="300"-->
+    <!--android:textSize="12sp"-->
+    <!--android:textColor="@color/white"-->
+    <!--/>-->
+
+    <!--</LinearLayout>-->
+
+
+    <!--</LinearLayout>-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="vertical"-->
+    <!--android:gravity="center_horizontal"-->
+    <!--android:layout_weight="1"-->
+    <!--&gt;-->
+
+    <!--<ImageView-->
+    <!--android:layout_width="55dp"-->
+    <!--android:layout_height="61dp"-->
+    <!--android:src="@mipmap/icon_gift4"-->
+    <!--android:scaleType="centerCrop"-->
+    <!--/>-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:gravity="center"-->
+    <!--android:layout_marginTop="10dp"-->
+
+    <!--&gt;-->
+
+    <!--<ImageView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:src="@mipmap/icon_diamond_small"-->
+    <!--android:layout_marginTop="3dp"-->
+    <!--/>-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="400"-->
+    <!--android:textSize="12sp"-->
+    <!--android:textColor="@color/white"-->
+    <!--/>-->
+
+    <!--</LinearLayout>-->
+
+
+    <!--</LinearLayout>-->
+
+    <!--</LinearLayout>-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:paddingLeft="16dp"-->
+    <!--android:paddingRight="16dp"-->
+    <!--android:layout_marginTop="20dp"-->
+    <!--&gt;-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="vertical"-->
+    <!--android:gravity="center_horizontal"-->
+    <!--android:layout_weight="1"-->
+    <!--&gt;-->
+
+    <!--<ImageView-->
+    <!--android:layout_width="55dp"-->
+    <!--android:layout_height="61dp"-->
+    <!--android:src="@mipmap/icon_gift5"-->
+    <!--android:scaleType="centerCrop"-->
+    <!--/>-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:gravity="center"-->
+    <!--android:layout_marginTop="10dp"-->
+    <!--android:paddingRight="10dp"-->
+    <!--&gt;-->
+
+    <!--<ImageView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:src="@mipmap/icon_diamond_small"-->
+    <!--android:layout_marginTop="3dp"-->
+    <!--/>-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="500"-->
+    <!--android:textSize="12sp"-->
+    <!--android:textColor="@color/white"-->
+    <!--/>-->
+
+    <!--</LinearLayout>-->
+
+
+    <!--</LinearLayout>-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="vertical"-->
+    <!--android:gravity="center_horizontal"-->
+    <!--android:layout_weight="1"-->
+    <!--&gt;-->
+
+    <!--<ImageView-->
+    <!--android:layout_width="55dp"-->
+    <!--android:layout_height="61dp"-->
+    <!--android:src="@mipmap/icon_gift6"-->
+    <!--android:scaleType="centerCrop"-->
+    <!--/>-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:gravity="center"-->
+    <!--android:layout_marginTop="10dp"-->
+    <!--android:paddingRight="10dp"-->
+    <!--&gt;-->
+
+    <!--<ImageView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:src="@mipmap/icon_diamond_small"-->
+    <!--android:layout_marginTop="3dp"-->
+    <!--/>-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="600"-->
+    <!--android:textSize="12sp"-->
+    <!--android:textColor="@color/white"-->
+    <!--/>-->
+
+    <!--</LinearLayout>-->
+
+
+    <!--</LinearLayout>-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="vertical"-->
+    <!--android:gravity="center_horizontal"-->
+    <!--android:layout_weight="1"-->
+    <!--android:scaleType="centerCrop"-->
+    <!--&gt;-->
+
+    <!--<ImageView-->
+    <!--android:layout_width="55dp"-->
+    <!--android:layout_height="61dp"-->
+    <!--android:src="@mipmap/icon_gift7"-->
+    <!--/>-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:gravity="center"-->
+    <!--android:layout_marginTop="10dp"-->
+    <!--&gt;-->
+
+    <!--<ImageView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:src="@mipmap/icon_diamond_small"-->
+    <!--android:layout_marginTop="3dp"-->
+    <!--/>-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="700"-->
+    <!--android:textSize="12sp"-->
+    <!--android:textColor="@color/white"-->
+    <!--/>-->
+
+    <!--</LinearLayout>-->
+
+
+    <!--</LinearLayout>-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="vertical"-->
+    <!--android:gravity="center_horizontal"-->
+    <!--android:layout_weight="1"-->
+    <!--&gt;-->
+
+    <!--<ImageView-->
+    <!--android:layout_width="55dp"-->
+    <!--android:layout_height="61dp"-->
+    <!--android:src="@mipmap/icon_gift8"-->
+    <!--android:scaleType="centerCrop"-->
+    <!--/>-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:gravity="center"-->
+    <!--android:layout_marginTop="10dp"-->
+
+    <!--&gt;-->
+
+    <!--<ImageView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:src="@mipmap/icon_diamond_small"-->
+    <!--android:layout_marginTop="3dp"-->
+    <!--/>-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="800"-->
+    <!--android:textSize="12sp"-->
+    <!--android:textColor="@color/white"-->
+    <!--/>-->
+
+    <!--</LinearLayout>-->
+
+
+    <!--</LinearLayout>-->
+
+    <!--</LinearLayout>-->
+
+
+</LinearLayout>
