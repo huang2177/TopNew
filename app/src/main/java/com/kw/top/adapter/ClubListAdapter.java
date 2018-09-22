@@ -13,15 +13,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.hyphenate.chat.EMMessage;
-import com.hyphenate.easeui.EaseConstant;
 import com.kw.top.R;
 import com.kw.top.bean.ClubBean;
 import com.kw.top.retrofit.HttpHost;
-import com.kw.top.tools.Constant;
 import com.kw.top.tools.GlideTools;
 import com.kw.top.tools.Logger;
-import com.kw.top.ui.activity.club.ClubChatActivity;
 import com.kw.top.ui.activity.club.ClubDetailsActivity;
 import com.kw.top.ui.activity.news.ChatActivity;
 
@@ -73,8 +69,8 @@ public class ClubListAdapter extends RecyclerView.Adapter<ClubListAdapter.ViewHo
                     Intent intent = new Intent(mContext, ChatActivity.class);
                     intent.putExtra("userId", clubBean.getGroupid());
                     Logger.e("-----服务器自己的群组id", clubBean.getGroupid());
-                    intent.putExtra(EaseConstant.EXTRA_TOOLBAR_TITLE, clubBean.getClubName());
-                    intent.putExtra("chatType", Constant.CHATTYPE_GROUP);
+                 //   intent.putExtra(EaseConstant.EXTRA_TOOLBAR_TITLE, clubBean.getClubName());
+                //    intent.putExtra("chatType", Constant.CHATTYPE_GROUP);
                     mContext.startActivity(intent);
                 } else if (type == 1) {
                     ClubDetailsActivity.startActivity(mContext, clubBean.getGroupid(), clubBean.getClubId() + "");

@@ -9,19 +9,13 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.google.gson.internal.LinkedTreeMap;
-import com.hyphenate.easeui.EaseConstant;
-import com.hyphenate.easeui.ui.EaseChatFragment;
-import com.hyphenate.util.EasyUtils;
 import com.kw.top.R;
 import com.kw.top.base.MyEaseBaseActivity;
 import com.kw.top.bean.BaseBean;
 import com.kw.top.bean.event.ExitClubEvent;
 import com.kw.top.retrofit.Api;
 import com.kw.top.runtimepermissions.PermissionsManager;
-import com.kw.top.tools.DemoHelper;
 import com.kw.top.tools.NotificationTools;
-import com.kw.top.ui.activity.NewMainActivity;
-import com.kw.top.ui.activity.task.ClubTaskListActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -40,7 +34,7 @@ import rx.schedulers.Schedulers;
 public class ChatActivity extends MyEaseBaseActivity {
 
     public static ChatActivity activityInstance;
-    private EaseChatFragment chatFragment;
+    //private EaseChatFragment chatFragment;
     public String toChatUsername;
     public String toolbarTitle;
     private boolean isBackground;
@@ -50,8 +44,8 @@ public class ChatActivity extends MyEaseBaseActivity {
         Intent intent = new Intent(context, ChatActivity.class);
         intent.putExtra("userId", userid);
         intent.putExtra("toolbar_title", title);
-        intent.putExtra(EaseConstant.RECEIVE_HEAD_REL, receive_headurl);
-        intent.putExtra(EaseConstant.RECEIVE_NAME, receive_name);
+        //intent.putExtra(EaseConstant.RECEIVE_HEAD_REL, receive_headurl);
+       // intent.putExtra(EaseConstant.RECEIVE_NAME, receive_name);
         context.startActivity(intent);
     }
 
@@ -65,22 +59,23 @@ public class ChatActivity extends MyEaseBaseActivity {
         //get user id or group id
         toChatUsername = getIntent().getExtras().getString("userId");
         //use EaseChatFratFragment
-        chatFragment = new ChatFragment();
+       // chatFragment = new ChatFragment();
         //pass parameters to chat fragment
-        chatFragment.setArguments(getIntent().getExtras());
-        getSupportFragmentManager().beginTransaction().add(R.id.container, chatFragment).commit();
+     //   chatFragment.setArguments(getIntent().getExtras());
+     //   getSupportFragmentManager().beginTransaction().add(R.id.container, chatFragment).commit();
 
-        int chatType = getIntent().getIntExtra(EaseConstant.EXTRA_CHAT_TYPE, EaseConstant.CHATTYPE_SINGLE);
-        if (chatType == EaseConstant.CHATTYPE_GROUP) {
+       // int chatType = getIntent().getIntExtra(EaseConstant.EXTRA_CHAT_TYPE, EaseConstant.CHATTYPE_SINGLE);
+       // if (chatType == EaseConstant.CHATTYPE_GROUP) {
             getClubTaskState();
         }
-        mTaskState.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ClubTaskListActivity.startActivity(ChatActivity.this, toChatUsername, false);
-            }
-        });
-    }
+       // mTaskState.setOnClickListener(new View.OnClickListener() {
+           //@Override
+          //  public void onClick(View v) {
+          //      ClubTaskListActivity.startActivity(ChatActivity.this, toChatUsername, false);
+      //      }
+       // });
+
+    //}
 
     private void getClubTaskState() {
         Api.getApiService().userClubTaskState(toChatUsername, getToken())
@@ -153,7 +148,7 @@ public class ChatActivity extends MyEaseBaseActivity {
         super.onResume();
         isBackground = false;
         NotificationTools.cancleNotification(NotificationTools.NEWS_ID);
-        DemoHelper.getInstance().getNotifier().cancelNotificatonForeground();
+      //  DemoHelper.getInstance().getNotifier().cancelNotificatonForeground();
     }
 
     @Override

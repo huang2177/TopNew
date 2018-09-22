@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -14,8 +13,6 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
-import com.hyphenate.chat.EMClient;
-import com.hyphenate.exceptions.HyphenateException;
 import com.kw.top.R;
 import com.kw.top.adapter.HeartGril2Adapter;
 import com.kw.top.base.BaseActivity;
@@ -23,7 +20,6 @@ import com.kw.top.bean.AllUserBean;
 import com.kw.top.bean.BaseBean;
 import com.kw.top.bean.event.EventMoney;
 import com.kw.top.retrofit.Api;
-import com.kw.top.tools.Constant;
 import com.kw.top.ui.activity.person_info.EditInfoActivity;
 import com.kw.top.utils.RxToast;
 
@@ -35,8 +31,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -170,8 +164,8 @@ public class HeartBeatGril2 extends BaseActivity implements View.OnClickListener
         showProgressDialog();
         for (int i=0;i<mList.size();i++){
             try {
-                EMClient.getInstance().contactManager().addContact(mList.get(i).getAccount(), "约炮");
-            } catch (HyphenateException e) {
+               // EMClient.getInstance().contactManager().addContact(mList.get(i).getAccount(), "约炮");
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             Api.getApiService().sendGiftAddFriend("7","1",mList.get(i).getUserId(),getToken())

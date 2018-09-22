@@ -1,11 +1,9 @@
 package com.kw.top.ui.activity;
 
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,16 +14,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import com.hyphenate.EMClientListener;
-import com.hyphenate.EMContactListener;
-import com.hyphenate.EMMultiDeviceListener;
-import com.hyphenate.chat.EMClient;
-import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.kw.top.R;
 import com.kw.top.app.AppManager;
 import com.kw.top.base.MyEaseBaseActivity;
@@ -33,16 +25,7 @@ import com.kw.top.bean.BaseBean;
 import com.kw.top.bean.FriendApplyBean;
 import com.kw.top.bean.VersionBean;
 import com.kw.top.bean.event.MsgCountEvent;
-import com.kw.top.db.InviteMessgeDao;
 import com.kw.top.retrofit.Api;
-import com.kw.top.tools.ChatHelper;
-import com.kw.top.tools.Constant;
-import com.kw.top.tools.DemoHelper;
-import com.kw.top.tools.NotificationTools;
-import com.kw.top.ui.activity.login.LoginActivity;
-import com.kw.top.ui.activity.news.ChatActivity;
-import com.kw.top.ui.activity.news.FriendApplyActivity;
-import com.kw.top.ui.activity.news.GroupsActivity;
 import com.kw.top.ui.fragment.active.NewActivityFragment;
 import com.kw.top.ui.fragment.center.CenterFragment;
 import com.kw.top.ui.fragment.circle.CircleContentFragment;
@@ -83,7 +66,6 @@ public class NewMainActivity extends MyEaseBaseActivity implements TabLayout.OnT
      **/
     private LocalBroadcastManager broadcastManager;
     private BroadcastReceiver broadcastReceiver;
-    private InviteMessgeDao inviteMessgeDao;
     private BroadcastReceiver internalDebugReceiver;
     public static boolean isForeground = false;
     private boolean friendApply;
@@ -93,11 +75,11 @@ public class NewMainActivity extends MyEaseBaseActivity implements TabLayout.OnT
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_main);
         ButterKnife.bind(this);
-        ChatHelper.getInstance().init(this);
+        //ChatHelper.getInstance().init(this);
         EventBus.getDefault().register(this);
         initTab();
         initSdk();
-        initIntent();
+       // initIntent();
         VersionCode();
     }
 
@@ -142,7 +124,7 @@ public class NewMainActivity extends MyEaseBaseActivity implements TabLayout.OnT
     }
 
 
-    private void initIntent() {
+   /* private void initIntent() {
         //make sure activity will not in background if user is logged into another device or removed
         if (getIntent() != null && (getIntent().getBooleanExtra(Constant.ACCOUNT_REMOVED, false)
                 || getIntent().getBooleanExtra(Constant.ACCOUNT_KICKED_BY_CHANGE_PASSWORD, false)
@@ -170,9 +152,9 @@ public class NewMainActivity extends MyEaseBaseActivity implements TabLayout.OnT
 
         refreshUIWithMessage();
     }
+*/
 
-
-    private void registerBroadcastReceiver() {
+   /* private void registerBroadcastReceiver() {
         broadcastManager = LocalBroadcastManager.getInstance(this);
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Constant.ACTION_CONTACT_CHANAGED);
@@ -222,7 +204,7 @@ public class NewMainActivity extends MyEaseBaseActivity implements TabLayout.OnT
         }
     };
 
-
+*/
     public void refreshUIWithMessage() {
         runOnUiThread(new Runnable() {
             public void run() {
@@ -236,44 +218,44 @@ public class NewMainActivity extends MyEaseBaseActivity implements TabLayout.OnT
      * update unread message count
      */
     public void updateUnreadLabel() {
-        int count = getUnreadMsgCountTotal();
-        if (count > 0) {
+     //   int count = getUnreadMsgCountTotal();
+       // if (count > 0) {
 //            unreadLabel.setText(String.valueOf(count));
 //            unreadLabel.setVisibility(View.VISIBLE);
-            if (count > 99) {
+         //   if (count > 99) {
                 // mTvNewsCount.setText("99+");
-            } else {
+          //  } else {
                 // mTvNewsCount.setText(count + "");
-            }
+          //  }
             // mTvMsgNew.setVisibility(View.VISIBLE);
             // mTvNewsCount.setVisibility(View.VISIBLE);
-        } else {
+        //} else {
 //            unreadLabel.setVisibility(View.INVISIBLE);
             // mTvMsgNew.setVisibility(View.GONE);
             // mTvNewsCount.setText("");
             // mTvNewsCount.setVisibility(View.GONE);
-        }
+       // }
     }
 
 
     /**
      * 监听好友变化请求
      */
-    public class MyContactListener implements EMContactListener {
-        /**
+   /* public class MyContactListener implements EMContactListener {
+        *//**
          * 添加好友
          *
          * @param username
-         */
+         *//*
         @Override
         public void onContactAdded(String username) {
         }
 
-        /**
+        *//**
          * 删除好友
          *
          * @param username
-         */
+         *//*
         @Override
         public void onContactDeleted(final String username) {
             runOnUiThread(new Runnable() {
@@ -290,12 +272,12 @@ public class NewMainActivity extends MyEaseBaseActivity implements TabLayout.OnT
         }
 
 
-        /**
+        *//**
          * 接到邀请的消息，如果不处理(同意或拒绝)，掉线后，服务器会自动再发过来，所以客户端不要重复提醒
          *
          * @param username
          * @param reason
-         */
+         *//*
         @Override
         public void onContactInvited(String username, String reason) {
             //收到好友邀请
@@ -306,11 +288,11 @@ public class NewMainActivity extends MyEaseBaseActivity implements TabLayout.OnT
             getApplyList();
         }
 
-        /**
+        *//**
          * 同意好友邀请
          *
          * @param username
-         */
+         *//*
         @Override
         public void onFriendRequestAccepted(String username) {
 
@@ -322,16 +304,16 @@ public class NewMainActivity extends MyEaseBaseActivity implements TabLayout.OnT
             getApplyList();
         }
 
-        /**
+        *//**
          * 拒绝好友的请求
          *
          * @param username
-         */
+         *//*
         @Override
         public void onFriendRequestDeclined(String username) {
         }
     }
-
+*/
 
     /**
      * get unread event notification count, including application, accepted, etc
@@ -340,7 +322,6 @@ public class NewMainActivity extends MyEaseBaseActivity implements TabLayout.OnT
      */
     public int getUnreadAddressCountTotal() {
         int unreadAddressCountTotal = 0;
-        unreadAddressCountTotal = inviteMessgeDao.getUnreadMessagesCount();
         return unreadAddressCountTotal;
     }
 
@@ -350,9 +331,9 @@ public class NewMainActivity extends MyEaseBaseActivity implements TabLayout.OnT
      *
      * @return
      */
-    public int getUnreadMsgCountTotal() {
-        return EMClient.getInstance().chatManager().getUnreadMsgsCount();
-    }
+   /* public int getUnreadMsgCountTotal() {
+     //   return EMClient.getInstance().chatManager().getUnreadMsgsCount();
+    }*/
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)

@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <RelativeLayout
+  <!--  <RelativeLayout
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
@@ -69,6 +69,6 @@
             android:gravity="center"
             android:src="@drawable/em_video_recorder_stop_btn"
             android:visibility="invisible" />
-    </RelativeLayout>
+    </RelativeLayout>-->
 
 </LinearLayout>

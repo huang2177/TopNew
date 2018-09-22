@@ -1,53 +1,32 @@
 package com.kw.top.ui.fragment.find;
 
 import android.app.Dialog;
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.androidkun.xtablayout.XTabLayout;
 import com.kw.top.R;
 import com.kw.top.base.BaseFragment;
-import com.kw.top.bean.BaseBean;
-import com.kw.top.bean.FriendApplyBean;
 import com.kw.top.bean.event.FindChooseEvent;
-import com.kw.top.retrofit.Api;
-import com.kw.top.tools.Logger;
-import com.kw.top.ui.activity.login.LoginActivity;
-import com.kw.top.ui.activity.news.FriendApplyActivity;
-import com.kw.top.utils.RxToast;
-import com.kw.top.utils.SPUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
 
 /**
  * author: Administrator

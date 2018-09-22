@@ -12,7 +12,7 @@
         android:orientation="vertical"
         >
 
-        <LinearLayout
+       <!-- <LinearLayout
             android:id="@+id/layout_bubble"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -25,7 +25,7 @@
             android:paddingRight="@dimen/recall_dimen"
             android:paddingTop="@dimen/recall_dimen_4"
             >
-            <!--消息内容-->
+            &lt;!&ndash;消息内容&ndash;&gt;
             <TextView
                 android:id="@+id/text_content"
                 android:layout_width="wrap_content"
@@ -34,6 +34,6 @@
                 android:textColor="@color/recall_black_38"
                 android:textSize="@dimen/recall_size_12"
                 />
-        </LinearLayout>
+        </LinearLayout>-->
     </LinearLayout>
 </RelativeLayout>

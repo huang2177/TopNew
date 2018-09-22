@@ -34,35 +34,6 @@
     </RadioGroup>
 
 
-    <FrameLayout
-        android:id="@+id/tab_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/status_color"
-        android:visibility="gone">
-
-        <com.androidkun.xtablayout.XTabLayout
-            android:id="@+id/home_tablayout"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_gravity="center"
-            app:xTabIndicatorColor="@color/white"
-            app:xTabIndicatorHeight="2.5dp"
-            app:xTabIndicatorWidth="40dp"
-            app:xTabMode="scrollable"
-            app:xTabSelectedTextColor="@color/white"
-            app:xTabTextColor="@color/recall_black"
-            app:xTabTextSize="16.0sp" />
-
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|right"
-            android:padding="5dp"
-            android:src="@drawable/ic_home_sx" />
-
-    </FrameLayout>
 
 
     <LinearLayout

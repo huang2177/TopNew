@@ -100,7 +100,7 @@ public class NewsFragment extends BaseFragment implements RadioGroup.OnCheckedCh
         imageTxl.setImageResource(R.drawable.ic_news_txl_two);
         tvTxllab.setVisibility(View.GONE);
         ray_hyqq.setVisibility(View.GONE);
-        showFragment(EaseuiNesListFragment.newInstance());
+       // showFragment(EaseuiNesListFragment.newInstance());
     }
 
 
@@ -138,7 +138,7 @@ public class NewsFragment extends BaseFragment implements RadioGroup.OnCheckedCh
                 ray_hyqq.setVisibility(View.GONE);
                 imageTxl.setImageResource(R.drawable.ic_news_txl_two);
                 tvTxllab.setVisibility(View.GONE);
-                showFragment(EaseuiNesListFragment.newInstance());
+                //showFragment(EaseuiNesListFragment.newInstance());
                 break;
             case R.id.txl_ray:
                 imageMessage.setImageResource(R.drawable.ic_news_message_two);
@@ -164,13 +164,13 @@ public class NewsFragment extends BaseFragment implements RadioGroup.OnCheckedCh
                 }
                 if (null == mEaseuiNesListFragment) {
                     mEaseuiNesListFragment = new EaseuiNesListFragment();
-                    mTransaction.add(R.id.frame_layout_news, mEaseuiNesListFragment);
+                   // mTransaction.add(R.id.frame_layout_news, mEaseuiNesListFragment);
                 }
-                mTransaction.show(mEaseuiNesListFragment);
+               // mTransaction.show(mEaseuiNesListFragment);
                 break;
             case R.id.rb_news_right:
                 if (null != mEaseuiNesListFragment) {
-                    mTransaction.hide(mEaseuiNesListFragment);
+                   // mTransaction.hide(mEaseuiNesListFragment);
                 }
                 if (null == mFriendFragment) {
                     mFriendFragment = FriendsListFragment.newInstance("1");

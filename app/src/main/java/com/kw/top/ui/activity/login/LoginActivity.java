@@ -5,7 +5,6 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -17,7 +16,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -26,23 +24,17 @@ import com.amap.api.location.AMapLocationListener;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
-import com.hyphenate.EMCallBack;
-import com.hyphenate.chat.EMClient;
 import com.kw.top.R;
 import com.kw.top.app.AppManager;
 import com.kw.top.base.MVPBaseActivity;
 import com.kw.top.bean.BaseBean;
 import com.kw.top.bean.LoginBean;
-import com.kw.top.tools.ChatHelper;
 import com.kw.top.tools.ConstantValue;
-import com.kw.top.ui.activity.MainActivity;
 import com.kw.top.ui.activity.NewMainActivity;
 import com.kw.top.ui.activity.login.contract.LoginContract;
 import com.kw.top.ui.activity.login.presenter.LoginPresenter;
 import com.kw.top.utils.RxToast;
 import com.kw.top.utils.SPUtils;
-
-import java.util.logging.Logger;
 
 import cn.jpush.android.api.JPushInterface;
 
@@ -205,7 +197,21 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
     @SuppressLint("StaticFieldLeak")
     private void Loginchat(final LoginBean loginBean) {
         SPUtils.clear(this);
-        new AsyncTask<Void, Void, Void>() {
+
+
+        SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_TOKEN, loginBean.getToken());
+        SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_SEX, loginBean.getSex());
+        SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_PHONE, phone);
+        SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_CHAT_NUM, loginBean.getAccount());
+        SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_CHAT_PWD, loginBean.getPassword());
+        SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_HEAD, loginBean.getHeadImg());
+        SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_NAME, loginBean.getNickName());
+        SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_USER_ID, loginBean.getUserId());
+        SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_PROVE_STATE, loginBean.getProveState());
+        SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_VIP_GRADE, loginBean.getGrade());
+
+
+        /*new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
                 EMClient.getInstance().login(loginBean.getAccount(), loginBean.getPassword(), new EMCallBack() {//回调
@@ -247,7 +253,7 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
                 });
                 return null;
             }
-        }.execute();
+        }.execute();*/
     }
 
     /**

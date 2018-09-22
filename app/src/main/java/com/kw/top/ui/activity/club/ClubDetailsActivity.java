@@ -12,7 +12,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.text.SpannableString;
 import android.text.Spanned;
-import android.text.TextUtils;
 import android.text.style.TextAppearanceSpan;
 import android.util.Log;
 import android.view.Gravity;
@@ -28,8 +27,6 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
-import com.hyphenate.chat.EMClient;
-import com.hyphenate.exceptions.HyphenateException;
 import com.kw.top.R;
 import com.kw.top.base.BaseActivity;
 import com.kw.top.bean.AllUserBean;
@@ -40,7 +37,6 @@ import com.kw.top.retrofit.Api;
 import com.kw.top.retrofit.HttpHost;
 import com.kw.top.tools.ComResultTools;
 import com.kw.top.tools.ConstantValue;
-import com.kw.top.tools.DemoHelper;
 import com.kw.top.tools.GlideTools;
 import com.kw.top.ui.activity.task.ClubTaskListActivity;
 import com.kw.top.ui.fragment.club.ClubUserListFragment;
@@ -193,8 +189,8 @@ public class ClubDetailsActivity extends BaseActivity {
             mTvTitle.setText(chairmanBean.getClubName());
 
             String myUserId = SPUtils.getString(ClubDetailsActivity.this, ConstantValue.KEY_USER_ID, "");
-            Log.e("tag","=========  :" + myUserId + "  : " + chairmanBean.getUserId());
-            if (myUserId.equals(chairmanBean.getUserId()+"")) {
+            Log.e("tag", "=========  :" + myUserId + "  : " + chairmanBean.getUserId());
+            if (myUserId.equals(chairmanBean.getUserId() + "")) {
                 isOwner = true;
             } else {
                 isOwner = false;
@@ -235,7 +231,7 @@ public class ClubDetailsActivity extends BaseActivity {
         if (isOwner || isJoin) {
             mTvTitleRight.setVisibility(View.VISIBLE);
             mTvTitleRight.setBackgroundResource(R.drawable.icon_more);
-        }else {
+        } else {
             mTvTitleRight.setVisibility(View.GONE);
         }
     }
@@ -293,9 +289,9 @@ public class ClubDetailsActivity extends BaseActivity {
         @Override
         public void run() {
             try {
-                EMClient.getInstance().groupManager().applyJoinToGroup(groupId, "求加入");//需异步处理
+                //EMClient.getInstance().groupManager().applyJoinToGroup(groupId, "求加入");//需异步处理
                 Log.e("tag", "=========== 发送申请");
-            } catch (HyphenateException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -323,17 +319,17 @@ public class ClubDetailsActivity extends BaseActivity {
     private void showDialog() {
         View view = View.inflate(this, R.layout.dialog_club, null);
         view.findViewById(R.id.btn_club_task).setOnClickListener(mOnClickListener);
-        Button btnManeger =  view.findViewById(R.id.btn_club_manager);
-        Button btnSetting =  view.findViewById(R.id.btn_club_setting);
+        Button btnManeger = view.findViewById(R.id.btn_club_manager);
+        Button btnSetting = view.findViewById(R.id.btn_club_setting);
         Button btnExit = view.findViewById(R.id.btn_club_exit);
         view.findViewById(R.id.btn_cancel).setOnClickListener(mOnClickListener);
         btnManeger.setOnClickListener(mOnClickListener);
         btnSetting.setOnClickListener(mOnClickListener);
         btnExit.setOnClickListener(mOnClickListener);
-        if (!isOwner){
+        if (!isOwner) {
             btnManeger.setVisibility(View.GONE);
             btnSetting.setVisibility(View.GONE);
-        }else {
+        } else {
             btnExit.setVisibility(View.GONE);
         }
         dialog = new Dialog(this, R.style.charge_dialog_style);
@@ -355,10 +351,10 @@ public class ClubDetailsActivity extends BaseActivity {
                     ClubTaskListActivity.startActivity(ClubDetailsActivity.this, groupId, isOwner);
                     break;
                 case R.id.btn_club_manager:
-                    VipManagerActivity.startActivity(ClubDetailsActivity.this,groupId);
+                    VipManagerActivity.startActivity(ClubDetailsActivity.this, groupId);
                     break;
                 case R.id.btn_club_setting:
-                    ClubNoticeActivity.startActivityForResult(ClubDetailsActivity.this,groupId,CLUB_NOTICE_CODE);
+                    ClubNoticeActivity.startActivityForResult(ClubDetailsActivity.this, groupId, CLUB_NOTICE_CODE);
                     break;
                 case R.id.btn_club_exit:
                     new AlertDialog.Builder(ClubDetailsActivity.this)
@@ -387,7 +383,7 @@ public class ClubDetailsActivity extends BaseActivity {
     //退出俱乐部
     private void exitClub() {
         showProgressDialog();
-        Api.getApiService().clubExit(groupId,getToken())
+        Api.getApiService().clubExit(groupId, getToken())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
@@ -395,12 +391,12 @@ public class ClubDetailsActivity extends BaseActivity {
                     @Override
                     public void call(BaseBean baseBean) {
                         hideProgressDialog();
-                        if (baseBean.isSuccess()){
+                        if (baseBean.isSuccess()) {
                             RxToast.normal("退出社团成功");
                             EventBus.getDefault().post(new ExitClubEvent(groupId));
                             finish();
-                        }else {
-                            ComResultTools.resultData(ClubDetailsActivity.this,baseBean);
+                        } else {
+                            ComResultTools.resultData(ClubDetailsActivity.this, baseBean);
                         }
                     }
                 }, new Action1<Throwable>() {
@@ -416,7 +412,7 @@ public class ClubDetailsActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && data!=null){
+        if (resultCode == RESULT_OK && data != null) {
             String desc = data.getStringExtra("desc");
             mTvInformation.setText(desc);
         }

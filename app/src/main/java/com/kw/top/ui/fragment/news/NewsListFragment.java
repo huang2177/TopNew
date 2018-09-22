@@ -6,18 +6,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.hyphenate.chat.EMClient;
-import com.hyphenate.chat.EMConversation;
-import com.hyphenate.chat.EMMessage;
-import com.hyphenate.exceptions.HyphenateException;
 import com.kw.top.R;
 import com.kw.top.adapter.MessageListAdapter;
 import com.kw.top.base.BaseFragment;
-import com.kw.top.tools.ChatHelper;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 
@@ -34,7 +25,7 @@ public class NewsListFragment extends BaseFragment implements SwipeRefreshLayout
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
-    private List<EMMessage> mList = new ArrayList<>();
+    //private List<EMMessage> mList = new ArrayList<>();
     private MessageListAdapter mAdapter;
 
     @Override
@@ -47,7 +38,7 @@ public class NewsListFragment extends BaseFragment implements SwipeRefreshLayout
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        mAdapter = new MessageListAdapter(getContext(), mList);
+      //  mAdapter = new MessageListAdapter(getContext(), mList);
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -59,7 +50,7 @@ public class NewsListFragment extends BaseFragment implements SwipeRefreshLayout
     @Override
     public void initData() {
         //获得所有会话
-        Map<String, EMConversation> allConver = ChatHelper.getInstance().getAllConversations();
+       /* Map<String, EMConversation> allConver = ChatHelper.getInstance().getAllConversations();
         if (allConver.size()>0)
             mList.clear();
         for (Map.Entry<String, EMConversation> entry : allConver.entrySet()) {
@@ -72,7 +63,7 @@ public class NewsListFragment extends BaseFragment implements SwipeRefreshLayout
 //                Log.e("tag","==========  message  " + emMessage.getBody().toString() +"  chatType " +emMessage.getChatType() +emMessage.getTo()
 //                        +"  " + emMessage.getMsgId()+" " + emMessage.getUserName() +" " + emMessage.getMsgTime());
 //            }
-        }
+        }*/
 
         mAdapter.notifyDataSetChanged();
         mSwipeRefreshLayout.setRefreshing(false);

@@ -16,7 +16,6 @@
         android:gravity="center_vertical"
         android:onClick="copy"
         android:padding="10dp"
-        android:text="@string/copy_message"
         android:textColor="@android:color/black"
         android:textSize="20sp" />
 
@@ -33,7 +32,6 @@
         android:gravity="center_vertical"
         android:onClick="delete"
         android:padding="10dp"
-        android:text="@string/delete_message"
         android:textColor="@android:color/black"
         android:textSize="20sp" />
 	 <View
@@ -50,7 +48,6 @@
         android:gravity="center_vertical"
         android:onClick="forward"
         android:padding="10dp"
-        android:text="@string/forward"
         android:textColor="@android:color/black"
         android:textSize="20sp" />
     <View

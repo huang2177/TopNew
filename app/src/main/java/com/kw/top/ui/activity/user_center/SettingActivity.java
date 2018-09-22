@@ -14,13 +14,9 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.hyphenate.EMCallBack;
 import com.kw.top.R;
 import com.kw.top.base.BaseActivity;
-import com.kw.top.tools.DemoHelper;
 import com.kw.top.tools.GlideTools;
-import com.kw.top.ui.activity.MainActivity;
-import com.kw.top.ui.activity.NewMainActivity;
 import com.kw.top.ui.activity.login.ForgetPwdActivity;
 import com.kw.top.ui.activity.login.LoginActivity;
 import com.kw.top.utils.RxToast;
@@ -101,24 +97,6 @@ public class SettingActivity extends BaseActivity {
                 break;
             case R.id.tv_out:
                 showProgressDialog();
-                DemoHelper.getInstance().logout(true, new EMCallBack() {
-                    @Override
-                    public void onSuccess() {
-                        mHandler1.sendEmptyMessage(1);
-                        com.kw.top.tools.Logger.e("-------", "环信退出登陆成功");
-                    }
-
-                    @Override
-                    public void onError(int i, String s) {
-                        mHandler1.sendEmptyMessage(0);
-                        com.kw.top.tools.Logger.e("-------", "环信退出登陆失败");
-                    }
-
-                    @Override
-                    public void onProgress(int i, String s) {
-
-                    }
-                });
                 break;
         }
     }

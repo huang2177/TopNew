@@ -3,37 +3,9 @@ package com.kw.top.ui.activity.club;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
-import com.hyphenate.chat.EMClient;
-import com.hyphenate.chat.EMConversation;
-import com.hyphenate.chat.EMMessage;
-import com.hyphenate.chat.adapter.message.EMAMessage;
-import com.kw.top.R;
-import com.kw.top.base.MVPBaseActivity;
-import com.kw.top.bean.ClubBean;
-import com.kw.top.bean.event.MessageEvent;
-import com.kw.top.tools.ConstantValue;
-import com.kw.top.utils.SPUtils;
+import android.support.v4.app.FragmentActivity;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * author  ： zy
@@ -41,7 +13,7 @@ import butterknife.OnClick;
  * des     ：
  */
 
-public class ClubChatActivity extends BaseChatActivity {
+public class ClubChatActivity extends FragmentActivity {
 
     private String title,//标题
 //            toChatUsername,//发送信息的对象 ID
@@ -63,7 +35,7 @@ public class ClubChatActivity extends BaseChatActivity {
         EventBus.getDefault().register(this);
     }
 
-    @Override
+    /*@Override
     public void initView() {
         super.initView();
         title = getIntent().getStringExtra("TITLE");
@@ -128,7 +100,7 @@ public class ClubChatActivity extends BaseChatActivity {
                 mRecyclerView.smoothScrollToPosition(mChatAdapter.getItemCount()-1);
             }
         }
-    }
+    }*/
 
     @Override
     protected void onDestroy() {

@@ -36,4 +36,11 @@
 
     <!-- default -->
     <color name="black_mask">#A2000000</color><!--黑色蒙版-->
+
+    <color name="grid_state_pressed">#1Affffff</color>
+    <color name="grid_state_focused">#80000000</color>
+    <color name="yellow">#deac6a</color>
+    <color name="news_list_bg">#606060</color>
+    <color name="chat_top_bg">#505050</color>
+    <color name="chat_bg">#5A5A5A</color>
 </resources>

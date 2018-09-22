@@ -1,39 +1,6 @@
 package com.kw.top.ui.fragment.news;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.text.TextUtils;
-import android.util.Log;
-import android.view.ContextMenu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.hyphenate.chat.EMClient;
-import com.hyphenate.chat.EMConversation;
-import com.hyphenate.chat.EMGroup;
-import com.hyphenate.chat.EMMessage;
-import com.hyphenate.easeui.EaseConstant;
-import com.hyphenate.easeui.model.EaseAtMessageHelper;
-import com.hyphenate.easeui.model.EaseDingMessageHelper;
-import com.hyphenate.easeui.ui.EaseConversationListFragment;
-import com.hyphenate.exceptions.HyphenateException;
-import com.hyphenate.util.NetUtils;
-import com.kw.top.R;
-import com.kw.top.bean.event.ExitClubEvent;
-import com.kw.top.bean.event.RefreshNewsEvent;
-import com.kw.top.db.InviteMessgeDao;
-import com.kw.top.tools.Constant;
-import com.kw.top.ui.activity.NewMainActivity;
-import com.kw.top.ui.activity.news.ChatActivity;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * author  ： zy
@@ -41,7 +8,7 @@ import org.greenrobot.eventbus.ThreadMode;
  * des     ：
  */
 
-public class EaseuiNesListFragment extends EaseConversationListFragment {
+public class EaseuiNesListFragment  {
 
     private TextView errorText;
     private boolean focus;
@@ -56,15 +23,15 @@ public class EaseuiNesListFragment extends EaseConversationListFragment {
     }
 
 
-    @Override
+    /*@Override
     protected void initView() {
         super.initView();
         View errorView = (LinearLayout) View.inflate(getActivity(), R.layout.em_chat_neterror_item, null);
-        errorItemContainer.addView(errorView);
+       // errorItemContainer.addView(errorView);
         errorText = (TextView) errorView.findViewById(R.id.tv_connect_errormsg);
-    }
+    }*/
 
-    @Override
+   /* @Override
     protected void setUpView() {
         super.setUpView();
         // register context menu
@@ -119,8 +86,8 @@ public class EaseuiNesListFragment extends EaseConversationListFragment {
         });
         super.setUpView();
     }
-
-    @Override
+*/
+   /* @Override
     protected void onConnectionDisconnected() {
         super.onConnectionDisconnected();
         if (NetUtils.hasNetwork(getActivity())) {
@@ -129,14 +96,14 @@ public class EaseuiNesListFragment extends EaseConversationListFragment {
             errorText.setText(R.string.the_current_network);
         }
     }
+*/
 
-
-    @Override
+  /*  @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         getActivity().getMenuInflater().inflate(R.menu.em_delete_message, menu);
     }
-
-    @Override
+*/
+ /*   @Override
     public boolean onContextItemSelected(MenuItem item) {
         boolean deleteMessage = false;
         if (item.getItemId() == R.id.delete_message) {
@@ -167,45 +134,45 @@ public class EaseuiNesListFragment extends EaseConversationListFragment {
 
         return true;
     }
+*/
 
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
+    /*@Subscribe(threadMode = ThreadMode.MAIN)
     public void refreshNews(RefreshNewsEvent newsEvent) {
         if (newsEvent.isNewsMsg() && focus)
             refresh();
     }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
+*/
+   /* @Subscribe(threadMode = ThreadMode.MAIN)
     public void exitClubEvent(ExitClubEvent exitClubEvent) {
         //删除聊天记录
         if (!TextUtils.isEmpty(exitClubEvent.getGroupId()))
             EMClient.getInstance().chatManager().deleteConversation(exitClubEvent.getGroupId(), true);
     }
-
-    @Override
+*/
+  /*  @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
     }
-
-    @Override
+*/
+    /*@Override
     public void onDestroy() {
-        super.onDestroy();
+       / super.onDestroy();
         EventBus.getDefault().unregister(this);
-    }
+    }*/
 
-    @Override
+    /*@Override
     public void onResume() {
         super.onResume();
         focus = true;
         // update unread count
         ((NewMainActivity) getActivity()).updateUnreadLabel();
-    }
+    }*/
 
-    @Override
+    /*@Override
     public void onPause() {
         super.onPause();
         focus = false;
-    }
+    }*/
 
 }

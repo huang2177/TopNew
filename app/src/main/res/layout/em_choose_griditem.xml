@@ -20,7 +20,6 @@
         android:layout_height="fill_parent"
         android:scaleType="center"
         android:clickable="false"
-        android:src="@drawable/ease_video_download_btn_nor"
         android:visibility="gone"
         />
          
@@ -36,7 +35,6 @@
 	    android:gravity="bottom"
 	    android:orientation="horizontal"
 	    android:visibility="visible"
-	    android:background="@drawable/ease_chat_video_mask_to"
 	    >
 	    <TextView 
 	        android:id="@+id/chatting_size_iv"

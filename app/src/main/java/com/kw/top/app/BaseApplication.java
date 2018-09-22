@@ -7,23 +7,14 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.StrictMode;
 import android.support.multidex.MultiDex;
-import android.util.Config;
 import android.util.Log;
 
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
-import com.hyphenate.chat.EMClient;
-import com.hyphenate.chat.EMOptions;
-import com.kw.top.R;
 import com.kw.top.crash.MyCrashHandler;
-import com.kw.top.tools.ChatHelper;
-import com.kw.top.tools.DemoHelper;
 import com.qiniu.android.common.FixedZone;
 import com.qiniu.android.storage.Configuration;
 import com.qiniu.android.storage.UploadManager;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
-import com.umeng.socialize.UMShareConfig;
 
 import java.util.Iterator;
 import java.util.List;
@@ -69,7 +60,7 @@ public class BaseApplication extends Application {
         initQiniu();
         initUmeng();
         //init demo helper
-        DemoHelper.getInstance().init(this);
+        //DemoHelper.getInstance().init(this);
 
         initVmPolicy();
     }
@@ -120,7 +111,7 @@ public class BaseApplication extends Application {
     }
 
     private void initChat() {
-        EMOptions options = new EMOptions();
+       /* EMOptions options = new EMOptions();
         // 默认添加好友时，是不需要验证的，改成需要验证
         options.setAcceptInvitationAlways(false);
         // 是否自动将消息附件上传到环信服务器，默认为True是使用环信服务器上传下载，如果设为 false，需要开发者自己处理附件消息的上传和下载
@@ -130,7 +121,7 @@ public class BaseApplication extends Application {
         //初始化
         EMClient.getInstance().init(this, options);
         //在做打包混淆时，关闭debug模式，避免消耗不必要的资源
-        EMClient.getInstance().setDebugMode(true);
+        EMClient.getInstance().setDebugMode(true);*/
     }
 
     private void initUtils() {

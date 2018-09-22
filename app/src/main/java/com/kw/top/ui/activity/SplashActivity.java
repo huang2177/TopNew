@@ -5,9 +5,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -23,7 +21,6 @@ import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-import com.hyphenate.chat.EMClient;
 import com.kw.top.R;
 import com.kw.top.base.BaseActivity;
 import com.kw.top.bean.BaseBean;
@@ -31,7 +28,6 @@ import com.kw.top.bean.SplashBean;
 import com.kw.top.bean.VersionBean;
 import com.kw.top.retrofit.Api;
 import com.kw.top.retrofit.HttpHost;
-import com.kw.top.tools.ChatHelper;
 import com.kw.top.tools.ConstantValue;
 import com.kw.top.tools.GlideTools;
 import com.kw.top.ui.activity.find.FindDetailsActivity;
@@ -117,11 +113,11 @@ public class SplashActivity extends BaseActivity {
 
     public void initData() {
         getPicImage();
-        if (ChatHelper.getInstance().isLoggedIn()) {
+       /* if (ChatHelper.getInstance().isLoggedIn()) {
             //加载本地会话和群组消息
             EMClient.getInstance().chatManager().loadAllConversations();
             EMClient.getInstance().groupManager().loadAllGroups();
-        }
+        }*/
     }
 
     private Runnable mRunnable = new Runnable() {

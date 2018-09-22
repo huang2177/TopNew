@@ -9,7 +9,6 @@
         android:id="@+id/tv_task_state"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/height_top_bar"
         android:paddingTop="6dp"
         android:paddingBottom="6dp"
         android:textSize="10sp"

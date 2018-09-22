@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -27,8 +26,6 @@ import com.bumptech.glide.request.transition.Transition;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
-import com.hyphenate.chat.EMClient;
-import com.hyphenate.exceptions.HyphenateException;
 import com.kw.top.R;
 import com.kw.top.adapter.FindDetailsGridViewAdapter;
 import com.kw.top.adapter.GiftAdapter;
@@ -44,7 +41,6 @@ import com.kw.top.tools.ConstantValue;
 import com.kw.top.tools.GlideTools;
 import com.kw.top.ui.activity.circle.UserCircleActivity;
 import com.kw.top.ui.activity.circle.WorldCircleDetailsActivity;
-import com.kw.top.ui.activity.login.LoginActivity;
 import com.kw.top.ui.activity.news.ChatActivity;
 import com.kw.top.utils.DisplayUtils;
 import com.kw.top.utils.RxToast;
@@ -158,14 +154,14 @@ public class FindDetailsActivity extends BaseActivity implements View.OnClickLis
                             } catch (JsonSyntaxException e) {
                                 e.printStackTrace();
                             }
-                            if (null == findDetailsBean)return;
+                            if (null == findDetailsBean) return;
                             account = findDetailsBean.getAccount();
                             friend_status = findDetailsBean.getFriends();
                             fillUserInfo(findDetailsBean.getUserDesc());
                             mList.addAll(findDetailsBean.getDynamicList());
                             mAdapter.notifyDataSetChanged();
                         } else {
-                            ComResultTools.resultData(FindDetailsActivity.this,baseBean);
+                            ComResultTools.resultData(FindDetailsActivity.this, baseBean);
                         }
 
                     }
@@ -190,12 +186,12 @@ public class FindDetailsActivity extends BaseActivity implements View.OnClickLis
 
         nickName = userDesc.getNickName();
         head_url = HttpHost.qiNiu + userDesc.getHeadImg();
-        if (userDesc.getUserId().equals(SPUtils.getString(this, ConstantValue.KEY_USER_ID,""))){
+        if (userDesc.getUserId().equals(SPUtils.getString(this, ConstantValue.KEY_USER_ID, ""))) {
             mTvAddFriend.setVisibility(View.GONE);
         }
 
-        String myUseId = SPUtils.getString(this, ConstantValue.KEY_USER_ID,"")+".0";
-        if (userId.equals(myUseId)){
+        String myUseId = SPUtils.getString(this, ConstantValue.KEY_USER_ID, "") + ".0";
+        if (userId.equals(myUseId)) {
             mTvAddFriend.setVisibility(View.GONE);
         }
         if (!TextUtils.isEmpty(friend_status) && friend_status.equals("1")) {
@@ -216,15 +212,15 @@ public class FindDetailsActivity extends BaseActivity implements View.OnClickLis
                 .into(new SimpleTarget<Bitmap>() {
                     @Override
                     public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                        int maxWidth = DisplayUtils.getScreenWidth(FindDetailsActivity.this) ;//- DisplayUtils.dip2px(getContext(), 32)) / 2;
-                        int maxHeight = DisplayUtils.dip2px(FindDetailsActivity.this,360);
+                        int maxWidth = DisplayUtils.getScreenWidth(FindDetailsActivity.this);//- DisplayUtils.dip2px(getContext(), 32)) / 2;
+                        int maxHeight = DisplayUtils.dip2px(FindDetailsActivity.this, 360);
                         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mIvIamge.getLayoutParams();
                         int height = maxWidth * resource.getHeight() / resource.getWidth();
-                        if (height>maxHeight){
+                        if (height > maxHeight) {
                             height = maxHeight;
                             params.height = height;
-                            params.width = height*resource.getWidth()/resource.getHeight();
-                        }else {
+                            params.width = height * resource.getWidth() / resource.getHeight();
+                        } else {
                             params.height = height;
                             params.width = maxWidth;
                         }
@@ -283,18 +279,18 @@ public class FindDetailsActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.tv_add_friend:
                 if (!TextUtils.isEmpty(receiveUserId)) {
-                    if (mAllGiftList.size() == 0){
+                    if (mAllGiftList.size() == 0) {
                         getGiftList();
-                    }else {
+                    } else {
                         showGiftDialog();
                     }
                 }
                 break;
             case R.id.tv_send_news:
-                ChatActivity.startActivity(this,account,nickName,head_url,nickName);
+                ChatActivity.startActivity(this, account, nickName, head_url, nickName);
                 break;
             case R.id.ci_head:
-                UserCircleActivity.startActivity(this,userId);
+                UserCircleActivity.startActivity(this, userId);
                 break;
         }
     }
@@ -303,14 +299,14 @@ public class FindDetailsActivity extends BaseActivity implements View.OnClickLis
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_add_friend, null);
         GridView gridView = view.findViewById(R.id.grid_view);
         gridView.setAdapter(mGiftAdapter);
-        mGiftAdapter.setList(friend_status.equals("1")?mAllGiftList:mDiamondList);
+        mGiftAdapter.setList(friend_status.equals("1") ? mAllGiftList : mDiamondList);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 dialog.dismiss();
-                if (!TextUtils.isEmpty(friend_status) && friend_status.equals("1")){
+                if (!TextUtils.isEmpty(friend_status) && friend_status.equals("1")) {
                     sendGift(i);
-                }else {
+                } else {
                     senFriend(i);
                 }
             }
@@ -327,7 +323,7 @@ public class FindDetailsActivity extends BaseActivity implements View.OnClickLis
 
     private void sendGift(int i) {
         showGiftDialog();
-        Api.getApiService().sendGift(mAllGiftList.get(i).getGiftId()+"","1",receiveUserId,getToken())
+        Api.getApiService().sendGift(mAllGiftList.get(i).getGiftId() + "", "1", receiveUserId, getToken())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
@@ -335,10 +331,10 @@ public class FindDetailsActivity extends BaseActivity implements View.OnClickLis
                     @Override
                     public void call(BaseBean baseBean) {
                         hideProgressDialog();
-                        if (baseBean.isSuccess()){
+                        if (baseBean.isSuccess()) {
                             RxToast.normal("赠送成功");
-                        }else {
-                            ComResultTools.resultData(FindDetailsActivity.this,baseBean);
+                        } else {
+                            ComResultTools.resultData(FindDetailsActivity.this, baseBean);
                         }
                     }
                 }, new Action1<Throwable>() {
@@ -380,7 +376,7 @@ public class FindDetailsActivity extends BaseActivity implements View.OnClickLis
                             }
                             showGiftDialog();
                         } else {
-                            ComResultTools.resultData(FindDetailsActivity.this,baseBean);
+                            ComResultTools.resultData(FindDetailsActivity.this, baseBean);
                         }
                     }
                 }, new Action1<Throwable>() {
@@ -412,12 +408,12 @@ public class FindDetailsActivity extends BaseActivity implements View.OnClickLis
                             RxToast.normal("申请成功,请等待好友同意");
                             //参数为要添加的好友的username和添加理由
                             try {
-                                EMClient.getInstance().contactManager().addContact(account, "约炮");
-                            } catch (HyphenateException e) {
+                                //    EMClient.getInstance().contactManager().addContact(account, "约炮");
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         } else {
-                            ComResultTools.resultData(FindDetailsActivity.this,baseBean);
+                            ComResultTools.resultData(FindDetailsActivity.this, baseBean);
                         }
                     }
                 }, new Action1<Throwable>() {

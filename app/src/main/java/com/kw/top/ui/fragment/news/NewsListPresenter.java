@@ -1,13 +1,8 @@
 package com.kw.top.ui.fragment.news;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
-import com.hyphenate.chat.EMMessageBody;
-import com.hyphenate.chat.EMTextMessageBody;
-import com.hyphenate.chat.adapter.message.EMAMessage;
 import com.kw.top.base.BasePresenterImpl;
-import com.kw.top.base.FriendBean;
 import com.kw.top.bean.BaseBean;
 import com.kw.top.retrofit.Api;
 
@@ -19,11 +14,6 @@ import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
-import com.hyphenate.EMMessageListener;
-import com.hyphenate.chat.EMClient;
-import com.hyphenate.chat.EMMessage;
-import com.hyphenate.exceptions.HyphenateException;
-
 /**
  * author: zy
  * data  : 2018/6/2
@@ -32,22 +22,22 @@ import com.hyphenate.exceptions.HyphenateException;
 
 public class NewsListPresenter extends BasePresenterImpl<NewsListContract.View> implements NewsListContract.Presenter {
 
-    private AsyncTask<Void,Void,Void> mAsyncTask;
+    private AsyncTask<Void, Void, Void> mAsyncTask;
     private List<String> mFrendsList = new ArrayList<>();
-    private List<EMMessage> mMessageList = new ArrayList<>();
+   // private List<EMMessage> mMessageList = new ArrayList<>();
     private List<String> mLetters = new ArrayList<>();
 
     /**
      * 初始化好友列表
      */
-    public void initFriendsList(){
+    public void initFriendsList() {
         mAsyncTask = new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
                 try {
                     mFrendsList.clear();
-                    mFrendsList = EMClient.getInstance().contactManager().getAllContactsFromServer();
-                } catch (HyphenateException e) {
+                    //mFrendsList = EMClient.getInstance().contactManager().getAllContactsFromServer();
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 return null;
@@ -58,17 +48,17 @@ public class NewsListPresenter extends BasePresenterImpl<NewsListContract.View> 
     /**
      * 初始化消息列表
      */
-    public void initMessageList(){
+    public void initMessageList() {
         mAsyncTask = new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
-                EMClient.getInstance().chatManager().addMessageListener(msgListener);
+                //    EMClient.getInstance().chatManager().addMessageListener(msgListener);
                 return null;
             }
         }.execute();
     }
 
-    EMMessageListener msgListener = new EMMessageListener() {
+    /*EMMessageListener msgListener = new EMMessageListener() {
 
         @Override
         public void onMessageReceived(List<EMMessage> messages) {
@@ -111,18 +101,19 @@ public class NewsListPresenter extends BasePresenterImpl<NewsListContract.View> 
             //消息状态变动
         }
     };
+*/
 
     /**
      * 页面销毁时移除消息监听
      */
-    public void removeMessageListener(){
-        EMClient.getInstance().chatManager().removeMessageListener(msgListener);
+    public void removeMessageListener() {
+        //EMClient.getInstance().chatManager().removeMessageListener(msgListener);
     }
 
-    public List<String> getLetters(){
-        char a ='A';
-        for (int i=0;i<26;i++){
-            mLetters.add(a+"");
+    public List<String> getLetters() {
+        char a = 'A';
+        for (int i = 0; i < 26; i++) {
+            mLetters.add(a + "");
             a++;
         }
         return mLetters;

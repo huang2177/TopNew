@@ -247,7 +247,6 @@
                         android:textSize="10sp"
                         android:textColor="@color/white"
                         android:id="@+id/tv_news_count"
-                        android:background="@drawable/ease_unread_count_bg"
                         android:gravity="center"
                         android:layout_marginTop="3dp"
                         />

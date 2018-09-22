@@ -1,7 +1,6 @@
 package com.kw.top.ui.activity;
 
 import android.app.Dialog;
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -20,9 +19,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -42,12 +39,6 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
-import com.hyphenate.EMCallBack;
-import com.hyphenate.EMClientListener;
-import com.hyphenate.EMContactListener;
-import com.hyphenate.EMMultiDeviceListener;
-import com.hyphenate.chat.EMClient;
-import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.jaeger.library.StatusBarUtil;
 import com.kw.top.R;
 import com.kw.top.app.AppManager;
@@ -56,21 +47,14 @@ import com.kw.top.bean.BaseBean;
 import com.kw.top.bean.CircleNewsBean;
 import com.kw.top.bean.event.FindChooseEvent;
 import com.kw.top.bean.event.MsgCountEvent;
-import com.kw.top.db.InviteMessgeDao;
 import com.kw.top.retrofit.Api;
 import com.kw.top.retrofit.HttpHost;
-import com.kw.top.tools.ChatHelper;
-import com.kw.top.tools.Constant;
 import com.kw.top.tools.ConstantValue;
-import com.kw.top.tools.DemoHelper;
 import com.kw.top.tools.GlideTools;
-import com.kw.top.tools.NotificationTools;
 import com.kw.top.ui.activity.circle.MyNewsActivity;
 import com.kw.top.ui.activity.club.CreateClubActivity;
 import com.kw.top.ui.activity.login.LoginActivity;
-import com.kw.top.ui.activity.news.ChatActivity;
 import com.kw.top.ui.activity.news.FriendApplyActivity;
-import com.kw.top.ui.activity.news.GroupsActivity;
 import com.kw.top.ui.activity.person_info.EditInfoActivity;
 import com.kw.top.ui.activity.task.PublishTaskActivity;
 import com.kw.top.ui.fragment.active.ActiveFragment;
@@ -93,7 +77,6 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 import rx.android.schedulers.AndroidSchedulers;
@@ -157,7 +140,7 @@ public class MainActivity extends MyEaseBaseActivity implements View.OnClickList
 
             }
         });
-        ChatHelper.getInstance().init(this);
+        //  ChatHelper.getInstance().init(this);
     }
 
     private void initTitle(String title, String titleRight, int rightRes) {
@@ -265,7 +248,7 @@ public class MainActivity extends MyEaseBaseActivity implements View.OnClickList
                 break;
             case R.id.tv_login_out:
                 showProgressDialog();
-                DemoHelper.getInstance().logout(true, new EMCallBack() {
+               /* DemoHelper.getInstance().logout(true, new EMCallBack() {
                     @Override
                     public void onSuccess() {
                         mHandler.sendEmptyMessage(1);
@@ -280,7 +263,7 @@ public class MainActivity extends MyEaseBaseActivity implements View.OnClickList
                     public void onProgress(int i, String s) {
 
                     }
-                });
+                });*/
                 break;
         }
     }
@@ -613,7 +596,7 @@ public class MainActivity extends MyEaseBaseActivity implements View.OnClickList
             }
         }
         //make sure activity will not in background if user is logged into another device or removed
-        if (getIntent() != null && (getIntent().getBooleanExtra(Constant.ACCOUNT_REMOVED, false)
+        /*if (getIntent() != null && (getIntent().getBooleanExtra(Constant.ACCOUNT_REMOVED, false)
                 || getIntent().getBooleanExtra(Constant.ACCOUNT_KICKED_BY_CHANGE_PASSWORD, false)
                 || getIntent().getBooleanExtra(Constant.ACCOUNT_KICKED_BY_OTHER_DEVICE, false)))
         {
@@ -625,22 +608,21 @@ public class MainActivity extends MyEaseBaseActivity implements View.OnClickList
             finish();
             startActivity(new Intent(this, LoginActivity.class));
             return;
-        }
+        }*/
 
 
-        inviteMessgeDao = new InviteMessgeDao(this);
         //register broadcast receiver to receive the change of group from DemoHelper
         registerBroadcastReceiver();
 
 
-        EMClient.getInstance().contactManager().setContactListener(new MyContactListener());
+       /* EMClient.getInstance().contactManager().setContactListener(new MyContactListener());
         EMClient.getInstance().addClientListener(clientListener);
-        EMClient.getInstance().addMultiDeviceListener(new MyMultiDeviceListener());
+        EMClient.getInstance().addMultiDeviceListener(new MyMultiDeviceListener());*/
 //        EMClient.getInstance().groupManager().addGroupChangeListener(new MyEmGroupChangeListener());
         //debug purpose only
 //        registerInternalDebugReceiver();
 
-        refreshUIWithMessage();
+       // refreshUIWithMessage();
     }
 
     private void bindView() {
@@ -712,19 +694,18 @@ public class MainActivity extends MyEaseBaseActivity implements View.OnClickList
     //*******************************************
     private LocalBroadcastManager broadcastManager;
     private BroadcastReceiver broadcastReceiver;
-    private InviteMessgeDao inviteMessgeDao;
     private BroadcastReceiver internalDebugReceiver;
 
     private void registerBroadcastReceiver() {
         broadcastManager = LocalBroadcastManager.getInstance(this);
         IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(Constant.ACTION_CONTACT_CHANAGED);
-        intentFilter.addAction(Constant.ACTION_GROUP_CHANAGED);
+        /*intentFilter.addAction(Constant.ACTION_CONTACT_CHANAGED);
+        intentFilter.addAction(Constant.ACTION_GROUP_CHANAGED);*/
         broadcastReceiver = new BroadcastReceiver() {
 
             @Override
             public void onReceive(Context context, Intent intent) {
-                updateUnreadLabel();
+                //   updateUnreadLabel();
 //                if (currentTabIndex == 0) {
 //                    // refresh conversation list
 //                    if (conversationListFragment != null) {
@@ -736,88 +717,88 @@ public class MainActivity extends MyEaseBaseActivity implements View.OnClickList
 //                    }
 //                }
                 String action = intent.getAction();
-                if (action.equals(Constant.ACTION_GROUP_CHANAGED)) {
+                /*if (action.equals(Constant.ACTION_GROUP_CHANAGED)) {
                     if (EaseCommonUtils.getTopActivity(MainActivity.this).equals(GroupsActivity.class.getName())) {
 //                        GroupsActivity.instance.onResume();
                     }
                 }
             }
-        };
-        broadcastManager.registerReceiver(broadcastReceiver, intentFilter);
-    }
-
-    public class MyMultiDeviceListener implements EMMultiDeviceListener {
-
-        @Override
-        public void onContactEvent(int event, String target, String ext) {
-
-        }
-
-        @Override
-        public void onGroupEvent(int event, String target, final List<String> username) {
-            switch (event) {
-                case EMMultiDeviceListener.GROUP_LEAVE:
-                    ChatActivity.activityInstance.finish();
-                    break;
-                default:
-                    break;
+        };*/
+                // broadcastManager.registerReceiver(broadcastReceiver, intentFilter);
             }
-        }
-    }
 
-    EMClientListener clientListener = new EMClientListener() {
-        @Override
-        public void onMigrate2x(boolean success) {
-//            Toast.makeText(MainActivity.this, "onUpgradeFrom 2.x to 3.x " + (success ? "success" : "fail"), Toast.LENGTH_LONG).show();
-            if (success) {
-                refreshUIWithMessage();
-            }
-        }
-    };
+            /*  public class MyMultiDeviceListener implements EMMultiDeviceListener {
 
-    public void refreshUIWithMessage() {
-        runOnUiThread(new Runnable() {
-            public void run() {
-                // refresh unread count
-                updateUnreadLabel();
+                  @Override
+                  public void onContactEvent(int event, String target, String ext) {
+
+                  }
+
+                  @Override
+                  public void onGroupEvent(int event, String target, final List<String> username) {
+                      switch (event) {
+                          case EMMultiDeviceListener.GROUP_LEAVE:
+                              ChatActivity.activityInstance.finish();
+                              break;
+                          default:
+                              break;
+                      }
+                  }
+              }
+
+              EMClientListener clientListener = new EMClientListener() {
+                  @Override
+                  public void onMigrate2x(boolean success) {
+          //            Toast.makeText(MainActivity.this, "onUpgradeFrom 2.x to 3.x " + (success ? "success" : "fail"), Toast.LENGTH_LONG).show();
+                      if (success) {
+                          refreshUIWithMessage();
+                      }
+                  }
+              };
+          */
+            public void refreshUIWithMessage() {
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        // refresh unread count
+                        //   updateUnreadLabel();
 //                if (currentTabIndex == 0) {
 //                    // refresh conversation list
 //                    if (conversationListFragment != null) {
 //                        conversationListFragment.refresh();
 //                    }
 //                }
+                    }
+                });
             }
-        });
-    }
 
-    /**
-     * update unread message count
-     */
+            /**
+             * update unread message count
+             */
 //    private TextView unreadLabel;
-    public void updateUnreadLabel() {
-        int count = getUnreadMsgCountTotal();
-        if (count > 0) {
+            /*public void updateUnreadLabel() {
+                int count = getUnreadMsgCountTotal();
+                if (count > 0) {
 //            unreadLabel.setText(String.valueOf(count));
 //            unreadLabel.setVisibility(View.VISIBLE);
-            if (count > 99) {
-                mTvNewsCount.setText("99+");
-            } else {
-                mTvNewsCount.setText(count + "");
-            }
-            mTvMsgNew.setVisibility(View.VISIBLE);
-            mTvNewsCount.setVisibility(View.VISIBLE);
-        } else {
+                    if (count > 99) {
+                        mTvNewsCount.setText("99+");
+                    } else {
+                        mTvNewsCount.setText(count + "");
+                    }
+                    mTvMsgNew.setVisibility(View.VISIBLE);
+                    mTvNewsCount.setVisibility(View.VISIBLE);
+                } else {
 //            unreadLabel.setVisibility(View.INVISIBLE);
-            mTvMsgNew.setVisibility(View.GONE);
-            mTvNewsCount.setText("");
-            mTvNewsCount.setVisibility(View.GONE);
-        }
-    }
+                    mTvMsgNew.setVisibility(View.GONE);
+                    mTvNewsCount.setText("");
+                    mTvNewsCount.setVisibility(View.GONE);
+                }
+            }*/
 
-    /**
-     * 监听好友变化请求
-     */
-    public class MyContactListener implements EMContactListener {
+            /**
+             * 监听好友变化请求
+             */
+   /* public class MyContactListener implements EMContactListener {
         @Override
         public void onContactAdded(String username) {
         }
@@ -860,83 +841,70 @@ public class MainActivity extends MyEaseBaseActivity implements View.OnClickList
         public void onFriendRequestDeclined(String username) {
         }
     }
-
-    /**
-     * get unread event notification count, including application, accepted, etc
-     *
-     * @return
-     */
-    public int getUnreadAddressCountTotal() {
-        int unreadAddressCountTotal = 0;
-        unreadAddressCountTotal = inviteMessgeDao.getUnreadMessagesCount();
-        return unreadAddressCountTotal;
-    }
+*/
 
 
-    /**
-     * get unread message count
-     *
-     * @return
-     */
-    public int getUnreadMsgCountTotal() {
-        return EMClient.getInstance().chatManager().getUnreadMsgsCount();
-    }
+            /**
+             * 获取未读评论
+             */
+            private void getComment() {
+                showProgressDialog();
+                Api.getApiService().getDynamicCom(getToken())
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .unsubscribeOn(Schedulers.io())
+                        .subscribe(new Action1<BaseBean>() {
+                            @Override
+                            public void call(BaseBean baseBean) {
+                                hideProgressDialog();
+                                if (baseBean.isSuccess()) {
+                                    CircleNewsBean circleNewsBean = null;
+                                    try {
+                                        circleNewsBean = new Gson().fromJson(baseBean.getJsonData(), new TypeToken<CircleNewsBean>() {
+                                        }.getType());
+                                        if (circleNewsBean != null && circleNewsBean.getCommentList().size() > 0) {
 
-    /**
-     * 获取未读评论
-     */
-    private void getComment() {
-        showProgressDialog();
-        Api.getApiService().getDynamicCom(getToken())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .unsubscribeOn(Schedulers.io())
-                .subscribe(new Action1<BaseBean>() {
-                    @Override
-                    public void call(BaseBean baseBean) {
-                        hideProgressDialog();
-                        if (baseBean.isSuccess()) {
-                            CircleNewsBean circleNewsBean = null;
-                            try {
-                                circleNewsBean = new Gson().fromJson(baseBean.getJsonData(), new TypeToken<CircleNewsBean>() {
-                                }.getType());
-                                if (circleNewsBean != null && circleNewsBean.getCommentList().size() > 0) {
-
+                                        }
+                                    } catch (JsonSyntaxException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
-                            } catch (JsonSyntaxException e) {
-                                e.printStackTrace();
                             }
-                        }
-                    }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                    }
-                });
-    }
+                        }, new Action1<Throwable>() {
+                            @Override
+                            public void call(Throwable throwable) {
+                            }
+                        });
+            }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void refreshMsgNum(MsgCountEvent countEvent) {
-        if (countEvent.isMsg())
-            refreshUIWithMessage();
-    }
+            @Subscribe(threadMode = ThreadMode.MAIN)
+            public void refreshMsgNum(MsgCountEvent countEvent) {
+                if (countEvent.isMsg())
+                    refreshUIWithMessage();
+            }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
-    }
+         /*   @Override
+            protected void onDestroy() {
+                super.onDestroy();
+                EventBus.getDefault().unregister(this);
+            }
 
-    @Override
-    protected void onResume() {
-        isForeground = true;
-        super.onResume();
-    }
+            @Override
+            protected void onResume() {
+                isForeground = true;
+                // super.onResume();
+            }
 
 
-    @Override
-    protected void onPause() {
-        isForeground = false;
-        super.onPause();
+            @Override
+            protected void onPause() {
+                isForeground = false;
+                //  super.onPause();
+            }*/
+
+        };
     }
 }
+
+
+

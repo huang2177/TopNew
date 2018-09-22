@@ -3,34 +3,17 @@ package com.kw.top.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.hyphenate.chat.EMClient;
-import com.hyphenate.chat.EMGroup;
-import com.hyphenate.chat.EMMessage;
-import com.hyphenate.chat.EMTextMessageBody;
-import com.hyphenate.exceptions.HyphenateException;
 import com.kw.top.R;
-import com.kw.top.tools.GlideTools;
-import com.kw.top.ui.activity.club.ClubChatActivity;
-import com.kw.top.utils.RxToast;
-import com.kw.top.utils.TimeUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
-import static com.kw.top.ui.activity.club.BaseChatActivity.HEAD_URL;
-import static com.kw.top.ui.activity.club.BaseChatActivity.NICK_NAME;
 
 /**
  * author  ： zy
@@ -42,12 +25,12 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
 
     private Context mContext;
     private LayoutInflater mInflater;
-    private List<EMMessage> mList = new ArrayList<>();
+   // private List<EMMessage> mList = new ArrayList<>();
 
-    public MessageListAdapter(Context context, List<EMMessage> list) {
+    public MessageListAdapter(Context context, List<String> list) {
         mContext = context;
         mInflater = LayoutInflater.from(mContext);
-        mList = list;
+        //mList = list;
     }
 
     @NonNull
@@ -59,7 +42,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        final EMMessage emMessage = mList.get(position);
+      /*  final EMMessage emMessage = mList.get(position);
         EMMessage.Type type = emMessage.getType();
         if (type == EMMessage.Type.TXT) {
             EMTextMessageBody messageBody = (EMTextMessageBody) emMessage.getBody();
@@ -109,12 +92,12 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
                 }
             });
         }
-        holder.mTvTime.setText(TimeUtils.getNewChatTime(emMessage.getMsgTime()));
+        holder.mTvTime.setText(TimeUtils.getNewChatTime(emMessage.getMsgTime()));*/
     }
 
     @Override
     public int getItemCount() {
-        return mList.size();
+        return 1;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

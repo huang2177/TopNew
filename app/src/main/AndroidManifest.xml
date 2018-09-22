@@ -226,9 +226,6 @@
         <activity
             android:name=".ui.activity.club.ClubDetailsActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity
-            android:name=".ui.activity.club.BaseChatActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".ui.activity.PictureActivity" />
         <activity
             android:name=".ui.activity.VideoViewActivity"
@@ -238,17 +235,8 @@
             android:screenOrientation="portrait"
             android:theme="@style/Trantheme" />
         <activity android:name=".ui.activity.news.ChatActivity" />
-        <activity android:name=".ui.activity.news.UserProfileActivity" />
         <activity
             android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity
-            android:name=".ui.activity.news.ContextMenuActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity
-            android:name=".ui.activity.news.RecorderVideoActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity

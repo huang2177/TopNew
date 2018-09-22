@@ -1,2 +1,4 @@
-include ':app', ':picture_library', ':ucrop', ':camera', ':easeui'
+include ':app', ':picture_library', ':ucrop', ':camera'
+
+//, ':easeui'
 

@@ -20,14 +20,14 @@
     android:layout_height="fill_parent"
     android:orientation="vertical"
     >
-    <RelativeLayout
+    <!--<RelativeLayout
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
         android:background="@color/black_bg"
         android:gravity="center_vertical" >
 
-        <!--<include layout="@layout/ease_commom_back_btn" />-->
+        &lt;!&ndash;<include layout="@layout/ease_commom_back_btn" />&ndash;&gt;
 
         <ImageView
             android:layout_width="wrap_content"
@@ -61,6 +61,6 @@
         android:stretchMode="columnWidth"
         android:verticalSpacing="@dimen/image_thumbnail_spacing" >
 
-    </GridView>
+    </GridView>-->
 
 </LinearLayout>

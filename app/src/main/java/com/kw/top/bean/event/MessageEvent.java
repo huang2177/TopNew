@@ -1,7 +1,5 @@
 package com.kw.top.bean.event;
 
-import com.hyphenate.chat.EMMessage;
-
 /**
  * author  ： zy
  * date    ： 2018/6/24
@@ -10,7 +8,7 @@ import com.hyphenate.chat.EMMessage;
 
 public class MessageEvent {
 
-    private EMMessage mEMMessage;
+    /*private EMMessage mEMMessage;
 
     public MessageEvent(EMMessage message){
         this.mEMMessage = message;
@@ -22,5 +20,5 @@ public class MessageEvent {
 
     public void setEMMessage(EMMessage EMMessage) {
         mEMMessage = EMMessage;
-    }
+    }*/
 }

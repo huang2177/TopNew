@@ -3,9 +3,6 @@ package com.kw.top.receiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.widget.Toast;
-
-import com.hyphenate.util.EMLog;
 
 /**
  * Created by lzan13 on 2018/4/2.
@@ -22,7 +19,7 @@ public class HeadsetReceiver extends BroadcastReceiver {
         // 耳机是否带有麦克风 0 没有，1 有
         boolean mic = intent.getIntExtra("microphone", 0) == 0 ? false : true;
         String headsetChange = String.format("耳机插入: %b, 有麦克风: %b", state, mic);
-        EMLog.d("HeadsetReceiver", headsetChange);
+      //  EMLog.d("HeadsetReceiver", headsetChange);
 //        Toast.makeText(context, headsetChange, Toast.LENGTH_SHORT).show();
     }
 }
