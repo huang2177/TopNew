@@ -36,7 +36,7 @@ public class NIMGlideModule implements GlideModule {
         // sdcard/Android/data/com.netease.nim.demo/glide
         final String cachedDirName = "glide";
         builder.setDiskCache(new ExternalCacheDiskCacheFactory(context, cachedDirName, MAX_DISK_CACHE_SIZE));
-        LogUtil.i(TAG, "NIMGlideModule apply options, disk cached path=" + context.getExternalCacheDir() + File.pathSeparator + cachedDirName);
+//        LogUtil.i(TAG, "NIMGlideModule apply options, disk cached path=" + context.getExternalCacheDir() + File.pathSeparator + cachedDirName);
     }
 
     @Override
