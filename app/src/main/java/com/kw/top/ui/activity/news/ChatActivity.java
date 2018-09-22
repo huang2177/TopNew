@@ -45,7 +45,7 @@ public class ChatActivity extends MyEaseBaseActivity {
         intent.putExtra("userId", userid);
         intent.putExtra("toolbar_title", title);
         //intent.putExtra(EaseConstant.RECEIVE_HEAD_REL, receive_headurl);
-       // intent.putExtra(EaseConstant.RECEIVE_NAME, receive_name);
+        // intent.putExtra(EaseConstant.RECEIVE_NAME, receive_name);
         context.startActivity(intent);
     }
 
@@ -59,21 +59,21 @@ public class ChatActivity extends MyEaseBaseActivity {
         //get user id or group id
         toChatUsername = getIntent().getExtras().getString("userId");
         //use EaseChatFratFragment
-       // chatFragment = new ChatFragment();
+        // chatFragment = new ChatFragment();
         //pass parameters to chat fragment
-     //   chatFragment.setArguments(getIntent().getExtras());
-     //   getSupportFragmentManager().beginTransaction().add(R.id.container, chatFragment).commit();
+        //   chatFragment.setArguments(getIntent().getExtras());
+        //   getSupportFragmentManager().beginTransaction().add(R.id.container, chatFragment).commit();
 
-       // int chatType = getIntent().getIntExtra(EaseConstant.EXTRA_CHAT_TYPE, EaseConstant.CHATTYPE_SINGLE);
-       // if (chatType == EaseConstant.CHATTYPE_GROUP) {
-            getClubTaskState();
-        }
-       // mTaskState.setOnClickListener(new View.OnClickListener() {
-           //@Override
-          //  public void onClick(View v) {
-          //      ClubTaskListActivity.startActivity(ChatActivity.this, toChatUsername, false);
-      //      }
-       // });
+        // int chatType = getIntent().getIntExtra(EaseConstant.EXTRA_CHAT_TYPE, EaseConstant.CHATTYPE_SINGLE);
+        // if (chatType == EaseConstant.CHATTYPE_GROUP) {
+        getClubTaskState();
+    }
+    // mTaskState.setOnClickListener(new View.OnClickListener() {
+    //@Override
+    //  public void onClick(View v) {
+    //      ClubTaskListActivity.startActivity(ChatActivity.this, toChatUsername, false);
+    //      }
+    // });
 
     //}
 
@@ -148,7 +148,7 @@ public class ChatActivity extends MyEaseBaseActivity {
         super.onResume();
         isBackground = false;
         NotificationTools.cancleNotification(NotificationTools.NEWS_ID);
-      //  DemoHelper.getInstance().getNotifier().cancelNotificatonForeground();
+        //  DemoHelper.getInstance().getNotifier().cancelNotificatonForeground();
     }
 
     @Override
