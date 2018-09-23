@@ -5,15 +5,7 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.widget.Toast;
 
-import com.jrmf360.normallib.JrmfClient;
-import com.jrmf360.normallib.base.http.OkHttpModelCallBack;
-import com.jrmf360.normallib.rp.JrmfRpClient;
-import com.jrmf360.normallib.rp.bean.GrabRpBean;
-import com.jrmf360.normallib.rp.http.model.BaseModel;
-import com.jrmf360.normallib.rp.utils.callback.GrabRpCallBack;
-import com.jrmf360.normallib.wallet.JrmfWalletClient;
 import com.netease.nim.uikit.api.NimUIKit;
-import com.netease.nim.uikit.common.util.log.LogUtil;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.Observer;
 import com.netease.nimlib.sdk.RequestCallbackWrapper;
@@ -109,9 +101,9 @@ public class NIMRedPacketClient {
      */
     private static void initJrmfSDK(Context context) {
         //初始化红包sdk
-        JrmfClient.isDebug(true);
+        //JrmfClient.isDebug(true);
 
-        JrmfClient.init(context);
+        //JrmfClient.init(context);
 
         // com.jrmf360.neteaselib.base.utils.LogUtil.init(true);
         // 设置微信appid，如果不使用微信支付可以不调用，此处需要开发者到微信支付申请appid
@@ -176,9 +168,9 @@ public class NIMRedPacketClient {
             // 调用群聊红包接口
             Team team = NimUIKit.getTeamProvider().getTeamById(targetAccount);
             int count = team == null ? 0 : team.getMemberCount();
-            JrmfRpClient.sendGroupEnvelopeForResult(activity, targetAccount, selfInfo.getAccount(), thirdToken, count, selfInfo.getName(), selfInfo.getAvatar(), requestCode);
+           // JrmfRpClient.sendGroupEnvelopeForResult(activity, targetAccount, selfInfo.getAccount(), thirdToken, count, selfInfo.getName(), selfInfo.getAvatar(), requestCode);
         } else { // 单聊红包
-            JrmfRpClient.sendSingleEnvelopeForResult(activity, targetAccount, selfInfo.getAccount(), thirdToken, selfInfo.getName(), selfInfo.getAvatar(), requestCode);
+           // JrmfRpClient.sendSingleEnvelopeForResult(activity, targetAccount, selfInfo.getAccount(), thirdToken, selfInfo.getName(), selfInfo.getAvatar(), requestCode);
         }
 
     }
@@ -190,7 +182,7 @@ public class NIMRedPacketClient {
      * @param sessionTypeEnum 会话类型
      * @param briberyId       红包id
      */
-    public static void startOpenRpDialog(final Activity activity, final SessionTypeEnum sessionTypeEnum, final String briberyId) {
+    /*public static void startOpenRpDialog(final Activity activity, final SessionTypeEnum sessionTypeEnum, final String briberyId) {
         if (!checkValid()) {
             return;
         }
@@ -207,7 +199,7 @@ public class NIMRedPacketClient {
         } else if (sessionTypeEnum == SessionTypeEnum.P2P) {
             JrmfRpClient.openSingleRp(activity, selfInfo.getAccount(), getThirdToken(), selfInfo.getName(), selfInfo.getAvatar(), briberyId, callBack);
         }
-    }
+    }*/
 
     /**
      * 打开红包详情界面
@@ -217,7 +209,7 @@ public class NIMRedPacketClient {
      */
     public static void startRpDetailActivity(Activity activity, String packetId) {
         if (checkValid()) {
-            JrmfRpClient.openRpDetail(activity, selfInfo.getAccount(), getThirdToken(), packetId, selfInfo.getName(), selfInfo.getAvatar());
+          //  JrmfRpClient.openRpDetail(activity, selfInfo.getAccount(), getThirdToken(), packetId, selfInfo.getName(), selfInfo.getAvatar());
         }
     }
 
@@ -225,7 +217,7 @@ public class NIMRedPacketClient {
     /**
      * 更新个人信息到jrmf
      */
-    public static void updateMyInfo() {
+    /*public static void updateMyInfo() {
         if (init && selfInfo != null) {
             JrmfRpClient.updateUserInfo(selfInfo.getAccount(), getThirdToken(), selfInfo.getName(), selfInfo.getAvatar(), new OkHttpModelCallBack<BaseModel>() {
 
@@ -240,5 +232,5 @@ public class NIMRedPacketClient {
                 }
             });
         }
-    }
+    }*/
 }

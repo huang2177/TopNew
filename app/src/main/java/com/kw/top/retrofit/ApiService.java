@@ -1,10 +1,8 @@
 package com.kw.top.retrofit;
 
-import android.animation.ObjectAnimator;
-
+import com.kw.top.base.EaseTokenBean;
 import com.kw.top.bean.AuthInfoBean;
 import com.kw.top.bean.BaseBean;
-import com.kw.top.bean.CityBean;
 import com.kw.top.bean.ClubBean;
 import com.kw.top.bean.FriendApplyBean;
 import com.kw.top.bean.ReceiveGiftBean;
@@ -37,6 +35,24 @@ public interface ApiService {
                                @Query("lon") String lon, @Query("lat") String lat,
                                @Query("city") String city, @Query("registrationId") String registrationId);
 
+
+    /**
+     * 新登陆接口
+     *
+     * @param phone
+     * @param phoneCode
+     * @param areaCode
+     * @return
+     */
+    @POST("api/userController/login1")
+    Observable<BaseBean> login1(@Query("phone") String phone, @Query("phoneCode") String phoneCode,
+                                @Query("areaCode") String areaCode);
+
+
+    @POST("api/videoController/getYunXinToken")
+    Observable<BaseBean<EaseTokenBean>> EaseToken(@Query("token") String token);
+
+
     @POST("api/userController/getBackPassword")
     Observable<BaseBean> changePwd(@Query("phone") String phone, @Query("phoneCode") String phoneCode,
                                    @Query("newPassword1") String newPassword1, @Query("newPassword2") String newPassword2);
@@ -52,6 +68,10 @@ public interface ApiService {
 
     @POST("api/userController/sendPhoneCode")
     Observable<BaseBean> sendPhoneCode(@Query("phone") String phone);
+
+
+    @POST("api/userController/sendPhoneCode")
+    Observable<BaseBean> NewsendPhoneCode(@Query("areaCode") String areaCode, @Query("phone") String phone);
 
     @POST("api/userController/inviteList")
     Observable<BaseBean> inviteList(@Query("token") String token);

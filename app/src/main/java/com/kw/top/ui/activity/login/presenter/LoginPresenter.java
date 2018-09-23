@@ -27,8 +27,8 @@ import rx.schedulers.Schedulers;
 public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implements LoginContract.Presenter {
 
     @Override
-    public void login(String phone, String password, String lon, String lat, String city,String registrationId) {
-        Api.getApiService().login(phone, password, lon, lat, city,registrationId)
+    public void login(String phone, String phoneCode, String areaCode) {
+        Api.getApiService().login1(phone, phoneCode, areaCode)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())

@@ -8,14 +8,10 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
-import com.google.gson.internal.LinkedTreeMap;
 import com.kw.top.R;
 import com.kw.top.base.MyEaseBaseActivity;
-import com.kw.top.bean.BaseBean;
 import com.kw.top.bean.event.ExitClubEvent;
 import com.kw.top.redpacket.NIMRedPacketClient;
-import com.kw.top.redpacket.RedPacketAction;
-import com.kw.top.retrofit.Api;
 import com.kw.top.runtimepermissions.PermissionsManager;
 import com.kw.top.tools.NotificationTools;
 import com.kw.top.ui.activity.task.ClubTaskListActivity;
@@ -33,9 +29,6 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
 
 /**
  * author  ： zy
@@ -92,7 +85,7 @@ public class ChatActivity extends MyEaseBaseActivity implements View.OnClickList
 
         ArrayList<BaseAction> actions = new ArrayList<>();
         if (NIMRedPacketClient.isEnable()) {
-            actions.add(new RedPacketAction());
+           // actions.add(new RedPacketAction());
         }
         customization.actions = actions;
         bundle.putSerializable(Extras.EXTRA_TYPE, SessionTypeEnum.P2P);

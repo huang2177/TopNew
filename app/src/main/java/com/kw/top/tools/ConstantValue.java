@@ -18,24 +18,24 @@ public interface ConstantValue {
     public static final int MENU_FLAG_ACTIVE = 6;//世界活动
     public static final int MENU_FLAG_NEWS = 7;//消息
     public static final int MENU_FLAG_SETTING = 8;//设置
-    public static final int MENU_FLAG_CENTER =9;//个人中心
+    public static final int MENU_FLAG_CENTER = 9;//个人中心
 
 
     //SharedPreferencesUtils key
     public static final String KEY_TOKEN = "TOKEN";
     public static final String KEY_PHONE = "PHONE";
     public static final String KEY_ALIAS = "ALIAS";
-    public static final String KEY_PWD   = "PWD";
+    public static final String KEY_PWD = "PWD";
     public static final String KEY_REGISTER = "REGISTER";
-    public static final String KEY_GYM  = "GYM";
-    public static final String KEY_USER_BESN ="USER_BESN";
+    public static final String KEY_GYM = "GYM";
+    public static final String KEY_USER_BESN = "USER_BESN";
     public static final String KEY_PHOTO = "PHOTO";
     public static final String KEY_SEX = "SEX";
     public static final String KEY_NAME = "NAME";
     public static final String KEY_HEAD = "HEAD";
-    public static final String KEY_CHAT_NUM ="CHAT_NUM";
-    public static final String KEY_CHAT_PWD ="CHAR_PWD";
-    public static final String KEY_INVITE_URL ="INVITE_URL";
+    public static final String KEY_CHAT_NUM = "CHAT_NUM";
+    public static final String KEY_CHAT_PWD = "CHAR_PWD";
+    public static final String KEY_INVITE_URL = "INVITE_URL";
     public static final String KEY_USER_ID = "USER_ID";
     public static final String KEY_PROVE_STATE = "proveState";
     public static final String KEY_VIP_GRADE = "vip_grade";
@@ -47,9 +47,9 @@ public interface ConstantValue {
     public static final int JUMP_RELEASE_IMAGE = 11;
 
     //地址选择器等级
-    public static final String GRADE_1 ="grade1";
-    public static final String GRADE_2 ="grade2";
-    public static final String GRADE_3 ="grade3";
+    public static final String GRADE_1 = "grade1";
+    public static final String GRADE_2 = "grade2";
+    public static final String GRADE_3 = "grade3";
 
     //文件路径
     public static final String IMAGE_RELEASE = "ylke/image/";
@@ -65,5 +65,8 @@ public interface ConstantValue {
     public static final String VIP = "vip";
     public static final String HEAD_URL = "head_url";
     public static final String NICK_NAME = "nick_name";//自定义扩展消息
+
+
+    String NET_EASE_TOKEN = "Net_Ease_Token";
 
 }

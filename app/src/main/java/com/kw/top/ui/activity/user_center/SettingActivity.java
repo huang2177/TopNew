@@ -97,6 +97,7 @@ public class SettingActivity extends BaseActivity {
                 break;
             case R.id.tv_out:
                 showProgressDialog();
+                mHandler1.sendEmptyMessage(1);
                 break;
         }
     }

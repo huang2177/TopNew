@@ -14,7 +14,9 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amap.api.location.AMapLocation;
@@ -24,19 +26,30 @@ import com.amap.api.location.AMapLocationListener;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
+import com.jaeger.library.StatusBarUtil;
 import com.kw.top.R;
 import com.kw.top.app.AppManager;
 import com.kw.top.base.MVPBaseActivity;
 import com.kw.top.bean.BaseBean;
 import com.kw.top.bean.LoginBean;
+import com.kw.top.retrofit.Api;
 import com.kw.top.tools.ConstantValue;
+import com.kw.top.tools.Logger;
 import com.kw.top.ui.activity.NewMainActivity;
+import com.kw.top.ui.activity.login.bean.NewLoginBean;
 import com.kw.top.ui.activity.login.contract.LoginContract;
 import com.kw.top.ui.activity.login.presenter.LoginPresenter;
 import com.kw.top.utils.RxToast;
 import com.kw.top.utils.SPUtils;
+import com.kw.top.utils.Tool;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.jpush.android.api.JPushInterface;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * author: 正义
@@ -46,11 +59,22 @@ import cn.jpush.android.api.JPushInterface;
 
 public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPresenter> implements LoginContract.View,
         View.OnClickListener {
-    TextView mTvLogin;
-    EditText mEtPhone;
-    EditText mEtPassword;
-    TextView mTvForgetPwd;
-    private String phone, password, lon = "", lat = "", city = "";
+
+    @BindView(R.id.tv_qh)
+    EditText ed_qh;
+    @BindView(R.id.image_qh)
+    ImageView image_qh;
+    @BindView(R.id.ed_phone)
+    EditText ed_phone;
+    @BindView(R.id.ed_code)
+    EditText ed_code;
+    @BindView(R.id.tv_send_code)
+    TextView tv_send_code;
+    @BindView(R.id.but_login)
+    Button but_login;
+
+
+    private String phone, code, areaCode, lon = "", lat = "", city = "";
     //声明mlocationClient对象
     public AMapLocationClient mlocationClient;
     //声明mLocationOption对象
@@ -60,19 +84,22 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
 
     @Override
     public int getContentView() {
-        return R.layout.activity_login;
+        return R.layout.new_login_activity;
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getContentView());
-        mTvLogin = findViewById(R.id.tv_login);
-        mEtPhone = findViewById(R.id.et_phone);
-        mEtPassword = findViewById(R.id.et_password);
-        mTvForgetPwd = findViewById(R.id.tv_forget_Pwd);
-        mTvForgetPwd.setOnClickListener(this);
-        mTvLogin.setOnClickListener(this);
+        ButterKnife.bind(this);
+        StatusBarUtil.setTranslucent(this, 0);
+        initviews();
+    }
+
+    /**
+     * 初始化
+     */
+    private void initviews() {
         registrationId = JPushInterface.getRegistrationID(getApplicationContext());
         if (TextUtils.isEmpty(registrationId)) {
             RxToast.normal("Get registration fail, JPush init failed!");
@@ -86,8 +113,17 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
         } else {
             initLocation();
         }
+
     }
 
+
+    /**
+     * 获取位置权限
+     *
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -98,6 +134,9 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
         }
     }
 
+    /**
+     * 定位信息
+     */
     private void initLocation() {
         mlocationClient = new AMapLocationClient(this);
         //初始化定位参数
@@ -112,6 +151,42 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
         mlocationClient.setLocationOption(mLocationOption);
     }
 
+
+    @OnClick({R.id.tv_send_code, R.id.but_login})
+    public void OnClick(View view) {
+        switch (view.getId()) {
+            case R.id.tv_send_code:
+                Logger.e("-----",ed_qh.getText().toString());
+                Logger.e("-----",ed_phone.getText().toString());
+                sendCode(ed_qh.getText().toString(), ed_phone.getText().toString(), tv_send_code);
+                break;
+            case R.id.but_login:
+                Login();
+                break;
+        }
+    }
+
+    /**
+     * 登陆
+     */
+    private void Login() {
+        phone = ed_phone.getText().toString().trim();
+        areaCode = ed_qh.getText().toString().trim();
+        code = ed_code.getText().toString().trim();
+        if (TextUtils.isEmpty(phone)) {
+            RxToast.normal("请输入手机号");
+            return;
+        }
+        if (TextUtils.isEmpty(code)) {
+            RxToast.normal("验证码不能为空");
+            return;
+        }
+        showProgressDialog();
+        mPresenter.login(phone, code, areaCode);
+
+    }
+
+
     @Override
     public void loginResult(final BaseBean baseBean) {
         if (null == baseBean) return;
@@ -120,67 +195,57 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
             RxToast.normal(baseBean.getMsg());
             return;
         }
-       /* if (ChatHelper.getInstance().isLoggedIn()) {
-            //退出登陆
-            EMClient.getInstance().logout(true, new EMCallBack() {
-
-                @Override
-                public void onSuccess() {
-                    // TODO Auto-generated method stub
-//                        mHandler.sendEmptyMessage(1);
-                    //Loginchat(loginBean);
-                }
-
-                @Override
-                public void onProgress(int progress, String status) {
-                    // TODO Auto-generated method stub
-                }
-
-                @Override
-                public void onError(int code, String message) {
-                    // TODO Auto-generated method stub
-//                        mHandler.sendEmptyMessage(0);
-                }
-            });
-        }*/
-
-        LoginBean loginBean = null;
+        NewLoginBean loginBean = null;
         try {
-            loginBean = new Gson().fromJson(baseBean.getJsonData(), new TypeToken<LoginBean>() {
+            loginBean = new Gson().fromJson(baseBean.getJsonData(), new TypeToken<NewLoginBean>() {
             }.getType());
         } catch (JsonSyntaxException e) {
             e.printStackTrace();
         }
-        SPUtils.saveString(this, ConstantValue.KEY_PROVE_STATE, loginBean.getProveState() + "");
+        SPUtils.saveString(this, ConstantValue.KEY_PROVE_STATE, loginBean.getUserInfo().getProveState() + "");
         SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_TOKEN, loginBean.getToken());
 
-        //认证状态(0 未认证,1 已认证,2 浏览超时,3审核中,4 未通过)
-        if (loginBean.getProveState().equals("1")) {
-            Loginchat(loginBean);
-        } else if (loginBean.getProveState().equals("0")) {
-            hideProgressDialog();
-            if (loginBean.getSex().equals("1")) {
-                //男
-                startActivity(NewMainActivity.class);
-            } else if (loginBean.getSex().equals("0")) {
-                //女
-                startActivity(VideoVerifyActivity.class);
-            } else {
-                startActivity(SexActivity.class);
-            }
-        } else if (loginBean.getProveState().equals("2")) {
-            hideProgressDialog();
-            startActivity(ManVipActivity.class);
-        } else if (loginBean.getProveState().equals("3")) {
-            hideProgressDialog();
-            showHint();
-        } else if (loginBean.getProveState().equals("4")) {
-            hideProgressDialog();
-            RxToast.normal("视频审核未通过，请重新认证");
-            startActivity(VideoVerifyActivity.class);
+
+        //如果状态等于1  就是没有注册的 区完善资料
+        if ("1".equals(loginBean.getRegisterState())) {
+            startActivity(SexActivity.class);
+            finish();
+            return;
         }
 
+        //认证状态(0 未认证,1 已认证,2 浏览超时,3审核中,4 未通过)
+        switch (loginBean.getUserInfo().getProveState()) {
+            case "0":
+                hideProgressDialog();
+                if (loginBean.getUserInfo().getSex().equals("1")) {
+                    //男
+                    startActivity(NewMainActivity.class);
+                } else if (loginBean.getUserInfo().getSex().equals("0")) {
+                    //女
+                    startActivity(VideoVerifyActivity.class);
+                } else {
+                    startActivity(SexActivity.class);
+                }
+                break;
+            case "1":
+                Loginchat(loginBean);
+                break;
+            case "2":
+                hideProgressDialog();
+                startActivity(ManVipActivity.class);
+                break;
+            case "3":
+                hideProgressDialog();
+                showHint();
+                break;
+            case "4":
+                hideProgressDialog();
+                RxToast.normal("视频审核未通过，请重新认证");
+                startActivity(VideoVerifyActivity.class);
+                break;
+        }
     }
+
 
     private void showHint() {
         new AlertDialog.Builder(this)
@@ -194,67 +259,69 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
                 }).show();
     }
 
+
+    /**
+     * 进入首页 保存信息
+     *
+     * @param loginBean
+     */
     @SuppressLint("StaticFieldLeak")
-    private void Loginchat(final LoginBean loginBean) {
+    private void Loginchat(final NewLoginBean loginBean) {
         SPUtils.clear(this);
-
-
         SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_TOKEN, loginBean.getToken());
-        SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_SEX, loginBean.getSex());
+        SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_SEX, loginBean.getUserInfo().getSex());
         SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_PHONE, phone);
         SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_CHAT_NUM, loginBean.getAccount());
         SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_CHAT_PWD, loginBean.getPassword());
-        SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_HEAD, loginBean.getHeadImg());
-        SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_NAME, loginBean.getNickName());
+        SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_HEAD, loginBean.getUserInfo().getHeadImg());
+        SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_NAME, loginBean.getUserInfo().getNickName());
         SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_USER_ID, loginBean.getUserId());
-        SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_PROVE_STATE, loginBean.getProveState());
-        SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_VIP_GRADE, loginBean.getGrade());
+        SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_PROVE_STATE, loginBean.getUserInfo().getProveState());
+        SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_VIP_GRADE, loginBean.getUserInfo().getGrade());
+        hideProgressDialog();
+        if (TextUtils.isEmpty(loginBean.getUserInfo().getSex())) {
+            startActivity(SexActivity.class);
+            finish();
+        } else {
+            skipActivityAndFinish(LoginActivity.this, NewMainActivity.class);
+        }
+    }
 
 
-        /*new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... voids) {
-                EMClient.getInstance().login(loginBean.getAccount(), loginBean.getPassword(), new EMCallBack() {//回调
+    /**
+     * 发送验证码
+     *
+     * @param phone 手机号码
+     * @param view  发送验证码空间
+     */
+    public void sendCode(final String areaCode, final String phone, final TextView view) {
+        if (TextUtils.isEmpty(phone)) {
+            RxToast.normal("手机号码不能为空");
+            return;
+        }
+        if (!Tool.isChinaPhoneLegal(phone)) {
+            RxToast.normal("手机号码有误");
+            return;
+        }
+        Api.getApiService().NewsendPhoneCode(areaCode, phone)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(new Action1<BaseBean>() {
                     @Override
-                    public void onSuccess() {
-                        hideProgressDialog();
-                        SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_TOKEN, loginBean.getToken());
-                        SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_SEX, loginBean.getSex());
-                        SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_PHONE, phone);
-                        SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_CHAT_NUM, loginBean.getAccount());
-                        SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_CHAT_PWD, loginBean.getPassword());
-                        SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_HEAD, loginBean.getHeadImg());
-                        SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_NAME, loginBean.getNickName());
-                        SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_USER_ID, loginBean.getUserId());
-                        SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_PROVE_STATE, loginBean.getProveState());
-                        SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_VIP_GRADE, loginBean.getGrade());
-                        EMClient.getInstance().groupManager().loadAllGroups();
-                        EMClient.getInstance().chatManager().loadAllConversations();
-                        com.kw.top.tools.Logger.e("------环信登陆", "环信登陆成功");
-                        if (TextUtils.isEmpty(loginBean.getSex())) {
-                            startActivity(SexActivity.class);
-                            finish();
-                        } else {
-                            skipActivityAndFinish(LoginActivity.this, NewMainActivity.class);
-                        }
+                    public void call(BaseBean baseBean) {
+                        RxToast.normal("验证码已发送，请注意查收");
+                        Tool.countDown(view, 60000, 1000, "获取验证码");
                     }
-
+                }, new Action1<Throwable>() {
                     @Override
-                    public void onProgress(int progress, String status) {
-
-                    }
-
-                    @Override
-                    public void onError(int code, String message) {
-                        Log.d("===============", "登录聊天服务器失败！");
-                        hideProgressDialog();
-                        RxToast.normal(getResources().getString(R.string.net_error));
+                    public void call(Throwable throwable) {
+                        // mView.sendCodeResult(null);
                     }
                 });
-                return null;
-            }
-        }.execute();*/
+
     }
+
 
     /**
      * 点击系统返回键
@@ -276,21 +343,7 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
                 startActivity(new Intent(this, ForgetPwdActivity.class));
                 break;
             case R.id.tv_login:
-                phone = mEtPhone.getText().toString().trim();
-                password = mEtPassword.getText().toString().trim();
-//                city = "上海";
-//                lon ="1";
-//                lat = "2";
-                if (TextUtils.isEmpty(phone)) {
-                    RxToast.normal("请输入手机号");
-                } else if (TextUtils.isEmpty(password)) {
-                    RxToast.normal("请输入密码");
-                } else if (TextUtils.isEmpty(city)) {
-                    RxToast.normal("位置信息获取失败");
-                } else {
-                    showProgressDialog();
-                    mPresenter.login(phone, password, lon, lat, city, registrationId);
-                }
+
                 break;
         }
     }
@@ -339,4 +392,6 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
         if (mlocationClient != null)
             mlocationClient.onDestroy();
     }
+
+
 }

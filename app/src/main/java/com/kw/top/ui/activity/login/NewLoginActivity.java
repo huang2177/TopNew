@@ -56,6 +56,8 @@ public class NewLoginActivity extends BaseActivity_ {
     }
 
 
+
+
     @OnClick({R.id.tv_send_code, R.id.but_login})
     public void OnClick(View view) {
         switch (view.getId()) {
