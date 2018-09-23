@@ -49,7 +49,7 @@ public abstract class AbsNimLog {
     }
 
     public static void i(String tag, String msg) {
-//        log.i(buildTag(tag), buildMessage(msg));
+        log.i(buildTag(tag), buildMessage(msg));
     }
 
     public static void i(String tag, String msg, Throwable thr) {

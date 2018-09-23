@@ -1,25 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:id="@+id/container"
-    >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/tv_task_state"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="6dp"
-        android:paddingBottom="6dp"
-        android:textSize="10sp"
-        android:textColor="@color/white"
         android:background="@color/yellow_E7C375"
-        android:text="今日任务还没有完成哦，赶紧去做任务吧。"
         android:drawableRight="@mipmap/icon_arrow_right"
-        android:paddingRight="10dp"
+        android:paddingBottom="6dp"
         android:paddingLeft="20dp"
+        android:paddingRight="10dp"
+        android:paddingTop="6dp"
+        android:text="今日任务还没有完成哦，赶紧去做任务吧。"
+        android:textColor="@color/white"
+        android:textSize="10sp"
         android:translationZ="1dp"
-        android:visibility="gone"
-        />
+        android:visibility="gone" />
 
 </FrameLayout>

@@ -10,6 +10,19 @@ import android.support.multidex.MultiDex;
 import android.util.Log;
 
 import com.kw.top.crash.MyCrashHandler;
+import com.kw.top.redpacket.NIMRedPacketClient;
+import com.kw.top.ui.activity.MainActivity;
+import com.netease.nim.uikit.api.NimUIKit;
+import com.netease.nim.uikit.api.model.user.IUserInfoProvider;
+import com.netease.nim.uikit.business.contact.core.query.PinYin;
+import com.netease.nim.uikit.business.contact.core.util.ContactHelper;
+import com.netease.nim.uikit.business.team.helper.TeamHelper;
+import com.netease.nim.uikit.business.uinfo.UserInfoHelper;
+import com.netease.nim.uikit.impl.NimUIKitImpl;
+import com.netease.nimlib.sdk.NIMClient;
+import com.netease.nimlib.sdk.uinfo.model.UserInfo;
+import com.netease.nimlib.sdk.util.NIMUtil;
+import com.netease.nrtc.engine.rawapi.IRtcEngine;
 import com.qiniu.android.common.FixedZone;
 import com.qiniu.android.storage.Configuration;
 import com.qiniu.android.storage.UploadManager;
@@ -56,15 +69,84 @@ public class BaseApplication extends Application {
         instance = this;
         initUtils();
         initJPush();
-        MyCrashHandler.getInstance().init(this);
         initQiniu();
         initUmeng();
-        //init demo helper
-        //DemoHelper.getInstance().init(this);
-
         initVmPolicy();
+        initNetEase();
+        MyCrashHandler.getInstance().init(this);
     }
 
+    private void initNetEase() {
+        NIMClient.init(this, null, null);
+        if (NIMUtil.isMainProcess(this)) {
+//            NIMRedPacketClient.init(this);
+            initUIKit();
+//            initAVChatKit();
+        }
+    }
+
+    /**
+     * 初始化音视频模块
+     */
+    private void initAVChatKit() {
+//        AVChatOptions avChatOptions = new AVChatOptions() {
+//            @Override
+//            public void logout(Context context) {
+//                MainActivity.logout(context, true);
+//            }
+//        };
+//        avChatOptions.entranceActivity = WelcomeActivity.class;
+//        avChatOptions.notificationIconRes = R.drawable.ic_stat_notify_msg;
+//        AVChatKit.init(avChatOptions);
+//
+//        // 初始化日志系统
+//        LogHelper.init();
+//        // 设置用户相关资料提供者
+//        AVChatKit.setUserInfoProvider(new IUserInfoProvider() {
+//            @Override
+//            public UserInfo getUserInfo(String account) {
+//                return NimUIKit.getUserInfoProvider().getUserInfo(account);
+//            }
+//
+//            @Override
+//            public String getUserDisplayName(String account) {
+//                return UserInfoHelper.getUserDisplayName(account);
+//            }
+//        });
+//        // 设置群组数据提供者
+//        AVChatKit.setTeamDataProvider(new ITeamDataProvider() {
+//            @Override
+//            public String getDisplayNameWithoutMe(String teamId, String account) {
+//                return TeamHelper.getDisplayNameWithoutMe(teamId, account);
+//            }
+//
+//            @Override
+//            public String getTeamMemberDisplayName(String teamId, String account) {
+//                return TeamHelper.getTeamMemberDisplayName(teamId, account);
+//            }
+//        });
+    }
+
+    /**
+     * 初始化网易IM UI
+     */
+    private void initUIKit() {
+        // 初始化
+        NimUIKit.init(this);
+
+//        // IM 会话窗口的定制初始化。
+//        SessionHelper.init();
+//
+//        // 聊天室聊天窗口的定制初始化。
+//        ChatRoomSessionHelper.init();
+//
+//        // 通讯录列表定制初始化
+//        ContactHelper.init();
+    }
+
+    /**
+     * 初始化极光
+     */
     private void initJPush() {
         JPushInterface.setDebugMode(true);
         JPushInterface.init(this);
@@ -95,34 +177,6 @@ public class BaseApplication extends Application {
         uploadManager = new UploadManager(config);
     }
 
-    private void checkChatInit() {
-        int pid = android.os.Process.myPid();
-        String processAppName = getAppName(pid);
-        // 如果APP启用了远程的service，此application:onCreate会被调用2次
-        // 为了防止环信SDK被初始化2次，加此判断会保证SDK被初始化1次
-        // 默认的APP会在以包名为默认的process name下运行，如果查到的process name不是APP的process name就立即返回
-        if (processAppName == null || !processAppName.equalsIgnoreCase(this.getPackageName())) {
-            Log.e("tag", "enter the service process!");
-
-            // 则此application::onCreate 是被service 调用的，直接返回
-            return;
-        }
-        initChat();
-    }
-
-    private void initChat() {
-       /* EMOptions options = new EMOptions();
-        // 默认添加好友时，是不需要验证的，改成需要验证
-        options.setAcceptInvitationAlways(false);
-        // 是否自动将消息附件上传到环信服务器，默认为True是使用环信服务器上传下载，如果设为 false，需要开发者自己处理附件消息的上传和下载
-        options.setAutoTransferMessageAttachments(true);
-        // 是否自动下载附件类消息的缩略图等，默认为 true 这里和上边这个参数相关联
-        options.setAutoDownloadThumbnail(true);
-        //初始化
-        EMClient.getInstance().init(this, options);
-        //在做打包混淆时，关闭debug模式，避免消耗不必要的资源
-        EMClient.getInstance().setDebugMode(true);*/
-    }
 
     private void initUtils() {
         Utils.init(this);
@@ -131,7 +185,6 @@ public class BaseApplication extends Application {
     private void initUmeng() {
         UMConfigure.init(this, "5b3256f4b27b0a295c00001b"
                 , "umeng", UMConfigure.DEVICE_TYPE_PHONE, "");//58edcfeb310c93091c000be2 5965ee00734be40b580001a0
-
     }
 
     {
@@ -144,7 +197,6 @@ public class BaseApplication extends Application {
     @Override
     public void onTerminate() {
         super.onTerminate();
-
     }
 
     /**
@@ -165,25 +217,5 @@ public class BaseApplication extends Application {
     @Override
     public void onTrimMemory(int level) {
         super.onTrimMemory(level);
-    }
-
-    private String getAppName(int pID) {
-        String processName = null;
-        ActivityManager am = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
-        List l = am.getRunningAppProcesses();
-        Iterator i = l.iterator();
-        PackageManager pm = this.getPackageManager();
-        while (i.hasNext()) {
-            ActivityManager.RunningAppProcessInfo info = (ActivityManager.RunningAppProcessInfo) (i.next());
-            try {
-                if (info.pid == pID) {
-                    processName = info.processName;
-                    return processName;
-                }
-            } catch (Exception e) {
-                // Log.d("Process", "Error>> :"+ e.toString());
-            }
-        }
-        return processName;
     }
 }

@@ -16,6 +16,9 @@ import com.kw.top.bean.event.ExitClubEvent;
 import com.kw.top.retrofit.Api;
 import com.kw.top.runtimepermissions.PermissionsManager;
 import com.kw.top.tools.NotificationTools;
+import com.kw.top.ui.activity.task.ClubTaskListActivity;
+import com.netease.nim.uikit.business.session.activity.BaseMessageActivity;
+import com.netease.nim.uikit.business.session.fragment.MessageFragment;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -31,7 +34,7 @@ import rx.schedulers.Schedulers;
  * des     ：
  */
 
-public class ChatActivity extends MyEaseBaseActivity {
+public class ChatActivity extends BaseMessageActivity implements View.OnClickListener {
 
     public static ChatActivity activityInstance;
     //private EaseChatFragment chatFragment;
@@ -50,54 +53,72 @@ public class ChatActivity extends MyEaseBaseActivity {
     }
 
     @Override
-    protected void onCreate(Bundle arg0) {
-        super.onCreate(arg0);
-        EventBus.getDefault().register(this);
-        setContentView(R.layout.em_activity_chat);
-        mTaskState = findViewById(R.id.tv_task_state);
-        activityInstance = this;
-        //get user id or group id
-        toChatUsername = getIntent().getExtras().getString("userId");
-        //use EaseChatFratFragment
-        // chatFragment = new ChatFragment();
-        //pass parameters to chat fragment
-        //   chatFragment.setArguments(getIntent().getExtras());
-        //   getSupportFragmentManager().beginTransaction().add(R.id.container, chatFragment).commit();
-
-        // int chatType = getIntent().getIntExtra(EaseConstant.EXTRA_CHAT_TYPE, EaseConstant.CHATTYPE_SINGLE);
-        // if (chatType == EaseConstant.CHATTYPE_GROUP) {
-        getClubTaskState();
+    protected MessageFragment fragment() {
+        MessageFragment fragment = new MessageFragment();
+        fragment.setContainerId(R.id.container);
+        fragment.setArguments(new Bundle());
+        return fragment;
     }
-    // mTaskState.setOnClickListener(new View.OnClickListener() {
-    //@Override
-    //  public void onClick(View v) {
-    //      ClubTaskListActivity.startActivity(ChatActivity.this, toChatUsername, false);
-    //      }
-    // });
 
-    //}
+    @Override
+    protected int getContentViewId() {
+        return R.layout.em_activity_chat;
+    }
+
+    @Override
+    protected void initToolBar() {
+
+    }
+
+    @Override
+    protected boolean enableSensor() {
+        return false;
+    }
+
+    @Override
+    public void onCreate(Bundle arg0) {
+        super.onCreate(arg0);
+//        EventBus.getDefault().register(this);
+//        setContentView(R.layout.em_activity_chat);
+//        mTaskState = findViewById(R.id.tv_task_state);
+//        activityInstance = this;
+//        //get user id or group id
+//        toChatUsername = getIntent().getExtras().getString("userId");
+//        //use EaseChatFratFragment
+//        chatFragment = new ChatFragment();
+//        //pass parameters to chat fragment
+//        //   chatFragment.setArguments(getIntent().getExtras());
+//        //   getSupportFragmentManager().beginTransaction().add(R.id.container, chatFragment).commit();
+//
+//        // int chatType = getIntent().getIntExtra(EaseConstant.EXTRA_CHAT_TYPE, EaseConstant.CHATTYPE_SINGLE);
+//        // if (chatType == EaseConstant.CHATTYPE_GROUP) {
+//        getClubTaskState();
+//
+//        mTaskState.setOnClickListener(this);
+
+    }
 
     private void getClubTaskState() {
-        Api.getApiService().userClubTaskState(toChatUsername, getToken())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .unsubscribeOn(Schedulers.io())
-                .subscribe(new Action1<BaseBean>() {
-                    @Override
-                    public void call(BaseBean baseBean) {
-                        if (baseBean.isSuccess()) {
-                            String state = ((LinkedTreeMap<String, String>) baseBean.getData()).get("finishTaskState");
-                            if (state.equals("0")) {
-                                mTaskState.setVisibility(View.VISIBLE);
-                            }
-                        }
-                    }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-
-                    }
-                });
+//        Api.getApiService().userClubTaskState(toChatUsername, getToken())
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .unsubscribeOn(Schedulers.io())
+//                .subscribe(new Action1<BaseBean>() {
+//                    @Override
+//                    public void call(BaseBean baseBean) {
+//                        if (baseBean.isSuccess()) {
+//                            String state = ((LinkedTreeMap<String, String>) baseBean.getData()).get("finishTaskState");
+//                            if (state.equals("0")) {
+//                                mTaskState.setVisibility(View.VISIBLE);
+//                            }
+//                        }
+//                    }
+//                }, new Action1<Throwable>() {
+//                    @Override
+//                    public void call(Throwable throwable) {
+//
+//                    }
+//                });
     }
 
     @Override
@@ -161,5 +182,10 @@ public class ChatActivity extends MyEaseBaseActivity {
     public void exitClubEvent(ExitClubEvent exitClubEvent) {
         if (!TextUtils.isEmpty(exitClubEvent.getGroupId()))
             ChatActivity.this.finish();
+    }
+
+    @Override
+    public void onClick(View v) {
+        ClubTaskListActivity.startActivity(ChatActivity.this, toChatUsername, false);
     }
 }

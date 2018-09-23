@@ -26,15 +26,22 @@ android {
 }
 
 dependencies {
-    api fileTree(dir: 'libs', include: '*.jar')
+    api fileTree(include: '*.jar', dir: 'libs')
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
-    api("com.android.support:design:26.1.0")
-
+    api 'com.android.support:design:26.1.0'
     api 'me.everything:overscroll-decor-android:1.0.4'
-    api "me.leolin:ShortcutBadger:1.1.17@aar"
-
+    api 'me.leolin:ShortcutBadger:1.1.17@aar'
     api 'com.github.bumptech.glide:glide:4.2.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.2.0'
     api 'jp.wasabeef:glide-transformations:3.0.1'
+
+    api 'com.netease.nimlib:basesdk:5.6.1'
+    // 音视频
+    api 'com.netease.nimlib:nrtc:5.6.1'
+    // 音视频需要
+    api 'com.netease.nimlib:avchat:5.6.1'
+    api 'com.netease.nimlib:chatroom:5.6.1'
+    api 'com.netease.nimlib:lucene:5.6.1'
+
 }
