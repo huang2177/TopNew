@@ -13,26 +13,26 @@ import com.kw.top.R;
 import com.kw.top.base.MyEaseBaseActivity;
 import com.kw.top.bean.BaseBean;
 import com.kw.top.bean.event.ExitClubEvent;
+import com.kw.top.redpacket.NIMRedPacketClient;
+import com.kw.top.redpacket.RedPacketAction;
 import com.kw.top.retrofit.Api;
 import com.kw.top.runtimepermissions.PermissionsManager;
 import com.kw.top.tools.NotificationTools;
 import com.kw.top.ui.activity.task.ClubTaskListActivity;
 import com.netease.nim.uikit.api.model.session.SessionCustomization;
 import com.netease.nim.uikit.business.session.actions.BaseAction;
-import com.netease.nim.uikit.business.session.actions.ImageAction;
-import com.netease.nim.uikit.business.session.actions.LocationAction;
-import com.netease.nim.uikit.business.session.actions.VideoAction;
-import com.netease.nim.uikit.business.session.activity.BaseMessageActivity;
 import com.netease.nim.uikit.business.session.constant.Extras;
 import com.netease.nim.uikit.business.session.fragment.MessageFragment;
+import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -43,85 +43,67 @@ import rx.schedulers.Schedulers;
  * des     ：
  */
 
-public class ChatActivity extends BaseMessageActivity implements View.OnClickListener {
+public class ChatActivity extends MyEaseBaseActivity implements View.OnClickListener {
+
+    @BindView(R.id.tv_task_state)
+    TextView mTaskState;
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
 
     public static ChatActivity activityInstance;
-    //private EaseChatFragment chatFragment;
     public String toChatUsername;
     public String toolbarTitle;
     private boolean isBackground;
-    private TextView mTaskState;
 
     public static void startActivity(Context context, String userid, String title, String receive_headurl, String receive_name) {
         Intent intent = new Intent(context, ChatActivity.class);
         intent.putExtra("userId", userid);
+        intent.putExtra("name", receive_name);
         intent.putExtra("toolbar_title", title);
-        //intent.putExtra(EaseConstant.RECEIVE_HEAD_REL, receive_headurl);
-        // intent.putExtra(EaseConstant.RECEIVE_NAME, receive_name);
+        intent.putExtra("head_url", receive_headurl);
         context.startActivity(intent);
     }
 
     @Override
-    protected MessageFragment fragment() {
+    public void onCreate(Bundle arg0) {
+        super.onCreate(arg0);
+        setContentView(R.layout.em_activity_chat);
+        EventBus.getDefault().register(this);
+        ButterKnife.bind(this);
+        initView();
+//        getClubTaskState();
+    }
+
+
+    private void initView() {
+        activityInstance = this;
+        toChatUsername = getIntent().getExtras().getString("userId");
         MessageFragment fragment = new MessageFragment();
         fragment.setContainerId(R.id.container);
-
         fragment.setArguments(getBundle());
-        return fragment;
+        getSupportFragmentManager().beginTransaction().add(R.id.container, fragment).commit();
+        mTaskState.setOnClickListener(this);
     }
+
 
     public Bundle getBundle() {
         Bundle bundle = new Bundle();
         SessionCustomization customization = new SessionCustomization();
 
         ArrayList<BaseAction> actions = new ArrayList<>();
-        actions.add(new ImageAction());
-        actions.add(new VideoAction());
-        actions.add(new);
+        if (NIMRedPacketClient.isEnable()) {
+            actions.add(new RedPacketAction());
+        }
         customization.actions = actions;
+        bundle.putSerializable(Extras.EXTRA_TYPE, SessionTypeEnum.P2P);
         bundle.putSerializable(Extras.EXTRA_CUSTOMIZATION, customization);
-    }
-
-    @Override
-    protected int getContentViewId() {
-        return R.layout.em_activity_chat;
-    }
-
-    @Override
-    protected void initToolBar() {
-
-    }
-
-    @Override
-    protected boolean enableSensor() {
-        return false;
-    }
-
-    @Override
-    public void onCreate(Bundle arg0) {
-        super.onCreate(arg0);
-//        EventBus.getDefault().register(this);
-//        setContentView(R.layout.em_activity_chat);
-//        mTaskState = findViewById(R.id.tv_task_state);
-//        activityInstance = this;
-//        //get user id or group id
-//        toChatUsername = getIntent().getExtras().getString("userId");
-//        //use EaseChatFratFragment
-//        chatFragment = new ChatFragment();
-//        //pass parameters to chat fragment
-//        //   chatFragment.setArguments(getIntent().getExtras());
-//        //   getSupportFragmentManager().beginTransaction().add(R.id.container, chatFragment).commit();
-//
-//        // int chatType = getIntent().getIntExtra(EaseConstant.EXTRA_CHAT_TYPE, EaseConstant.CHATTYPE_SINGLE);
-//        // if (chatType == EaseConstant.CHATTYPE_GROUP) {
-//        getClubTaskState();
-//
-//        mTaskState.setOnClickListener(this);
-
+        return bundle;
     }
 
     private void getClubTaskState() {
-//        Api.getApiService().userClubTaskState(toChatUsername, getToken())
+        //        int chatType = getIntent().getIntExtra(EaseConstant.EXTRA_CHAT_TYPE, EaseConstant.CHATTYPE_SINGLE);
+//        if (chatType == EaseConstant.CHATTYPE_GROUP) {
+//             Api.getApiService().userClubTaskState(toChatUsername, getToken())
 //                .subscribeOn(Schedulers.io())
 //                .observeOn(AndroidSchedulers.mainThread())
 //                .unsubscribeOn(Schedulers.io())
@@ -141,6 +123,8 @@ public class ChatActivity extends BaseMessageActivity implements View.OnClickLis
 //
 //                    }
 //                });
+//        }
+
     }
 
     @Override

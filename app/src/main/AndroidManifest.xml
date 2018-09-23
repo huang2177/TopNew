@@ -422,6 +422,9 @@
         <meta-data
             android:name="com.netease.nim.appKey"
             android:value="7ef33ad2c3ba428c15ab9ce9c13e1f0b" />
+        <meta-data
+            android:name="JRMF_PARTNER_NAME"
+            android:value="云信红包"/>
 
         <!-- 云信后台服务，请使用独立进程。 -->
         <service

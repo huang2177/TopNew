@@ -109,7 +109,7 @@ public class NIMRedPacketClient {
      */
     private static void initJrmfSDK(Context context) {
         //初始化红包sdk
-        JrmfClient.isDebug(false);
+        JrmfClient.isDebug(true);
 
         JrmfClient.init(context);
 
@@ -126,7 +126,7 @@ public class NIMRedPacketClient {
 //        return init && (selfInfo = (NimUserInfo) NimUIKit
 //                .getUserInfoProvider()
 //                .getUserInfo(DemoCache.getAccount())) != null;
-        return false;
+        return true;
     }
 
     /**

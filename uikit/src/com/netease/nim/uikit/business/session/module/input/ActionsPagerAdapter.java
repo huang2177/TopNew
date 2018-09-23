@@ -1,6 +1,7 @@
 package com.netease.nim.uikit.business.session.module.input;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Gravity;
@@ -82,7 +83,6 @@ public class ActionsPagerAdapter extends PagerAdapter {
                 actions.get(index).onClick();
             }
         });
-
         container.addView(gridView);
         return gridView;
     }

@@ -56,6 +56,7 @@ public class ActionsPanel {
         if (total <= 1) {
             indicator.removeAllViews();
         } else {
+            indicator.setVisibility(View.VISIBLE);
             indicator.removeAllViews();
             for (int i = 0; i < total; i++) {
                 ImageView imgCur = new ImageView(indicator.getContext());

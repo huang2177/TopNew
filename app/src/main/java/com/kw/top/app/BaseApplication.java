@@ -79,7 +79,7 @@ public class BaseApplication extends Application {
     private void initNetEase() {
         NIMClient.init(this, null, null);
         if (NIMUtil.isMainProcess(this)) {
-//            NIMRedPacketClient.init(this);
+            NIMRedPacketClient.init(this);
             initUIKit();
 //            initAVChatKit();
         }

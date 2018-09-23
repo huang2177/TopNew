@@ -44,11 +44,10 @@ public class ActionsGridviewAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View itemlayout;
         if (convertView == null) {
-            itemlayout = LayoutInflater.from(context).inflate(R.layout.nim_actions_item_layout, null);
+            itemlayout = LayoutInflater.from(context).inflate(R.layout.nim_actions_item_layout, parent,false);
         } else {
             itemlayout = convertView;
         }
-
         BaseAction viewHolder = baseActions.get(position);
         ((ImageView) itemlayout.findViewById(R.id.imageView)).setBackgroundResource(viewHolder.getIconResId());
         ((TextView) itemlayout.findViewById(R.id.textView)).setText(context.getString(viewHolder.getTitleId()));

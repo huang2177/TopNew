@@ -40,6 +40,7 @@ import com.kw.top.ui.activity.news.ChatActivity;
 import com.kw.top.utils.RxToast;
 import com.kw.top.utils.SPUtils;
 import com.kw.top.view.UILetterListView;
+import com.netease.nim.uikit.api.NimUIKit;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -303,6 +304,8 @@ public class FriendsListFragment extends MVPBaseFragment<NewsListContract.View, 
     @Override
     public void onClick(View view, FriendBean friendBean) {
         if (null != friendBean && !TextUtils.isEmpty(friendBean.getFriendAccount())) {
+//            NimUIKit.startChatting(getContext(), "", null, null, null);
+            //NimUIKit.startP2PSession(getContext(), friendBean.getFriendAccount());
             ChatActivity.startActivity(getContext(), friendBean.getFriendAccount(), friendBean.getNickName(), HttpHost.qiNiu + friendBean.getHeadImg(), friendBean.getNickName());
         } else {
             RxToast.normal("用户信息异常");
