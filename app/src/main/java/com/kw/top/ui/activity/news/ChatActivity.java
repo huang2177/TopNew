@@ -17,12 +17,21 @@ import com.kw.top.retrofit.Api;
 import com.kw.top.runtimepermissions.PermissionsManager;
 import com.kw.top.tools.NotificationTools;
 import com.kw.top.ui.activity.task.ClubTaskListActivity;
+import com.netease.nim.uikit.api.model.session.SessionCustomization;
+import com.netease.nim.uikit.business.session.actions.BaseAction;
+import com.netease.nim.uikit.business.session.actions.ImageAction;
+import com.netease.nim.uikit.business.session.actions.LocationAction;
+import com.netease.nim.uikit.business.session.actions.VideoAction;
 import com.netease.nim.uikit.business.session.activity.BaseMessageActivity;
+import com.netease.nim.uikit.business.session.constant.Extras;
 import com.netease.nim.uikit.business.session.fragment.MessageFragment;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -56,8 +65,21 @@ public class ChatActivity extends BaseMessageActivity implements View.OnClickLis
     protected MessageFragment fragment() {
         MessageFragment fragment = new MessageFragment();
         fragment.setContainerId(R.id.container);
-        fragment.setArguments(new Bundle());
+
+        fragment.setArguments(getBundle());
         return fragment;
+    }
+
+    public Bundle getBundle() {
+        Bundle bundle = new Bundle();
+        SessionCustomization customization = new SessionCustomization();
+
+        ArrayList<BaseAction> actions = new ArrayList<>();
+        actions.add(new ImageAction());
+        actions.add(new VideoAction());
+        actions.add(new);
+        customization.actions = actions;
+        bundle.putSerializable(Extras.EXTRA_CUSTOMIZATION, customization);
     }
 
     @Override
