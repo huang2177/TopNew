@@ -536,4 +536,12 @@ public interface ApiService {
     Observable<BaseBean> queryCity(@Query("token") String token);
 
 
+    /**
+     * 视频类接口
+     */
+
+
+    @POST("api/videoController/getAllUserList")
+    Observable<BaseBean> getAllUserList(@Query("type") String type, @Query("nowPage") String nowPage, @Query("pageNum") String pageNum, @Query("token") String token);
+
 }

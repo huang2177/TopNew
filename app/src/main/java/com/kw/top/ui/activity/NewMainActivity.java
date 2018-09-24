@@ -34,6 +34,7 @@ import com.kw.top.ui.fragment.active.NewActivityFragment;
 import com.kw.top.ui.fragment.center.CenterFragment;
 import com.kw.top.ui.fragment.circle.CircleContentFragment;
 import com.kw.top.ui.fragment.find.FindFrament;
+import com.kw.top.ui.fragment.find.HomePageFragmnet;
 import com.kw.top.ui.fragment.news.NewsFragment;
 import com.kw.top.utils.SPUtils;
 
@@ -91,7 +92,7 @@ public class NewMainActivity extends MyEaseBaseActivity implements TabLayout.OnT
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        showFragment(FindFrament.newInstance());
+        showFragment(HomePageFragmnet.newInstance());
         tabLayout.getTabAt(0).select();
         VersionCode();
     }
@@ -107,7 +108,7 @@ public class NewMainActivity extends MyEaseBaseActivity implements TabLayout.OnT
             tabLayout.addTab(tabLayout.newTab().setText(listString.get(i)));
         }
         tabLayout.addOnTabSelectedListener(this);
-        showFragment(FindFrament.newInstance());
+        showFragment(HomePageFragmnet.newInstance());
     }
 
     private void initSdk() {
@@ -153,7 +154,7 @@ public class NewMainActivity extends MyEaseBaseActivity implements TabLayout.OnT
 
         switch (tab.getPosition()) {
             case 0:
-                showFragment(FindFrament.newInstance());
+                showFragment(HomePageFragmnet.newInstance());
                 break;
             case 1:
                 showFragment(NewsFragment.newInstance());

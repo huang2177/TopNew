@@ -95,4 +95,6 @@ dependencies {
     compile project(':camera')
     compile project(':uikit')
 //    compile project(':jrmfRpWalletlib')
+    //banner图
+    implementation 'com.youth.banner:banner:1.4.10'
 }

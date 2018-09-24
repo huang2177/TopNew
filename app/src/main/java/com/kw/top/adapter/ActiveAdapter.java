@@ -16,7 +16,6 @@ import com.kw.top.bean.ActiveBean;
 import com.kw.top.retrofit.HttpHost;
 import com.kw.top.tools.GlideTools;
 import com.kw.top.ui.activity.active.ActiveDetailsActivity;
-import com.kw.top.utils.OnItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;

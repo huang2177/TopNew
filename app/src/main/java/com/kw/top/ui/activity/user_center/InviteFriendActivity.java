@@ -88,6 +88,11 @@ public class InviteFriendActivity extends BaseActivity implements View.OnClickLi
         String head = HttpHost.qiNiu + SPUtils.getString(this, ConstantValue.KEY_HEAD, "");
         Glide.with(this).load(head).apply(GlideTools.getOptions()).into(mIvHead);
         Glide.with(this).load(head).apply(GlideTools.getOptions()).into(imageView_heade);
+        if (TextUtils.isEmpty(SPUtils.getString(this, ConstantValue.KEY_VIP_GRADE, ""))) {
+            imageView_leave.setVisibility(View.GONE);
+        } else {
+            GlideTools.setVipResourceS(imageView_leave, Integer.parseInt(SPUtils.getString(this, ConstantValue.KEY_VIP_GRADE, "")));
+        }
         GlideTools.setVipResourceS(imageView_leave, Integer.parseInt(SPUtils.getString(this, ConstantValue.KEY_VIP_GRADE, "")));
         tv_name.setText(SPUtils.getString(this, ConstantValue.KEY_NAME, ""));
     }
