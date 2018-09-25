@@ -304,9 +304,7 @@ public class FriendsListFragment extends MVPBaseFragment<NewsListContract.View, 
     @Override
     public void onClick(View view, FriendBean friendBean) {
         if (null != friendBean && !TextUtils.isEmpty(friendBean.getFriendAccount())) {
-//            NimUIKit.startChatting(getContext(), "", null, null, null);
-            //NimUIKit.startP2PSession(getContext(), friendBean.getFriendAccount());
-            ChatActivity.startActivity(getContext(), friendBean.getFriendAccount(), friendBean.getNickName(), HttpHost.qiNiu + friendBean.getHeadImg(), friendBean.getNickName());
+            ChatActivity.startActivity(getContext(), friendBean);
         } else {
             RxToast.normal("用户信息异常");
         }

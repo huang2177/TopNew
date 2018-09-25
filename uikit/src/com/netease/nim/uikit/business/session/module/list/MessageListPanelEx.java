@@ -200,7 +200,7 @@ public class MessageListPanelEx {
     private OnItemClickListener listener = new OnItemClickListener() {
         @Override
         public void onItemClick(IRecyclerView adapter, View view, int position) {
-
+            Log.e("-------", "-----");
         }
 
         @Override

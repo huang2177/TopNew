@@ -1,36 +1,27 @@
 package com.kw.top.app;
 
-import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
-import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.StrictMode;
 import android.support.multidex.MultiDex;
-import android.util.Log;
+import android.text.TextUtils;
 
 import com.kw.top.crash.MyCrashHandler;
-import com.kw.top.redpacket.NIMRedPacketClient;
-import com.kw.top.ui.activity.MainActivity;
+import com.kw.top.tools.ConstantValue;
+import com.kw.top.utils.SPUtils;
 import com.netease.nim.uikit.api.NimUIKit;
-import com.netease.nim.uikit.api.model.user.IUserInfoProvider;
-import com.netease.nim.uikit.business.contact.core.query.PinYin;
-import com.netease.nim.uikit.business.contact.core.util.ContactHelper;
-import com.netease.nim.uikit.business.team.helper.TeamHelper;
-import com.netease.nim.uikit.business.uinfo.UserInfoHelper;
-import com.netease.nim.uikit.impl.NimUIKitImpl;
 import com.netease.nimlib.sdk.NIMClient;
-import com.netease.nimlib.sdk.uinfo.model.UserInfo;
+import com.netease.nimlib.sdk.SDKOptions;
+import com.netease.nimlib.sdk.StatusBarNotificationConfig;
+import com.netease.nimlib.sdk.auth.LoginInfo;
 import com.netease.nimlib.sdk.util.NIMUtil;
-import com.netease.nrtc.engine.rawapi.IRtcEngine;
 import com.qiniu.android.common.FixedZone;
 import com.qiniu.android.storage.Configuration;
 import com.qiniu.android.storage.UploadManager;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
-
-import java.util.Iterator;
-import java.util.List;
 
 import cn.jpush.android.api.JPushInterface;
 
@@ -77,12 +68,41 @@ public class BaseApplication extends Application {
     }
 
     private void initNetEase() {
-        NIMClient.init(this, null, null);
+        NIMClient.init(this, loginInfo(), null);
         if (NIMUtil.isMainProcess(this)) {
-            NIMRedPacketClient.init(this);
+//            NIMRedPacketClient.init(this);
             initUIKit();
 //            initAVChatKit();
         }
+    }
+
+    private LoginInfo loginInfo() {
+        String netEaseToken = SPUtils.getString(this, ConstantValue.NET_EASE_TOKEN, "");
+        String netEaseAccount = SPUtils.getString(this, ConstantValue.NET_EASE_ACCOUNT, "");
+
+        if (!TextUtils.isEmpty(netEaseToken) && !TextUtils.isEmpty(netEaseAccount)) {
+            return new LoginInfo(netEaseAccount, netEaseToken);
+        }
+        return null;
+    }
+
+    private SDKOptions options() {
+        SDKOptions options = new SDKOptions();
+
+        // 如果将新消息通知提醒托管给 SDK 完成，需要添加以下配置。否则无需设置。
+        StatusBarNotificationConfig config = new StatusBarNotificationConfig();
+//        config.notificationEntrance = WelcomeActivity.class; // 点击通知栏跳转到该Activity
+//        config.notificationSmallIconId = R.drawable.ic_stat_notify_msg;
+        // 呼吸灯配置
+        config.ledARGB = Color.GREEN;
+        config.ledOnMs = 1000;
+        config.ledOffMs = 1500;
+        // 通知铃声的uri字符串
+        options.statusBarNotificationConfig = config;
+
+        // 配置是否需要预下载附件缩略图，默认为 true
+        options.preloadAttach = true;
+        return options;
     }
 
     /**

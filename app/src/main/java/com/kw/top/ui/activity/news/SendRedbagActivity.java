@@ -70,12 +70,12 @@ public class SendRedbagActivity extends BaseActivity {
     private String content = "[红包消息]";
     private String groupId = "";
 
-    public static void startActivity(Activity context, String redType, String toUsername, int request_code,String head,String groupId) {
+    public static void startActivity(Activity context, String redType, String toUsername, int request_code, String head, String groupId) {
         Intent intent = new Intent(context, SendRedbagActivity.class);
         intent.putExtra("RED_TYPE", redType);
         intent.putExtra("TO_USER", toUsername);
-        intent.putExtra("HEAD",head);
-        intent.putExtra("GROUPID",groupId);
+        intent.putExtra("HEAD", head);
+        intent.putExtra("GROUPID", groupId);
         context.startActivityForResult(intent, request_code);
     }
 
@@ -95,20 +95,15 @@ public class SendRedbagActivity extends BaseActivity {
         String head = HttpHost.qiNiu + getIntent().getStringExtra("HEAD");
         groupId = getIntent().getStringExtra("GROUPID");
 
-        if (redType.equals("1")) {
-            mLlNum.setVisibility(View.VISIBLE);
+        if ("1".equals(redType)) {
             mCiHead.setImageResource(R.mipmap.icon_group);
-        }else {
-            if (redType.equals("1")) {
-                mLlNum.setVisibility(View.VISIBLE);
-                Glide.with(this).load(head).apply(GlideTools.getHeadOptions()).into(mCiHead);
-            }
+        } else {
+            Glide.with(this).load(head).apply(GlideTools.getHeadOptions()).into(mCiHead);
         }
-        mTvNickname.setText(nickname);
         mTvTitle.setText("发红包");
+        mTvNickname.setText(nickname);
+        mLlNum.setVisibility(View.VISIBLE);
         mRelativeTitle.setBackgroundColor(getResources().getColor(R.color.transparent));
-
-
     }
 
 
@@ -121,19 +116,19 @@ public class SendRedbagActivity extends BaseActivity {
             case R.id.tv_send_redbag:
                 amountSum = mEtAmount.getText().toString().trim();
 
-                if (redType.equals("1")){
+                if ("1".equals(redType)) {
                     shareSum = mEtNum.getText().toString().trim();
-                }else {
+                } else {
                     shareSum = "1";
                 }
 
                 if (TextUtils.isEmpty(amountSum)) {
                     RxToast.normal("请输入金额");
                     return;
-                } else if (TextUtils.isEmpty(shareSum)){
+                } else if (TextUtils.isEmpty(shareSum)) {
                     RxToast.normal("请输入红包数量");
                     return;
-                }else {
+                } else {
                     sendRedbag();
                 }
                 break;
@@ -142,7 +137,7 @@ public class SendRedbagActivity extends BaseActivity {
 
     private void sendRedbag() {
         showProgressDialog();
-        Api.getApiService().sendRedPackage(groupId,amountSum, shareSum, redPackageType, getToken())
+        Api.getApiService().sendRedPackage(groupId, amountSum, shareSum, redPackageType, getToken())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
@@ -152,14 +147,13 @@ public class SendRedbagActivity extends BaseActivity {
                         hideProgressDialog();
                         if (baseBean.isSuccess()) {
                             try {
-                                RedbagBean redbagBean = new Gson().fromJson(baseBean.getJsonData(), new TypeToken<RedbagBean>() {
-                                }.getType());
+                                RedbagBean redbagBean = new Gson().fromJson(baseBean.getJsonData(), RedbagBean.class);
                                 Intent intent = new Intent();
                                 intent.putExtra("REDBAG_ID", redbagBean.getRedPackageId());
                                 intent.putExtra("CONTENT", content);
                                 setResult(RESULT_OK, intent);
                                 finish();
-                            } catch (JsonSyntaxException e) {
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         } else {

@@ -65,18 +65,18 @@ public final class R {
         public static int notification_top_pad_large_text = 0x7f0800d1;
     }
     public static final class drawable {
-        public static int notification_action_background = 0x7f090117;
-        public static int notification_bg = 0x7f090118;
-        public static int notification_bg_low = 0x7f090119;
-        public static int notification_bg_low_normal = 0x7f09011a;
-        public static int notification_bg_low_pressed = 0x7f09011b;
-        public static int notification_bg_normal = 0x7f09011c;
-        public static int notification_bg_normal_pressed = 0x7f09011d;
-        public static int notification_icon_background = 0x7f09011e;
-        public static int notification_template_icon_bg = 0x7f09011f;
-        public static int notification_template_icon_low_bg = 0x7f090120;
-        public static int notification_tile_bg = 0x7f090121;
-        public static int notify_panel_notification_icon_bg = 0x7f090122;
+        public static int notification_action_background = 0x7f09011a;
+        public static int notification_bg = 0x7f09011b;
+        public static int notification_bg_low = 0x7f09011c;
+        public static int notification_bg_low_normal = 0x7f09011d;
+        public static int notification_bg_low_pressed = 0x7f09011e;
+        public static int notification_bg_normal = 0x7f09011f;
+        public static int notification_bg_normal_pressed = 0x7f090120;
+        public static int notification_icon_background = 0x7f090121;
+        public static int notification_template_icon_bg = 0x7f090122;
+        public static int notification_template_icon_low_bg = 0x7f090123;
+        public static int notification_tile_bg = 0x7f090124;
+        public static int notify_panel_notification_icon_bg = 0x7f090125;
     }
     public static final class id {
         public static int action_container = 0x7f0c000f;
@@ -101,10 +101,10 @@ public final class R {
         public static int notification_main_column_container = 0x7f0c00f5;
         public static int right_icon = 0x7f0c0127;
         public static int right_side = 0x7f0c0128;
-        public static int text = 0x7f0c0184;
-        public static int text2 = 0x7f0c0185;
-        public static int time = 0x7f0c0190;
-        public static int title = 0x7f0c0195;
+        public static int text = 0x7f0c0185;
+        public static int text2 = 0x7f0c0186;
+        public static int time = 0x7f0c0191;
+        public static int title = 0x7f0c0196;
     }
     public static final class integer {
         public static int status_bar_notification_info_maxnum = 0x7f0d000a;
@@ -118,7 +118,7 @@ public final class R {
         public static int notification_template_part_time = 0x7f0f00a0;
     }
     public static final class string {
-        public static int status_bar_notification_info_overflow = 0x7f1500b3;
+        public static int status_bar_notification_info_overflow = 0x7f1500b4;
     }
     public static final class style {
         public static int TextAppearance_Compat_Notification = 0x7f160104;
@@ -137,10 +137,13 @@ public final class R {
         public static int FontFamily_fontProviderFetchTimeout = 3;
         public static int FontFamily_fontProviderPackage = 4;
         public static int FontFamily_fontProviderQuery = 5;
-        public static int[] FontFamilyFont = { 0x7f04009b, 0x7f0400a3, 0x7f0400a4 };
-        public static int FontFamilyFont_font = 0;
-        public static int FontFamilyFont_fontStyle = 1;
-        public static int FontFamilyFont_fontWeight = 2;
+        public static int[] FontFamilyFont = { 0x01010532, 0x0101053f, 0x01010533, 0x7f04009b, 0x7f0400a3, 0x7f0400a4 };
+        public static int FontFamilyFont_android_font = 0;
+        public static int FontFamilyFont_android_fontStyle = 1;
+        public static int FontFamilyFont_android_fontWeight = 2;
+        public static int FontFamilyFont_font = 3;
+        public static int FontFamilyFont_fontStyle = 4;
+        public static int FontFamilyFont_fontWeight = 5;
         public static int[] RecyclerView = { 0x010100f1, 0x010100c4, 0x7f040096, 0x7f040097, 0x7f040098, 0x7f040099, 0x7f04009a, 0x7f0400c0, 0x7f040130, 0x7f040140, 0x7f040146 };
         public static int RecyclerView_android_descendantFocusability = 0;
         public static int RecyclerView_android_orientation = 1;

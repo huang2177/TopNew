@@ -807,10 +807,10 @@ public class MainActivity extends MyEaseBaseActivity implements View.OnClickList
         public void onContactDeleted(final String username) {
             runOnUiThread(new Runnable() {
                 public void run() {
-                    if (ChatActivity.activityInstance != null && ChatActivity.activityInstance.toChatUsername != null &&
-                            username.equals(ChatActivity.activityInstance.toChatUsername)) {
+                    if (ChatActivity.activityInstance != null && ChatActivity.activityInstance.userId != null &&
+                            username.equals(ChatActivity.activityInstance.userId)) {
                         String st10 = getResources().getString(R.string.have_you_removed);
-                        Toast.makeText(MainActivity.this, ChatActivity.activityInstance.getToChatUsername() + st10, Toast.LENGTH_LONG)
+                        Toast.makeText(MainActivity.this, ChatActivity.activityInstance.getUserId() + st10, Toast.LENGTH_LONG)
                                 .show();
                         ChatActivity.activityInstance.finish();
                     }

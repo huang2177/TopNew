@@ -1,12 +1,14 @@
 package com.kw.top.base;
 
+import java.io.Serializable;
+
 /**
  * author: zy
  * data  : 2018/6/10
  * des   :
  */
 
-public class FriendBean {
+public class FriendBean implements Serializable{
 
         /**
          * headImg : c520c3385e1734953944
@@ -24,7 +26,16 @@ public class FriendBean {
         private int friendsId;
         private String friendAccount;
 
-        public String getHeadImg() {
+    public FriendBean(String headImg, String nickName, String grade, String myAccount, int friendsId, String friendAccount) {
+        this.headImg = headImg;
+        this.nickName = nickName;
+        this.grade = grade;
+        this.myAccount = myAccount;
+        this.friendsId = friendsId;
+        this.friendAccount = friendAccount;
+    }
+
+    public String getHeadImg() {
             return headImg;
         }
 

@@ -30,6 +30,7 @@ import com.kw.top.R;
 import com.kw.top.adapter.FindDetailsGridViewAdapter;
 import com.kw.top.adapter.GiftAdapter;
 import com.kw.top.base.BaseActivity;
+import com.kw.top.base.FriendBean;
 import com.kw.top.bean.BaseBean;
 import com.kw.top.bean.FindDetailsBean;
 import com.kw.top.bean.GiftBean;
@@ -287,7 +288,8 @@ public class FindDetailsActivity extends BaseActivity implements View.OnClickLis
                 }
                 break;
             case R.id.tv_send_news:
-                ChatActivity.startActivity(this, account, nickName, head_url, nickName);
+//                ChatActivity.startActivity(this, account, nickName, head_url, nickName);
+//                ChatActivity.startActivity(this,new FriendBean());
                 break;
             case R.id.ci_head:
                 UserCircleActivity.startActivity(this, userId);

@@ -16,7 +16,7 @@ import org.greenrobot.eventbus.EventBus;
 public class ClubChatActivity extends FragmentActivity {
 
     private String title,//标题
-//            toChatUsername,//发送信息的对象 ID
+//            userId,//发送信息的对象 ID
             chat_type; //消息类型 0单人，1群组
     private String clubid;
 
@@ -39,7 +39,7 @@ public class ClubChatActivity extends FragmentActivity {
     public void initView() {
         super.initView();
         title = getIntent().getStringExtra("TITLE");
-        toChatUsername = getIntent().getStringExtra("TOUSERNAME");
+        userId = getIntent().getStringExtra("TOUSERNAME");
         chat_type = getIntent().getStringExtra("CHATTYPE");
 
         mTvTitle.setText(title);
@@ -93,7 +93,7 @@ public class ClubChatActivity extends FragmentActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onReceiveMessage(MessageEvent messageEvent){
         Log.e("tag","==========  eventbus ");
-        if (null != messageEvent.getEMMessage() && messageEvent.getEMMessage().getTo().equals(toChatUsername)){
+        if (null != messageEvent.getEMMessage() && messageEvent.getEMMessage().getTo().equals(userId)){
             mList.add(messageEvent.getEMMessage());
             if (null != mChatAdapter){
                 mChatAdapter.notifyDataSetChanged();

@@ -11,6 +11,7 @@ import com.netease.nimlib.sdk.msg.model.IMMessage;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 聊天界面定制化参数。 可定制：<br>
@@ -36,7 +37,7 @@ public class SessionCustomization implements Serializable {
      * 加号展开后的action list。
      * 默认已包含图片，视频和地理位置
      */
-    public ArrayList<BaseAction> actions;
+    public List<BaseAction> actions;
 
     /**
      * ActionBar右侧可定制按钮。默认为空。

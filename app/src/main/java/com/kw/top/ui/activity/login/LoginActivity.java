@@ -31,7 +31,6 @@ import com.kw.top.R;
 import com.kw.top.app.AppManager;
 import com.kw.top.base.MVPBaseActivity;
 import com.kw.top.bean.BaseBean;
-import com.kw.top.bean.LoginBean;
 import com.kw.top.retrofit.Api;
 import com.kw.top.tools.ConstantValue;
 import com.kw.top.tools.Logger;
@@ -271,7 +270,7 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
         SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_TOKEN, loginBean.getToken());
         SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_SEX, loginBean.getUserInfo().getSex());
         SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_PHONE, phone);
-        SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_CHAT_NUM, loginBean.getAccount());
+        SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_ACCOUNT, loginBean.getAccount());
         SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_CHAT_PWD, loginBean.getPassword());
         SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_HEAD, loginBean.getUserInfo().getHeadImg());
         SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_NAME, loginBean.getUserInfo().getNickName());

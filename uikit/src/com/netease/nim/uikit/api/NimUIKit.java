@@ -2,7 +2,9 @@ package com.netease.nim.uikit.api;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 
+import com.netease.nim.uikit.api.model.SimpleCallback;
 import com.netease.nim.uikit.api.model.chatroom.ChatRoomMemberChangedObservable;
 import com.netease.nim.uikit.api.model.chatroom.ChatRoomProvider;
 import com.netease.nim.uikit.api.model.chatroom.ChatRoomSessionCustomization;
@@ -39,7 +41,10 @@ import com.netease.nimlib.sdk.chatroom.model.EnterChatRoomResultData;
 import com.netease.nimlib.sdk.msg.attachment.MsgAttachment;
 import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
 import com.netease.nimlib.sdk.msg.model.IMMessage;
+import com.netease.nimlib.sdk.uinfo.UserInfoProvider;
+import com.netease.nimlib.sdk.uinfo.model.UserInfo;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -345,10 +350,10 @@ public class NimUIKit {
     /**
      * 同 {@link NimUIKitImpl#startTeamSession(Context, String)},同时聊天界面打开后，列表跳转至anchor位置
      *
-     * @param context 上下文
-     * @param tid     群id
+     * @param context       上下文
+     * @param tid           群id
      * @param customization 定制化信息。针对不同的聊天对象，可提供不同的定制化。
-     * @param anchor  跳转到指定消息的位置，不需要跳转填null
+     * @param anchor        跳转到指定消息的位置，不需要跳转填null
      */
     public static void startTeamSession(Context context, String tid, SessionCustomization customization, IMMessage anchor) {
         NimUIKitImpl.startTeamSession(context, tid, customization, anchor);
@@ -415,6 +420,34 @@ public class NimUIKit {
      */
     public static IUserInfoProvider getUserInfoProvider() {
         return NimUIKitImpl.getUserInfoProvider();
+    }
+
+    /**
+     * 设置“用户资料” 提供者
+     */
+    public static void setUserInfo(final UserInfo userInfo) {
+        IUserInfoProvider provider = new IUserInfoProvider() {
+            @Override
+            public UserInfo getUserInfo(String account) {
+                return userInfo;
+            }
+
+            @Override
+            public List getUserInfo(List accounts) {
+                return null;
+            }
+
+            @Override
+            public void getUserInfoAsync(String account, SimpleCallback callback) {
+
+            }
+
+            @Override
+            public void getUserInfoAsync(List accounts, SimpleCallback callback) {
+
+            }
+        };
+        NimUIKitImpl.initUserInfoProvider(provider);
     }
 
     /**
@@ -567,6 +600,7 @@ public class NimUIKit {
 
     /**
      * 获取在线状态变更通知接口
+     *
      * @return
      */
     public static OnlineStateChangeObservable getOnlineStateChangeObservable() {

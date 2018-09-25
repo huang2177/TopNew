@@ -225,4 +225,6 @@
     <string name="msg_search">全文检索</string>
     <string name="msg_search_limit">全文检索显示条数</string>
 
+    <string name="red_packet">红包</string>
+
 </resources>

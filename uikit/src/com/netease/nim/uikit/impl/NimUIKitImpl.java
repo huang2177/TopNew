@@ -286,7 +286,7 @@ public final class NimUIKitImpl {
     }
 
     // 初始化用户信息提供者
-    private static void initUserInfoProvider(IUserInfoProvider userInfoProvider) {
+    public static void initUserInfoProvider(IUserInfoProvider userInfoProvider) {
 
         if (userInfoProvider == null) {
             userInfoProvider = new DefaultUserInfoProvider();

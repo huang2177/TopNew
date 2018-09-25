@@ -129,10 +129,227 @@ public class NewMainActivity extends MyEaseBaseActivity implements TabLayout.OnT
         }
     }
 
+
+   /* private void initIntent() {
+        //make sure activity will not in background if user is logged into another device or removed
+        if (getIntent() != null && (getIntent().getBooleanExtra(Constant.ACCOUNT_REMOVED, false)
+                || getIntent().getBooleanExtra(Constant.ACCOUNT_KICKED_BY_CHANGE_PASSWORD, false)
+                || getIntent().getBooleanExtra(Constant.ACCOUNT_KICKED_BY_OTHER_DEVICE, false))) {
+            DemoHelper.getInstance().logout(false, null);
+            finish();
+            startActivity(new Intent(NewMainActivity.this, LoginActivity.class));
+            return;
+        } else if (getIntent() != null && getIntent().getBooleanExtra("isConflict", false)) {
+            finish();
+            startActivity(new Intent(NewMainActivity.this, LoginActivity.class));
+            return;
+        }
+
+
+        inviteMessgeDao = new InviteMessgeDao(this);
+        //register broadcast receiver to receive the change of group from DemoHelper
+        registerBroadcastReceiver();
+        EMClient.getInstance().contactManager().setContactListener(new MyContactListener());
+        EMClient.getInstance().addClientListener(clientListener);
+        EMClient.getInstance().addMultiDeviceListener(new MyMultiDeviceListener());
+//        EMClient.getInstance().groupManager().addGroupChangeListener(new MyEmGroupChangeListener());
+        //debug purpose only
+//        registerInternalDebugReceiver();
+
+        refreshUIWithMessage();
+    }
+*/
+
+    /* private void registerBroadcastReceiver() {
+         broadcastManager = LocalBroadcastManager.getInstance(this);
+         IntentFilter intentFilter = new IntentFilter();
+         intentFilter.addAction(Constant.ACTION_CONTACT_CHANAGED);
+         intentFilter.addAction(Constant.ACTION_GROUP_CHANAGED);
+         broadcastReceiver = new BroadcastReceiver() {
+             @Override
+             public void onReceive(Context context, Intent intent) {
+                 updateUnreadLabel();
+                 String action = intent.getAction();
+                 if (action.equals(Constant.ACTION_GROUP_CHANAGED)) {
+                     if (EaseCommonUtils.getTopActivity(NewMainActivity.this).equals(GroupsActivity.class.getName())) {
+ //                        GroupsActivity.instance.onResume();
+                     }
+                 }
+             }
+         };
+         broadcastManager.registerReceiver(broadcastReceiver, intentFilter);
+     }
+
+
+     public class MyMultiDeviceListener implements EMMultiDeviceListener {
+
+         @Override
+         public void onContactEvent(int event, String target, String ext) {
+
+         }
+
+         @Override
+         public void onGroupEvent(int event, String target, final List<String> username) {
+             switch (event) {
+                 case EMMultiDeviceListener.GROUP_LEAVE:
+                     ChatActivity.activityInstance.finish();
+                     break;
+                 default:
+                     break;
+             }
+         }
+     }
+
+
+     EMClientListener clientListener = new EMClientListener() {
+         @Override
+         public void onMigrate2x(boolean success) {
+             if (success) {
+                 refreshUIWithMessage();
+             }
+         }
+     };
+
+ */
+    public void refreshUIWithMessage() {
+        runOnUiThread(new Runnable() {
+            public void run() {
+                updateUnreadLabel();
+            }
+        });
+    }
+
+
+    /**
+     * update unread message count
+     */
+    public void updateUnreadLabel() {
+        //   int count = getUnreadMsgCountTotal();
+        // if (count > 0) {
+//            unreadLabel.setText(String.valueOf(count));
+//            unreadLabel.setVisibility(View.VISIBLE);
+        //   if (count > 99) {
+        // mTvNewsCount.setText("99+");
+        //  } else {
+        // mTvNewsCount.setText(count + "");
+        //  }
+        // mTvMsgNew.setVisibility(View.VISIBLE);
+        // mTvNewsCount.setVisibility(View.VISIBLE);
+        //} else {
+//            unreadLabel.setVisibility(View.INVISIBLE);
+        // mTvMsgNew.setVisibility(View.GONE);
+        // mTvNewsCount.setText("");
+        // mTvNewsCount.setVisibility(View.GONE);
+        // }
+    }
+
+
+    /**
+     * 监听好友变化请求
+     */
+   /* public class MyContactListener implements EMContactListener {
+        *//**
+     * 添加好友
+     *
+     * @param username
+     *//*
+        @Override
+        public void onContactAdded(String username) {
+        }
+
+        *//**
+     * 删除好友
+     *
+     * @param username
+     *//*
+        @Override
+        public void onContactDeleted(final String username) {
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    if (ChatActivity.activityInstance != null && ChatActivity.activityInstance.userId != null &&
+                            username.equals(ChatActivity.activityInstance.userId)) {
+                        String st10 = getResources().getString(R.string.have_you_removed);
+                        Toast.makeText(NewMainActivity.this, ChatActivity.activityInstance.getUserId() + st10, Toast.LENGTH_LONG)
+                                .show();
+                        ChatActivity.activityInstance.finish();
+                    }
+                }
+            });
+        }
+
+
+        *//**
+     * 接到邀请的消息，如果不处理(同意或拒绝)，掉线后，服务器会自动再发过来，所以客户端不要重复提醒
+     *
+     * @param username
+     * @param reason
+     *//*
+        @Override
+        public void onContactInvited(String username, String reason) {
+            //收到好友邀请
+            friendApply = true;
+            Intent intent = new Intent(NewMainActivity.this, FriendApplyActivity.class);//点击之后进入MainActivity
+            PendingIntent pendingIntent = PendingIntent.getActivity(NewMainActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            NotificationTools.showNotification(NewMainActivity.this, pendingIntent, "您有一条新的好友请求", NotificationTools.FRIEND_ID, NotificationTools.FRIEND_CHANNEL_ID);
+            getApplyList();
+        }
+
+        *//**
+     * 同意好友邀请
+     *
+     * @param username
+     *//*
+        @Override
+        public void onFriendRequestAccepted(String username) {
+
+            friendApply = false;
+            Log.e("tag", "=============  收到好友邀请");
+            Intent intent = new Intent(NewMainActivity.this, FriendApplyActivity.class);//点击之后进入MainActivity
+            PendingIntent pendingIntent = PendingIntent.getActivity(NewMainActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            NotificationTools.showNotification(NewMainActivity.this, pendingIntent, "好友请求被同意", NotificationTools.FRIEND_ID, NotificationTools.FRIEND_CHANNEL_ID);
+            getApplyList();
+        }
+
+        *//**
+     * 拒绝好友的请求
+     *
+     * @param username
+     *//*
+        @Override
+        public void onFriendRequestDeclined(String username) {
+        }
+    }
+*/
+
+    /**
+     * get unread event notification count, including application, accepted, etc
+     *
+     * @return
+     */
+    public int getUnreadAddressCountTotal() {
+        int unreadAddressCountTotal = 0;
+        return unreadAddressCountTotal;
+    }
+
+
+    /**
+     * get unread message count
+     *
+     * @return
+     */
+   /* public int getUnreadMsgCountTotal() {
+     //   return EMClient.getInstance().chatManager().getUnreadMsgsCount();
+    }*/
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void refreshMsgNum(MsgCountEvent countEvent) {
+        if (countEvent.isMsg())
+            refreshUIWithMessage();
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
-      //  EventBus.getDefault().unregister(this);
+        //  EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -270,8 +487,7 @@ public class NewMainActivity extends MyEaseBaseActivity implements TabLayout.OnT
      */
 
     private void EaseToken() {
-        String token = getToken();
-        Api.getApiService().EaseToken(token)
+        Api.getApiService().EaseToken(getToken())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
@@ -282,16 +498,14 @@ public class NewMainActivity extends MyEaseBaseActivity implements TabLayout.OnT
                             return;
                         }
                         Logger.e("--EaseToke----", baseBean.getData().getToken());
-
                         SPUtils.saveString(NewMainActivity.this, ConstantValue.NET_EASE_TOKEN, baseBean.getData().getToken());
                     }
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-
+                        Logger.e("--EaseToke----", throwable.toString());
                     }
                 });
-
     }
 
 

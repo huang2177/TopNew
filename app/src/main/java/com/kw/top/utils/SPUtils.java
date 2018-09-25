@@ -146,9 +146,13 @@ public class SPUtils {
      *
      * @param context
      * @param key
-     * @param defValue
      * @return
      */
+    public static String getString(Context context, String key) {
+        sp = context.getSharedPreferences(SP_NAME, 0);
+        return getString(context, SP_NAME, key, "");
+    }
+
     public static String getString(Context context, String key, String defValue) {
         sp = context.getSharedPreferences(SP_NAME, 0);
         return getString(context, SP_NAME, key, defValue);

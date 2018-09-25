@@ -15,7 +15,6 @@ import com.netease.nim.uikit.api.model.session.SessionCustomization;
 import com.netease.nim.uikit.business.ait.AitManager;
 import com.netease.nim.uikit.business.session.actions.BaseAction;
 import com.netease.nim.uikit.business.session.actions.ImageAction;
-import com.netease.nim.uikit.business.session.actions.LocationAction;
 import com.netease.nim.uikit.business.session.actions.VideoAction;
 import com.netease.nim.uikit.business.session.constant.Extras;
 import com.netease.nim.uikit.business.session.module.Container;
@@ -69,6 +68,8 @@ public class MessageFragment extends TFragment implements ModuleProxy {
     protected MessageListPanelEx messageListPanel;
 
     protected AitManager aitManager;
+    private ArrayList<BaseAction> actions;
+    private View.OnClickListener mListener;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -178,7 +179,8 @@ public class MessageFragment extends TFragment implements ModuleProxy {
      */
     // 是否允许发送消息
     protected boolean isAllowSendMessage(final IMMessage message) {
-        return customization.isAllowSendMessage(message);
+//        return customization.isAllowSendMessage(message);
+        return true;
     }
 
     /**
@@ -228,7 +230,7 @@ public class MessageFragment extends TFragment implements ModuleProxy {
             message.setContent("该消息无法发送");
             message.setStatus(MsgStatusEnum.success);
             NIMClient.getService(MsgService.class).saveMessageToLocal(message, false);
-        }else {
+        } else {
             appendTeamMemberPush(message);
             message = changeToRobotMsg(message);
             final IMMessage msg = message;
@@ -251,7 +253,6 @@ public class MessageFragment extends TFragment implements ModuleProxy {
                 }
             });
         }
-
 
 
         messageListPanel.onMsgSend(message);
@@ -332,7 +333,7 @@ public class MessageFragment extends TFragment implements ModuleProxy {
         if (customConfig != null) {
             String content = customConfig.getPushContent(message);
             Map<String, Object> payload = customConfig.getPushPayload(message);
-            if(!TextUtils.isEmpty(content)){
+            if (!TextUtils.isEmpty(content)) {
                 message.setPushContent(content);
             }
             if (payload != null) {
@@ -380,13 +381,15 @@ public class MessageFragment extends TFragment implements ModuleProxy {
 
     // 操作面板集合
     protected List<BaseAction> getActionList() {
-        List<BaseAction> actions = new ArrayList<>();
-        actions.add(new ImageAction());
-        actions.add(new VideoAction());
-        //actions.add(new LocationAction());
+        if (actions == null) {
+            actions = new ArrayList<>();
+            actions.add(new ImageAction());
+            actions.add(new VideoAction());
+            //actions.add(new RedPacketAction(mListener));
 
-        if (customization != null && customization.actions != null) {
-            actions.addAll(customization.actions);
+            if (customization != null && customization.actions != null) {
+                actions.addAll(customization.actions);
+            }
         }
         return actions;
     }
@@ -403,5 +406,9 @@ public class MessageFragment extends TFragment implements ModuleProxy {
      */
     public void receiveReceipt() {
         messageListPanel.receiveReceipt();
+    }
+
+    public void setRedPacketClickListener(View.OnClickListener listener) {
+        this.mListener = listener;
     }
 }

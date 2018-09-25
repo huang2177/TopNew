@@ -337,6 +337,7 @@
     <string name="recording_error">录音失败，请重试</string>
     <string name="recording_init_failed">初始化录音失败</string>
     <string name="recording_max_time">录音达到最大时间，是否发送？</string>
+    <string name="red_packet">红包</string>
     <string name="remove">移除</string>
     <string name="remove_member">移出本群</string>
     <string name="remove_member_failed">移除成员失败</string>

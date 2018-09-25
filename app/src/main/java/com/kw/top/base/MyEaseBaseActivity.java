@@ -122,8 +122,7 @@ public class MyEaseBaseActivity extends com.kw.top.base.EaseBaseActivity{
     }
 
     public String getToken() {
-        String token = SPUtils.getString(this, ConstantValue.KEY_TOKEN, "");
-        return token;
+        return SPUtils.getString(this, ConstantValue.KEY_TOKEN, "");
     }
 
 }
