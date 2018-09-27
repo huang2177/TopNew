@@ -29,7 +29,7 @@ public class NewLoginActivity extends BaseActivity_ {
 
 
     @BindView(R.id.tv_qh)
-    TextView tv_qh;
+    EditText tv_qh;
     @BindView(R.id.image_qh)
     ImageView image_qh;
     @BindView(R.id.ed_phone)
@@ -53,9 +53,8 @@ public class NewLoginActivity extends BaseActivity_ {
         setContentView(getContentView());
         StatusBarUtil.setTranslucent(this, 0);
         ButterKnife.bind(this);
+
     }
-
-
 
 
     @OnClick({R.id.tv_send_code, R.id.but_login})

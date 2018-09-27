@@ -3,14 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black_bg"
-    android:orientation="vertical"
     android:clickable="true"
-    >
+    android:orientation="vertical">
+
+
+    <include layout="@layout/layout_title" />
 
     <RadioGroup
         android:id="@+id/radio_group_top_list"
-        style="@style/top_radio_group"
-        >
+        style="@style/top_radio_group">
 
         <RadioButton
             android:id="@+id/rb_left"
@@ -29,6 +30,6 @@
 
     <FrameLayout
         android:id="@+id/frame_layout_top_list"
-        style="@style/frame_layout_content"></FrameLayout>
+        style="@style/frame_layout_content" />
 
 </LinearLayout>

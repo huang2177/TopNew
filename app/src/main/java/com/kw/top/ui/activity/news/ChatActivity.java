@@ -176,15 +176,8 @@ public class ChatActivity extends MyEaseBaseActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        if (v != null) {
-            ClubTaskListActivity.startActivity(ChatActivity.this, userId, false);
-        } else {
-            Intent intent = new Intent(this, SendRedbagActivity.class);
-            intent.putExtra("RED_TYPE", "0");
-            intent.putExtra("TO_USER", bean.getNickName());
-            intent.putExtra("HEAD", bean.getHeadImg());
-            startActivityForResult(intent, REQUEST_CODE_RED_PACKET);
-        }
+        ClubTaskListActivity.startActivity(ChatActivity.this, userId, false);
+
     }
 
     @Override
@@ -224,30 +217,13 @@ public class ChatActivity extends MyEaseBaseActivity implements View.OnClickList
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 10) {
+        if (requestCode == 8) {
             redPacketAction.onActivityResult(requestCode, resultCode, data);
         } else {
             fragment.onActivityResult(requestCode, resultCode, data);
         }
     }
 
-    public File inputStreamToFile() {
-        File file = new File("/storage/emulated/0/com.kw.top/temp", "red_packet.png");
-        try {
-            InputStream ins = getAssets().open("icon_red_packet.png");
-            OutputStream os = new FileOutputStream(file);
-            int bytesRead = 0;
-            byte[] buffer = new byte[1024];
-            while ((bytesRead = ins.read(buffer, 0, 1024)) != -1) {
-                os.write(buffer, 0, bytesRead);
-            }
-            os.close();
-            ins.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return file;
-    }
 
     private class UserInfoImp implements UserInfo {
         @Override

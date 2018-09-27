@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -34,6 +35,8 @@ public class ClubActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     FrameLayout mFrameLayoutTwo;
     @BindView(R.id.tv_title)
     TextView tv_title;
+    @BindView(R.id.tv_title_right)
+    TextView tvRight;
 
     private ClubContentFragment mMyJoinFragment, mAllClubFragment;
     private FragmentManager mFragmentManager;
@@ -54,7 +57,8 @@ public class ClubActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
 
     public void initData() {
-        tv_title.setText("俱乐部列表");
+        tv_title.setText("俱乐部列表");  //icon_title_task
+        tvRight.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icon_title_task, 0, 0, 0);
         mRadioGroupTwo.setOnCheckedChangeListener(this);
         mFragmentManager = getSupportFragmentManager();
         mTransaction = mFragmentManager.beginTransaction();
@@ -95,8 +99,16 @@ public class ClubActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     }
 
 
-    @OnClick(R.id.iv_back)
-    public void OnClick() {
-        finish();
+    @OnClick({R.id.iv_back, R.id.tv_title_right})
+    public void OnClick(View view) {
+        switch (view.getId()) {
+            case R.id.iv_back:
+                finish();
+                break;
+            case R.id.tv_title_right:
+                startActivity(CreateClubActivity.class);
+                break;
+        }
+
     }
 }

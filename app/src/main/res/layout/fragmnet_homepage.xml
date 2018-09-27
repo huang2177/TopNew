@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -8,7 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/chat_bg">
+        android:background="@color/status_color">
 
 
         <TextView
@@ -68,43 +69,53 @@
             android:textColor="@color/white"
             android:textSize="16.0sp" />
 
-        <TextView
+        <ImageView
+            android:id="@+id/home_search"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:textColor="@color/white"
-            android:textSize="16.0sp" />
+            android:src="@drawable/ic_search" />
     </LinearLayout>
 
 
-    <android.support.v4.widget.NestedScrollView
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/chat_bg">
+        android:layout_height="match_parent">
+        <com.scwang.smartrefresh.header.MaterialHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
 
-        <LinearLayout
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <com.youth.banner.Banner
-                android:id="@+id/banner"
-                android:layout_width="match_parent"
-                android:layout_height="120dp" />
+            android:background="@color/chat_bg">
 
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/homepage_recylerview"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginVertical="10dp"/>
+                android:orientation="vertical">
 
-        </LinearLayout>
+                <com.youth.banner.Banner
+                    android:id="@+id/banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp" />
 
 
-    </android.support.v4.widget.NestedScrollView>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/homepage_recylerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginVertical="10dp" />
 
 
+            </LinearLayout>
+
+
+        </android.support.v4.widget.NestedScrollView>
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>

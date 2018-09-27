@@ -541,7 +541,31 @@ public interface ApiService {
      */
 
 
+    /**
+     * 获取首页数据
+     *
+     * @param type
+     * @param nowPage
+     * @param pageNum
+     * @param token
+     * @return
+     */
     @POST("api/videoController/getAllUserList")
     Observable<BaseBean> getAllUserList(@Query("type") String type, @Query("nowPage") String nowPage, @Query("pageNum") String pageNum, @Query("token") String token);
+
+
+    /**
+     * 查看主播主页
+     * @param anchorId
+     * @param token
+     * @return
+     */
+    @POST("api/videoController/userInfoHomepage")
+    Observable<BaseBean> getuserInfoHomepage(@Query("anchorId") String anchorId, @Query("token") String token);
+
+
+
+    @POST("api/videoController/addMyFollow")
+    Observable<BaseBean> addMyFollow(@Query("followId") String followId, @Query("token") String token);
 
 }

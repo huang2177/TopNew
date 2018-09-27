@@ -103,7 +103,6 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
         if (TextUtils.isEmpty(registrationId)) {
             RxToast.normal("Get registration fail, JPush init failed!");
         }
-        Log.e("Tag", "============== reid " + registrationId);
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
             //申请WRITE_EXTERNAL_STORAGE权限
@@ -112,7 +111,7 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
         } else {
             initLocation();
         }
-
+        ed_qh.setCursorVisible(true);   //隐藏+区号的  光标
     }
 
 
@@ -155,8 +154,6 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
     public void OnClick(View view) {
         switch (view.getId()) {
             case R.id.tv_send_code:
-                Logger.e("-----",ed_qh.getText().toString());
-                Logger.e("-----",ed_phone.getText().toString());
                 sendCode(ed_qh.getText().toString(), ed_phone.getText().toString(), tv_send_code);
                 break;
             case R.id.but_login:

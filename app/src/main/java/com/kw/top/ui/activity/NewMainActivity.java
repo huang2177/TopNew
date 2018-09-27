@@ -103,7 +103,7 @@ public class NewMainActivity extends MyEaseBaseActivity implements TabLayout.OnT
     private void initTab() {
         VerName = SPUtils.getVerName(this);
         listFragment = new ArrayList<>();
-        listString = Arrays.asList("推荐", "消息", "TOP圈", "活动", "我");
+        listString = Arrays.asList("首页", "消息", "TOP圈", "活动", "我");
         for (int i = 0; i < listString.size(); i++) {
             tabLayout.addTab(tabLayout.newTab().setText(listString.get(i)));
         }

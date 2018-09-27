@@ -24,10 +24,20 @@ public class HomeBean {
     private String city;
     private String nickName;
     private String grade;
-    private int userId;
+    private String userId;
     private String profit;
     private String starNum;
     private String age;
+    private String objective;
+
+
+    public String getObjective() {
+        return objective;
+    }
+
+    public void setObjective(String objective) {
+        this.objective = objective;
+    }
 
     public String getHeadImg() {
         return headImg;
@@ -69,11 +79,11 @@ public class HomeBean {
         this.grade = grade;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

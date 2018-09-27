@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.kw.top.R;
 import com.kw.top.base.BaseActivity;
@@ -14,6 +15,7 @@ import com.kw.top.ui.fragment.list.ListFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by shibing on 2018/9/4.
@@ -30,6 +32,8 @@ public class TopListActivity extends BaseActivity implements RadioGroup.OnChecke
     RadioGroup mRadioGroupTopList;
     @BindView(R.id.frame_layout_top_list)
     FrameLayout mFrameLayoutTopList;
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
     private ListFragment charmFragment, powerFragment;
     private FragmentManager mFragmentManager;
     private FragmentTransaction mTransaction;
@@ -45,8 +49,16 @@ public class TopListActivity extends BaseActivity implements RadioGroup.OnChecke
         super.onCreate(savedInstanceState);
         setContentView(R.layout.frament_top_list);
         ButterKnife.bind(this);
+        tvTitle.setText("名人堂");
         initData();
     }
+
+
+    @OnClick(R.id.iv_back)
+    public void OnClick() {
+        finish();
+    }
+
 
     public void initData() {
         mRadioGroupTopList.setOnCheckedChangeListener(this);

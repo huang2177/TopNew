@@ -2,6 +2,7 @@ package com.kw.top.ui.fragment.find.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,7 +21,9 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.kw.top.R;
 import com.kw.top.retrofit.HttpHost;
+import com.kw.top.tools.ConstantValue;
 import com.kw.top.tools.GlideTools;
+import com.kw.top.ui.fragment.find.HomePageDetailsActivity;
 import com.kw.top.ui.fragment.find.baen.HomeBean;
 import com.kw.top.utils.DisplayUtils;
 import com.kw.top.utils.OnItemClickListener;
@@ -59,7 +62,7 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int position) {
         final ViewHodler viewHodler = (ViewHodler) holder;
         if (listener != null) {
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
+            viewHodler.imaRanking.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     listener.onItemClick(position);
@@ -67,7 +70,16 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             });
         }
 
-        Glide.with(mContext)
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, HomePageDetailsActivity.class);
+                intent.putExtra(ConstantValue.KEY_USER_ID, list.get(position).getUserId());
+                mContext.startActivity(intent);
+            }
+        });
+
+        /*Glide.with(mContext)
                 .asBitmap()
                 .load(HttpHost.qiNiu + list.get(position).getHeadImg())
                 .apply(GlideTools.getOptions())
@@ -80,8 +92,15 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         viewHodler.imageView.setLayoutParams(params);
                         viewHodler.imageView.setImageBitmap(resource);
                     }
-                });
-        viewHodler.textView.setText(list.get(position).getNickName());
+                });*/
+
+
+        Glide.with(mContext)
+                .asBitmap()
+                .load(HttpHost.qiNiu + list.get(position).getHeadImg())
+                .apply(GlideTools.getOptions())
+                .into(viewHodler.imageView);
+
         if (TextUtils.isEmpty(list.get(position).getStarNum())) {
             viewHodler.iamgeStaricon1.setVisibility(View.GONE);
             viewHodler.iamgeStaricon2.setVisibility(View.GONE);
@@ -127,6 +146,8 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     break;
             }
             viewHodler.textView2.setText(list.get(position).getProfit() + "T币/分钟");
+            viewHodler.textView.setText(list.get(position).getNickName());
+            viewHodler.textView1.setText(list.get(position).getObjective());
         }
 
     }

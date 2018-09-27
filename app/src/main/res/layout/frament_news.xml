@@ -7,33 +7,6 @@
     android:orientation="vertical">
 
 
-    <RadioGroup
-        android:id="@+id/radio_group_news"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:orientation="horizontal"
-        android:visibility="gone">
-
-        <RadioButton
-            android:id="@+id/rb_news_left"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:button="@null"
-            android:drawableTop="@drawable/ic_news_message"
-            android:gravity="center" />
-
-        <RadioButton
-            android:id="@+id/rb_news_right"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:button="@null"
-            android:drawableTop="@drawable/ic_news_txl"
-            android:gravity="center"
-            android:textColor="@color/white" />
-    </RadioGroup>
 
 
     <LinearLayout

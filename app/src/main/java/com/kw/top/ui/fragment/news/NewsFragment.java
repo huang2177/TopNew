@@ -38,15 +38,9 @@ import rx.schedulers.Schedulers;
  * des   : 消息
  */
 
-public class NewsFragment extends BaseFragment implements RadioGroup.OnCheckedChangeListener {
+public class NewsFragment extends BaseFragment  {
 
 
-    @BindView(R.id.rb_news_left)
-    RadioButton mRbNewsLeft;
-    @BindView(R.id.rb_news_right)
-    RadioButton mRbNewsRight;
-    @BindView(R.id.radio_group_news)
-    RadioGroup mRadioGroupNews;
     @BindView(R.id.frame_layout_news)
     FrameLayout mFrameLayoutNews;
     @BindView(R.id.new_message)
@@ -64,10 +58,7 @@ public class NewsFragment extends BaseFragment implements RadioGroup.OnCheckedCh
     @BindView(R.id.info_icon_coun)
     TextView tv_ic_num;
 
-    private FragmentManager mFragmentManager;
-    private FragmentTransaction mTransaction;
-    private FriendsListFragment mFriendFragment;
-    private EaseuiNesListFragment mEaseuiNesListFragment;
+
     private List<Fragment> fragments;
     private List<String> MessageState;
 
@@ -100,7 +91,7 @@ public class NewsFragment extends BaseFragment implements RadioGroup.OnCheckedCh
         imageTxl.setImageResource(R.drawable.ic_news_txl_two);
         tvTxllab.setVisibility(View.GONE);
         ray_hyqq.setVisibility(View.GONE);
-       // showFragment(EaseuiNesListFragment.newInstance());
+        showFragment(EaseuiNesListFragment.newInstance());
     }
 
 
@@ -119,7 +110,6 @@ public class NewsFragment extends BaseFragment implements RadioGroup.OnCheckedCh
 
     @Override
     public void initListener() {
-        //mRadioGroupNews.setOnCheckedChangeListener(this);
 
     }
 
@@ -138,7 +128,7 @@ public class NewsFragment extends BaseFragment implements RadioGroup.OnCheckedCh
                 ray_hyqq.setVisibility(View.GONE);
                 imageTxl.setImageResource(R.drawable.ic_news_txl_two);
                 tvTxllab.setVisibility(View.GONE);
-                //showFragment(EaseuiNesListFragment.newInstance());
+                showFragment(EaseuiNesListFragment.newInstance());
                 break;
             case R.id.txl_ray:
                 imageMessage.setImageResource(R.drawable.ic_news_message_two);
@@ -155,34 +145,6 @@ public class NewsFragment extends BaseFragment implements RadioGroup.OnCheckedCh
     }
 
 
-    @Override
-    public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
-        switch (checkedId) {
-            case R.id.rb_news_left:
-                if (null != mFriendFragment) {
-                    mTransaction.hide(mFriendFragment);
-                }
-                if (null == mEaseuiNesListFragment) {
-                    mEaseuiNesListFragment = new EaseuiNesListFragment();
-                   // mTransaction.add(R.id.frame_layout_news, mEaseuiNesListFragment);
-                }
-               // mTransaction.show(mEaseuiNesListFragment);
-                break;
-            case R.id.rb_news_right:
-                if (null != mEaseuiNesListFragment) {
-                   // mTransaction.hide(mEaseuiNesListFragment);
-                }
-                if (null == mFriendFragment) {
-                    mFriendFragment = FriendsListFragment.newInstance("1");
-                    mTransaction.add(R.id.frame_layout_news, mFriendFragment);
-                }
-                mTransaction.show(mFriendFragment);
-                break;
-
-
-        }
-        mTransaction.commit();
-    }
 
 
     @Override

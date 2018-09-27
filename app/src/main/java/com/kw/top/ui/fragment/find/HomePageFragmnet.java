@@ -2,6 +2,7 @@ package com.kw.top.ui.fragment.find;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -24,9 +25,15 @@ import com.kw.top.ui.fragment.find.baen.HomeBean;
 import com.kw.top.utils.OnItemClickListener;
 import com.kw.top.utils.RxToast;
 import com.kw.top.utils.SPUtils;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -36,11 +43,13 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
+import static com.scwang.smartrefresh.layout.constant.SpinnerStyle.FixedBehind;
+
 /**
  * Created by shibing on 2018/9/24.
  */
 
-public class HomePageFragmnet extends BaseFragment implements OnItemClickListener {
+public class HomePageFragmnet extends BaseFragment implements OnItemClickListener, OnRefreshListener, OnLoadMoreListener {
 
 
     @BindView(R.id.banner)
@@ -53,10 +62,15 @@ public class HomePageFragmnet extends BaseFragment implements OnItemClickListene
     TextView tv_zr;
     @BindView(R.id.homepage_zx)
     TextView tv_zx;
+    @BindView(R.id.refresh_layout)
+    SmartRefreshLayout mRefreshLayout;
 
     private String type = "01";
+    private int nowPage = 1, pageNum = 20;
 
     private List<HomeBean> beanList;
+
+    private List<HomeBean> RefreshList;
 
     public static HomePageFragmnet pageFragmnet;
     private List<String> listBanner;
@@ -78,7 +92,7 @@ public class HomePageFragmnet extends BaseFragment implements OnItemClickListene
 
     @Override
     public void initData() {
-        getHonePageData(type, "1", "100", getToken());
+        getHonePageData(type, nowPage + "", pageNum + "", getToken());
     }
 
     @Override
@@ -86,6 +100,15 @@ public class HomePageFragmnet extends BaseFragment implements OnItemClickListene
         initDefault();
         initBanner();
         initRecyler();
+        RefreshLayout();
+    }
+
+
+    private void RefreshLayout() {
+        mRefreshLayout.setOnRefreshListener(this);
+        mRefreshLayout.setOnLoadMoreListener(this);
+        mRefreshLayout.setRefreshFooter(new ClassicsFooter(getActivity()).setSpinnerStyle(FixedBehind));
+        RefreshList = new ArrayList<>();
     }
 
 
@@ -96,10 +119,11 @@ public class HomePageFragmnet extends BaseFragment implements OnItemClickListene
         tv_gz.setBackgroundResource(R.drawable.shape_homepage_left);
         tv_zr.setBackgroundResource(R.drawable.shape_gray_homepage);
         tv_zx.setBackgroundResource(R.drawable.shape_homepage_gray_right);
+
     }
 
 
-    @OnClick({R.id.homepage_gz, R.id.homepage_zr, R.id.homepage_zx})
+    @OnClick({R.id.homepage_gz, R.id.homepage_zr, R.id.homepage_zx, R.id.home_search})
     public void OnClick(View view) {
         switch (view.getId()) {
             case R.id.homepage_gz:
@@ -107,21 +131,23 @@ public class HomePageFragmnet extends BaseFragment implements OnItemClickListene
                 tv_gz.setBackgroundResource(R.drawable.shape_homepage_left);
                 tv_zr.setBackgroundResource(R.drawable.shape_gray_homepage);
                 tv_zx.setBackgroundResource(R.drawable.shape_homepage_gray_right);
-                getHonePageData(type, "1", "100", getToken());
+                getHonePageData(type, nowPage + "", pageNum + "", getToken());
                 break;
             case R.id.homepage_zr:
                 type = "02";
                 tv_gz.setBackgroundResource(R.drawable.shape_homepage_gray_left);
                 tv_zr.setBackgroundResource(R.drawable.shape_homepage);
                 tv_zx.setBackgroundResource(R.drawable.shape_homepage_gray_right);
-                getHonePageData(type, "1", "100", getToken());
+                getHonePageData(type, nowPage + "", pageNum + "", getToken());
                 break;
             case R.id.homepage_zx:
                 type = "03";
                 tv_gz.setBackgroundResource(R.drawable.shape_homepage_gray_left);
                 tv_zr.setBackgroundResource(R.drawable.shape_gray_homepage);
                 tv_zx.setBackgroundResource(R.drawable.shape_homepage_right);
-                getHonePageData(type, "1", "100", getToken());
+                getHonePageData(type, nowPage + "", pageNum + "", getToken());
+                break;
+            case R.id.home_search:
                 break;
         }
     }
@@ -181,13 +207,26 @@ public class HomePageFragmnet extends BaseFragment implements OnItemClickListene
             try {
                 beanList = new Gson().fromJson(baseBean.getJsonData(), new TypeToken<List<HomeBean>>() {
                 }.getType());
-                adapter = new HomePageAdapter(getActivity(), beanList);
-                recyclerView.setAdapter(adapter);
+
+                if (nowPage == 1) {
+                    RefreshList.clear();
+                    RefreshList.addAll(beanList);
+                    mRefreshLayout.finishRefresh();
+                    adapter = new HomePageAdapter(getActivity(), RefreshList);
+                    recyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                } else {
+                    RefreshList.addAll(beanList);
+                    mRefreshLayout.finishLoadMore();
+                    adapter.notifyDataSetChanged();
+                }
                 adapter.addOnItemOnClick(this);
             } catch (JsonSyntaxException e) {
                 e.printStackTrace();
             }
         } else {
+            mRefreshLayout.finishLoadMore();
+            mRefreshLayout.finishRefresh();
             RxToast.normal(getResources().getString(R.string.login_out));
             SPUtils.clear(getActivity());
             startActivity(LoginActivity.class);
@@ -204,7 +243,19 @@ public class HomePageFragmnet extends BaseFragment implements OnItemClickListene
 
     @Override
     public void onItemClick(int position) {
-        Intent intent = new Intent(getActivity(), HomePageDetailsActivity.class);
-        startActivity(intent);
+        RxToast.normal("排行榜");
+
+    }
+
+    @Override
+    public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+        nowPage = 1;
+        getHonePageData(type, nowPage + "", pageNum + "", getToken());
+    }
+
+    @Override
+    public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+        nowPage++;
+        getHonePageData(type, nowPage + "", pageNum + "", getToken());
     }
 }

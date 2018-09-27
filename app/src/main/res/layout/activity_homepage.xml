@@ -22,19 +22,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="375dp">
 
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="123123"
-                    android:textSize="20.0sp" />
-
+                <com.youth.banner.Banner
+                    android:id="@+id/detalis_banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="375dp" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="45dp">
+                    android:layout_height="45dp"
+                    android:layout_marginTop="15dp">
 
                     <ImageView
                         android:id="@+id/image_back"
@@ -64,10 +60,82 @@
                 </RelativeLayout>
 
 
-                <com.youth.banner.Banner
-                    android:id="@+id/detalis_banner"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="45dp">
+
+                            <TextView
+                                android:id="@+id/tv_home_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentBottom="true"
+                                android:layout_marginLeft="12dp"
+                                android:text="nihao"
+                                android:textColor="@color/white"
+                                android:textSize="16.0sp" />
+
+                            <ImageView
+                                android:id="@+id/home_leave"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentBottom="true"
+                                android:layout_marginBottom="2dp"
+                                android:layout_marginLeft="5dp"
+                                android:layout_toRightOf="@+id/tv_home_name" />
+
+
+                            <TextView
+                                android:id="@+id/tv_fans"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="10dp"
+                                android:textColor="@color/white"
+                                android:textSize="14.0sp" />
+
+                            <TextView
+                                android:id="@+id/tv_follow"
+                                android:layout_width="wrap_content"
+                                android:layout_height="22dp"
+                                android:layout_alignParentBottom="true"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginBottom="2dp"
+                                android:layout_marginRight="10dp"
+                                android:background="@drawable/shape_yellow_bg"
+                                android:gravity="center"
+                                android:paddingLeft="12dp"
+                                android:paddingRight="12dp"
+                                android:src="@drawable/ic_left_back"
+                                android:text="关注"
+                                android:textColor="@color/white"
+                                android:textSize="12.0sp" />
+                        </RelativeLayout>
+
+
+                    </LinearLayout>
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="4dp"
+                        android:background="@color/white" />
+                </LinearLayout>
 
 
             </FrameLayout>
@@ -75,7 +143,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp">
+                android:layout_height="45dp">
 
 
                 <TextView
@@ -89,6 +157,7 @@
 
 
                 <TextView
+                    android:id="@+id/tv_jb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -104,11 +173,11 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#333" />
+                android:background="#444" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp">
+                android:layout_height="45dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -121,9 +190,11 @@
 
 
                 <android.support.v7.widget.RecyclerView
-                    android:layout_width="match_parent"
+                    android:id="@+id/lw_recylerview"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true" />
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true" />
 
             </RelativeLayout>
 
@@ -131,16 +202,17 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#333" />
+                android:background="#444" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="13dp"
                 android:orientation="vertical">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp">
+                    android:layout_height="45dp">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -153,7 +225,7 @@
 
 
                     <TextView
-                        android:id="@+id/activity_gd"
+                        android:id="@+id/tv_gd"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -171,6 +243,7 @@
                 </RelativeLayout>
 
                 <android.support.v7.widget.RecyclerView
+                    android:id="@+id/pyq_recylerview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginHorizontal="10dp" />
@@ -179,24 +252,28 @@
             </LinearLayout>
 
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#444" />
+
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_centerVertical="true"
+                android:layout_height="45dp"
                 android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
                 android:text="个人资料"
                 android:textColor="@color/white"
                 android:textSize="16.0sp" />
 
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#333" />
+                android:background="#444" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp">
+                android:layout_height="45dp">
 
 
                 <TextView
@@ -206,26 +283,29 @@
                     android:layout_marginLeft="10dp"
                     android:text="身高："
                     android:textColor="#cccccc"
-                    android:textSize="16.0sp" />
+                    android:textSize="14.0sp" />
+
                 <TextView
+                    android:id="@+id/tv_sg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
                     android:text="173cm"
-                    android:textColor="@color/yellow_DEAC6A" />
+                    android:textColor="@color/yellow_DEAC6A"
+                    android:textSize="14.0sp" />
             </RelativeLayout>
 
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#333" />
+                android:background="#444" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp">
+                android:layout_height="45dp">
 
 
                 <TextView
@@ -233,29 +313,32 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
-                    android:text="身高："
+                    android:text="职业："
                     android:textColor="#cccccc"
-                    android:textSize="16.0sp" />
+                    android:textSize="14.0sp" />
+
                 <TextView
+                    android:id="@+id/tv_job"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
-                    android:text="173cm"
-                    android:textColor="@color/yellow_DEAC6A" />
+                    android:text="自由职业"
+                    android:textColor="@color/yellow_DEAC6A"
+                    android:textSize="14.0sp" />
             </RelativeLayout>
 
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#333" />
+                android:background="#444" />
 
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp">
+                android:layout_height="45dp">
 
 
                 <TextView
@@ -263,29 +346,32 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
-                    android:text="身高："
+                    android:text="生日："
                     android:textColor="#cccccc"
-                    android:textSize="16.0sp" />
+                    android:textSize="14.0sp" />
+
                 <TextView
+                    android:id="@+id/tv_shengri"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
-                    android:text="173cm"
-                    android:textColor="@color/yellow_DEAC6A" />
+                    android:text="1996年11月20日"
+                    android:textColor="@color/yellow_DEAC6A"
+                    android:textSize="14.0sp" />
             </RelativeLayout>
 
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#333" />
+                android:background="#444" />
 
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp">
+                android:layout_height="45dp">
 
 
                 <TextView
@@ -293,29 +379,32 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
-                    android:text="身高："
+                    android:text="生活品质："
                     android:textColor="#cccccc"
-                    android:textSize="16.0sp" />
+                    android:textSize="14.0sp" />
+
                 <TextView
+                    android:id="@+id/tv_shpz"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
-                    android:text="173cm"
-                    android:textColor="@color/yellow_DEAC6A" />
+                    android:text="小左一杯"
+                    android:textColor="@color/yellow_DEAC6A"
+                    android:textSize="14.0sp" />
             </RelativeLayout>
 
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#333" />
+                android:background="#444" />
 
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp">
+                android:layout_height="45dp">
 
 
                 <TextView
@@ -323,29 +412,32 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
-                    android:text="身高："
+                    android:text="饮酒习惯："
                     android:textColor="#cccccc"
-                    android:textSize="16.0sp" />
+                    android:textSize="14.0sp" />
+
                 <TextView
+                    android:id="@+id/tv_yjxg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
-                    android:text="173cm"
-                    android:textColor="@color/yellow_DEAC6A" />
+                    android:text="偶尔一杯"
+                    android:textColor="@color/yellow_DEAC6A"
+                    android:textSize="14.0sp" />
             </RelativeLayout>
 
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#333" />
+                android:background="#444" />
 
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp">
+                android:layout_height="45dp">
 
 
                 <TextView
@@ -353,29 +445,32 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
-                    android:text="身高："
+                    android:text="年收入："
                     android:textColor="#cccccc"
-                    android:textSize="16.0sp" />
+                    android:textSize="14.0sp" />
+
                 <TextView
+                    android:id="@+id/tv_sr"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
-                    android:text="173cm"
-                    android:textColor="@color/yellow_DEAC6A" />
+                    android:text="100万——500万"
+                    android:textColor="@color/yellow_DEAC6A"
+                    android:textSize="14.0sp" />
             </RelativeLayout>
 
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#333" />
+                android:background="#444" />
 
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp">
+                android:layout_height="45dp">
 
 
                 <TextView
@@ -383,85 +478,21 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
-                    android:text="身高："
+                    android:text="总资产："
                     android:textColor="#cccccc"
-                    android:textSize="16.0sp" />
+                    android:textSize="14.0sp" />
+
                 <TextView
+                    android:id="@+id/tv_zzc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
-                    android:text="173cm"
-                    android:textColor="@color/yellow_DEAC6A" />
+                    android:text="500万——1000万"
+                    android:textColor="@color/yellow_DEAC6A"
+                    android:textSize="14.0sp" />
             </RelativeLayout>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#333" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp">
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:text="身高："
-                    android:textColor="#cccccc"
-                    android:textSize="16.0sp" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:text="173cm"
-                    android:textColor="@color/yellow_DEAC6A" />
-            </RelativeLayout>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#333" />
-
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp">
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:text="身高："
-                    android:textColor="#cccccc"
-                    android:textSize="16.0sp" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:text="173cm"
-                    android:textColor="@color/yellow_DEAC6A" />
-            </RelativeLayout>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#333" />
-
-
         </LinearLayout>
 
 
@@ -475,6 +506,7 @@
         android:gravity="center">
 
         <ImageView
+            android:id="@+id/image_add"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -482,12 +514,14 @@
 
 
         <ImageView
+            android:id="@+id/iamge_lw"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:src="@drawable/ic_add_lw" />
 
         <ImageView
+            android:id="@+id/iamge_sp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
