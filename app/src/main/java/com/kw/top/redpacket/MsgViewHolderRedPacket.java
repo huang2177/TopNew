@@ -1,23 +1,29 @@
 package com.kw.top.redpacket;
 
-import android.app.Activity;
-import android.view.View;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.text.TextUtils;
+import android.widget.ImageView;
 
 import com.kw.top.R;
-import com.netease.nim.uikit.business.chatroom.adapter.ChatRoomMsgAdapter;
-import com.netease.nim.uikit.business.session.module.ModuleProxy;
-import com.netease.nim.uikit.business.session.module.list.MsgAdapter;
+import com.kw.top.bean.BaseBean;
+import com.kw.top.retrofit.Api;
+import com.kw.top.tools.ConstantValue;
+import com.kw.top.ui.activity.user_center.RedPacketDetailsActivity;
+import com.kw.top.utils.SPUtils;
 import com.netease.nim.uikit.business.session.viewholder.MsgViewHolderBase;
 import com.netease.nim.uikit.common.ui.recyclerview.adapter.BaseMultiItemFetchLoadAdapter;
 
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
+
+import static com.netease.nim.uikit.api.NimUIKit.getContext;
+
 public class MsgViewHolderRedPacket extends MsgViewHolderBase {
 
-//    private RelativeLayout sendView, revView;
-//    private TextView sendContentText, revContentText;    // 红包描述
-//    private TextView sendTitleText, revTitleText;    // 红包名称
+    private ImageView ivRedPacket;
+    private long mClickTime;
 
     public MsgViewHolderRedPacket(BaseMultiItemFetchLoadAdapter adapter) {
         super(adapter);
@@ -30,29 +36,13 @@ public class MsgViewHolderRedPacket extends MsgViewHolderBase {
 
     @Override
     protected void inflateContentView() {
-//        sendContentText = findViewById(R.id.tv_bri_mess_send);
-//        sendTitleText = findViewById(R.id.tv_bri_name_send);
-//        sendView = findViewById(R.id.bri_send);
-//        revContentText = findViewById(R.id.tv_bri_mess_rev);
-//        revTitleText = findViewById(R.id.tv_bri_name_rev);
-//        revView = findViewById(R.id.bri_rev);
+        ivRedPacket = findViewById(R.id.iv_red_packet);
     }
 
     @Override
     protected void bindContentView() {
         RedPacketAttachment attachment = (RedPacketAttachment) message.getAttachment();
-
-//        if (!isReceivedMessage()) {// 消息方向，自己发送的
-//            sendView.setVisibility(View.VISIBLE);
-//            revView.setVisibility(View.GONE);
-//            sendContentText.setText(attachment.getRpContent());
-//            sendTitleText.setText(attachment.getRpTitle());
-//        } else {
-//            sendView.setVisibility(View.GONE);
-//            revView.setVisibility(View.VISIBLE);
-//            revContentText.setText(attachment.getRpContent());
-//            revTitleText.setText(attachment.getRpTitle());
-//        }
+        setLayoutParams(getWidth_Height()[0], getWidth_Height()[1], ivRedPacket);
     }
 
     @Override
@@ -65,20 +55,58 @@ public class MsgViewHolderRedPacket extends MsgViewHolderBase {
         return R.color.transparent;
     }
 
+    /**
+     * 拆红包
+     */
     @Override
     protected void onItemClick() {
-        // 拆红包
         RedPacketAttachment attachment = (RedPacketAttachment) message.getAttachment();
-
-        BaseMultiItemFetchLoadAdapter adapter = getAdapter();
-        ModuleProxy proxy = null;
-        if (adapter instanceof MsgAdapter) {
-            proxy = ((MsgAdapter) adapter).getContainer().proxy;
-        } else if (adapter instanceof ChatRoomMsgAdapter) {
-            proxy = ((ChatRoomMsgAdapter) adapter).getContainer().proxy;
+        String redPacketId = SPUtils.getString(getContext(), ConstantValue.RED_PACKET_ID);
+        if (TextUtils.isEmpty(redPacketId)) {
+            clickRedPacket(attachment.getRedPacketId());
+        } else {
+            RedPacketDetailsActivity.startActivity(getContext(), redPacketId);
         }
-        Toast.makeText(context, "拆红包", Toast.LENGTH_SHORT).show();
-//        NIMOpenRpCallback cb = new NIMOpenRpCallback(message.getFromAccount(), message.getSessionId(), message.getSessionType(), proxy);
-//        NIMRedPacketClient.startOpenRpDialog((Activity) context, message.getSessionType(), attachment.getRpId(), cb);
+    }
+
+    /**
+     * 领取红包点击事件
+     */
+    private void clickRedPacket(final String redPacketId) {
+        if (System.currentTimeMillis() - mClickTime <= 1000) {
+            return;
+        }
+        mClickTime = System.currentTimeMillis();
+        Api.getApiService().clickRedPackage(redPacketId, SPUtils.getString(getContext(), ConstantValue.KEY_TOKEN))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(new Action1<BaseBean>() {
+                    @Override
+                    public void call(BaseBean baseBean) {
+                        if (baseBean.isSuccess()) {
+                            //保存领取过的红包ID
+                            SPUtils.saveString(getContext(), ConstantValue.RED_PACKET_ID, redPacketId);
+                            RedPacketDetailsActivity.startActivity(getContext(), redPacketId);
+                        } else {
+                            RedPacketDetailsActivity.startActivity(getContext(), redPacketId);
+                        }
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+
+                    }
+                });
+    }
+    private int[] getWidth_Height() {
+        int array[] = new int[2];
+        Bitmap bitmap = BitmapFactory.decodeResource(getContext().getResources(), R.mipmap.icon_red_packet);
+        if (bitmap == null) {
+            return array;
+        }
+        array[0] = bitmap.getWidth();
+        array[1] = bitmap.getHeight();
+        return array;
     }
 }

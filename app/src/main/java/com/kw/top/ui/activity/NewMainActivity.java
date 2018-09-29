@@ -62,18 +62,9 @@ public class NewMainActivity extends MyEaseBaseActivity implements TabLayout.OnT
     FrameLayout frameLayout;
     @BindView(R.id.tablayout)
     TabLayout tabLayout;
-    private List<String> listString;
     private List<Fragment> listFragment;
     private String VerName;
     private long mExitTime = 0;
-    /**
-     * 环信相关
-     **/
-    private LocalBroadcastManager broadcastManager;
-    private BroadcastReceiver broadcastReceiver;
-    private BroadcastReceiver internalDebugReceiver;
-    public static boolean isForeground = false;
-    private boolean friendApply;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,7 +77,6 @@ public class NewMainActivity extends MyEaseBaseActivity implements TabLayout.OnT
         initSdk();
         // initIntent();
         VersionCode();
-        EaseToken();
     }
 
     @Override
@@ -103,7 +93,7 @@ public class NewMainActivity extends MyEaseBaseActivity implements TabLayout.OnT
     private void initTab() {
         VerName = SPUtils.getVerName(this);
         listFragment = new ArrayList<>();
-        listString = Arrays.asList("首页", "消息", "TOP圈", "活动", "我");
+        List<String> listString = Arrays.asList("首页", "消息", "TOP圈", "活动", "我");
         for (int i = 0; i < listString.size(); i++) {
             tabLayout.addTab(tabLayout.newTab().setText(listString.get(i)));
         }
@@ -353,20 +343,6 @@ public class NewMainActivity extends MyEaseBaseActivity implements TabLayout.OnT
     }
 
     @Override
-    protected void onResume() {
-        isForeground = true;
-        super.onResume();
-    }
-
-
-    @Override
-    protected void onPause() {
-        isForeground = false;
-        super.onPause();
-    }
-
-
-    @Override
     public void onTabSelected(TabLayout.Tab tab) {
 
         switch (tab.getPosition()) {
@@ -481,34 +457,6 @@ public class NewMainActivity extends MyEaseBaseActivity implements TabLayout.OnT
                 }).show();
     }
 
-
-    /**
-     * 获取网易云token  并保存在本地
-     */
-
-    private void EaseToken() {
-        Api.getApiService().EaseToken(getToken())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .unsubscribeOn(Schedulers.io())
-                .subscribe(new Action1<BaseBean<EaseTokenBean>>() {
-                    @Override
-                    public void call(BaseBean<EaseTokenBean> baseBean) {
-                        if (!baseBean.isSuccess()) {
-                            return;
-                        }
-                        Logger.e("--EaseToke----", baseBean.getData().getToken());
-                        SPUtils.saveString(NewMainActivity.this, ConstantValue.NET_EASE_TOKEN, baseBean.getData().getToken());
-                    }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        Logger.e("--EaseToke----", throwable.toString());
-                    }
-                });
-    }
-
-
     /**
      * 点击系统返回键
      */
@@ -529,4 +477,7 @@ public class NewMainActivity extends MyEaseBaseActivity implements TabLayout.OnT
     }
 
 
+    public static void logout(Context context, boolean b) {
+
+    }
 }

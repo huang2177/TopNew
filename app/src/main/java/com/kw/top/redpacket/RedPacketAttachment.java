@@ -4,62 +4,57 @@ import com.alibaba.fastjson.JSONObject;
 import com.netease.nimlib.sdk.msg.attachment.MsgAttachment;
 
 public class RedPacketAttachment extends CustomAttachment {
+    public static final int RED_PACKET = 100;
 
-    private String content;//  消息文本内容
-    private String redPacketId;//  红包id
-    private String title;// 红包名称
+    private int width;
+    private int height;
+    private String redPacketId; //  红包id
 
-    private static final String KEY_CONTENT = "content";
+    private static final String KEY_WIDTH = "width";
+    private static final String KEY_HEIGHT = "height";
     private static final String KEY_ID = "redPacketId";
-    private static final String KEY_TITLE = "title";
 
     public RedPacketAttachment() {
-        super(CustomAttachmentType.RedPacket);
+        super(RED_PACKET);
     }
 
     @Override
     protected void parseData(JSONObject data) {
-        content = data.getString(KEY_CONTENT);
+        width = data.getInteger(KEY_WIDTH);
         redPacketId = data.getString(KEY_ID);
-        title = data.getString(KEY_TITLE);
+        height = data.getInteger(KEY_HEIGHT);
     }
 
     @Override
     protected JSONObject packData() {
         JSONObject data = new JSONObject();
-        data.put(KEY_CONTENT, content);
+        data.put(KEY_WIDTH, width);
+        data.put(KEY_HEIGHT, height);
         data.put(KEY_ID, redPacketId);
-        data.put(KEY_TITLE, title);
         return data;
     }
 
-    public String getRpContent() {
-        return content;
+    public int getWidth() {
+        return width;
     }
 
-    public String getRpId() {
+    public int getHeight() {
+        return height;
+    }
+
+    public String getRedPacketId() {
         return redPacketId;
     }
 
-    public String getRpTitle() {
-        return title;
+    public void setWidth(int width) {
+        this.width = width;
     }
 
-
-    public void setRpContent(String content) {
-        this.content = content;
+    public void setHeight(int height) {
+        this.height = height;
     }
 
-    public void setRpId(String briberyID) {
-        this.redPacketId = briberyID;
-    }
-
-    public void setRpTitle(String briberyName) {
-        this.title = briberyName;
-    }
-
-    @Override
-    public String toJson(boolean send) {
-        return null;
+    public void setRedPacketId(String redPacketId) {
+        this.redPacketId = redPacketId;
     }
 }

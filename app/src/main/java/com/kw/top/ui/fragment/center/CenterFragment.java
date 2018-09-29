@@ -26,6 +26,7 @@ import com.kw.top.bean.BaseBean;
 import com.kw.top.bean.PersonCenterBean;
 import com.kw.top.bean.UserinfoBean;
 import com.kw.top.bean.event.CenterCouponEvent;
+import com.kw.top.bean.event.UserAvatarEvent;
 import com.kw.top.retrofit.Api;
 import com.kw.top.retrofit.HttpHost;
 import com.kw.top.tools.ComResultTools;
@@ -112,8 +113,6 @@ public class CenterFragment extends MVPBaseFragment<CenterContract.View, CenterP
     @Override
     public void initView(View view, Bundle savedInstanceState) {
         String head = SPUtils.getString(getContext(), ConstantValue.KEY_HEAD, "");
-
-
     }
 
     @Override
@@ -217,6 +216,7 @@ public class CenterFragment extends MVPBaseFragment<CenterContract.View, CenterP
             Glide.with(this).load(localMedia.getPath()).apply(options).into(mCiHead);
             //((MainActivity) getActivity()).changePhoto(localMedia.getPath());
             SPUtils.saveString(getContext(), ConstantValue.KEY_HEAD, key);
+            EventBus.getDefault().post(new UserAvatarEvent(key, null));
         }
     }
 

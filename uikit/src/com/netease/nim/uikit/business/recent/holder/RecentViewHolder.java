@@ -107,7 +107,7 @@ public abstract class RecentViewHolder extends RecyclerViewHolder<BaseQuickAdapt
         boolean shouldBoom = lastUnreadCount > 0 && recent.getUnreadCount() == 0; // 未读数从N->0执行爆裂动画;
         lastUnreadCount = recent.getUnreadCount();
 
-        updateBackground(holder, recent, position);
+        //updateBackground(holder, recent, position);
 
         loadPortrait(recent);
 

@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,14 +14,11 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
-import com.jaeger.library.StatusBarUtil;
 import com.kw.top.R;
 import com.kw.top.adapter.GiftAdapter;
 import com.kw.top.base.BaseActivity_;
@@ -35,30 +31,24 @@ import com.kw.top.tools.ConstantValue;
 import com.kw.top.tools.GlideTools;
 import com.kw.top.ui.activity.HomePage.AnchorPresenter;
 import com.kw.top.ui.activity.HomePage.AnchorView;
-import com.kw.top.ui.activity.find.FindDetailsActivity;
 import com.kw.top.ui.activity.login.LoginActivity;
 import com.kw.top.ui.fragment.find.adapter.GlideImageLoader;
 import com.kw.top.ui.fragment.find.adapter.HomeFriendsAdapter;
 import com.kw.top.ui.fragment.find.adapter.HomeGiftAdapter;
-import com.kw.top.ui.fragment.find.adapter.HomePageAdapter;
-import com.kw.top.ui.fragment.find.baen.HomeBean;
 import com.kw.top.ui.fragment.find.baen.HomeInfoBean;
 import com.kw.top.utils.RxToast;
 import com.kw.top.utils.SPUtils;
 import com.kw.top.utils.StatusUtil;
-import com.kw.top.utils.ToastUtils;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
@@ -202,6 +192,10 @@ public class HomePageDetailsActivity extends BaseActivity_ implements AnchorView
                 showGiftDialog("1");
                 break;
             case R.id.iamge_sp:   //与她视频
+//                AVChatKit.outgoingCall(this, getAccount()
+//                        , UserInfoHelper.getUserDisplayName(getAccount())
+//                        , AVChatType.VIDEO.getValue()
+//                        , AVChatActivity.FROM_INTERNAL);
                 break;
             case R.id.tv_follow:
                 if (follow.equals("1")) {

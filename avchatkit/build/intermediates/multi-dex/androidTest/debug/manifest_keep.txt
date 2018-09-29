@@ -1,0 +1,3 @@
+# Referenced at C:\Users\kobe\Desktop\TopNew\avchatkit\build\intermediates\manifest\androidTest\debug\AndroidManifest.xml:9
+-keep class android.support.test.runner.AndroidJUnitRunner { <init>(...); }
+

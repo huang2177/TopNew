@@ -68,6 +68,7 @@ public class RedPacketDetailsActivity extends BaseActivity {
 
     public static void startActivity(Context context, String redbagID) {
         Intent intent = new Intent(context, RedPacketDetailsActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("REDBAGID", redbagID);
         context.startActivity(intent);
     }

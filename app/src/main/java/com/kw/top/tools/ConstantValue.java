@@ -67,6 +67,6 @@ public interface ConstantValue {
     String NICK_NAME = "nick_name";//自定义扩展消息
 
     String NET_EASE_TOKEN = "Net_Ease_Token";//网易Token
-    String NET_EASE_ACCOUNT = "NET_EASE_ACCOUNT";//网易账户
 
+    String RED_PACKET_ID = "red_packet_id";
 }

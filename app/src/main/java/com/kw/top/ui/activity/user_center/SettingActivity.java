@@ -1,6 +1,7 @@
 package com.kw.top.ui.activity.user_center;
 
 import android.annotation.SuppressLint;
+import android.app.ActivityManager;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -15,12 +16,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.kw.top.R;
+import com.kw.top.app.AppManager;
 import com.kw.top.base.BaseActivity;
+import com.kw.top.bean.event.AppLoginEvent;
 import com.kw.top.tools.GlideTools;
+import com.kw.top.ui.activity.NewMainActivity;
 import com.kw.top.ui.activity.login.ForgetPwdActivity;
 import com.kw.top.ui.activity.login.LoginActivity;
 import com.kw.top.utils.RxToast;
 import com.kw.top.utils.SPUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -158,9 +164,10 @@ public class SettingActivity extends BaseActivity {
                     RxToast.normal("退出登陆失败");
                     break;
                 case 1:
+                    EventBus.getDefault().post(new AppLoginEvent(false));
                     SPUtils.clear(SettingActivity.this);
                     startActivity(LoginActivity.class);
-                    finish();
+                    AppManager.getAppManager().finishAllActivity();
                     break;
             }
         }

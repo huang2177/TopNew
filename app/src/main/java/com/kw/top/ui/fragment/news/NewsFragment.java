@@ -1,15 +1,11 @@
 package com.kw.top.ui.fragment.news;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -18,16 +14,13 @@ import com.kw.top.base.BaseFragment;
 import com.kw.top.bean.BaseBean;
 import com.kw.top.bean.FriendApplyBean;
 import com.kw.top.retrofit.Api;
-import com.kw.top.tools.Logger;
 import com.kw.top.ui.activity.news.FriendApplyActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -38,9 +31,7 @@ import rx.schedulers.Schedulers;
  * des   : 消息
  */
 
-public class NewsFragment extends BaseFragment  {
-
-
+public class NewsFragment extends BaseFragment {
     @BindView(R.id.frame_layout_news)
     FrameLayout mFrameLayoutNews;
     @BindView(R.id.new_message)
@@ -63,9 +54,9 @@ public class NewsFragment extends BaseFragment  {
     private List<String> MessageState;
 
     public static NewsFragment fragment;
+    private RecentSessionFragment mSessionFragment;
 
     public static NewsFragment newInstance() {
-
         if (fragment == null) {
             fragment = new NewsFragment();
         }
@@ -78,20 +69,15 @@ public class NewsFragment extends BaseFragment  {
     }
 
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
     private void initFragment() {
         //默认的标签
+        mSessionFragment =new  RecentSessionFragment();
         imageMessage.setImageResource(R.drawable.ic_news_message);
         tvMessagelab.setVisibility(View.VISIBLE);
         imageTxl.setImageResource(R.drawable.ic_news_txl_two);
         tvTxllab.setVisibility(View.GONE);
         ray_hyqq.setVisibility(View.GONE);
-        showFragment(EaseuiNesListFragment.newInstance());
+        showFragment(mSessionFragment);
     }
 
 
@@ -118,7 +104,6 @@ public class NewsFragment extends BaseFragment  {
 
     }
 
-
     @OnClick({R.id.message_lay, R.id.txl_ray, R.id.news_hy_lay})
     public void OnClick(View view) {
         switch (view.getId()) {
@@ -128,7 +113,7 @@ public class NewsFragment extends BaseFragment  {
                 ray_hyqq.setVisibility(View.GONE);
                 imageTxl.setImageResource(R.drawable.ic_news_txl_two);
                 tvTxllab.setVisibility(View.GONE);
-                showFragment(EaseuiNesListFragment.newInstance());
+                showFragment(mSessionFragment);
                 break;
             case R.id.txl_ray:
                 imageMessage.setImageResource(R.drawable.ic_news_message_two);
@@ -143,15 +128,6 @@ public class NewsFragment extends BaseFragment  {
                 break;
         }
     }
-
-
-
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-    }
-
 
     /**
      * 显示Fragment
@@ -189,7 +165,6 @@ public class NewsFragment extends BaseFragment  {
     /**
      * 获取好友请求数量
      */
-
     private void getApplyList() {
         Api.getApiService().applyFriendsList(getToken())
                 .subscribeOn(Schedulers.io())
@@ -205,7 +180,6 @@ public class NewsFragment extends BaseFragment  {
                                     MessageState.add(baseBean.getData().get(i).getFriendsState());
                                 }
                             }
-                            Logger.e("-------", MessageState.size() + "");
                             if (MessageState.size() == 0) {
                                 tv_num.setVisibility(View.GONE);
                                 tv_ic_num.setVisibility(View.GONE);

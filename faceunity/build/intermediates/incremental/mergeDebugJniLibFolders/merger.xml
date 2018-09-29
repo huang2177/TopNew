@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="C:\Users\kobe\Desktop\TopNew\faceunity\libs"><file name="armeabi-v7a/libnama.so" path="C:\Users\kobe\Desktop\TopNew\faceunity\libs\armeabi-v7a\libnama.so"/><file name="nama.jar" path="C:\Users\kobe\Desktop\TopNew\faceunity\libs\nama.jar"/></source></dataSet><dataSet config="debug"><source path="C:\Users\kobe\Desktop\TopNew\faceunity\src\debug\jniLibs"/></dataSet></merger>

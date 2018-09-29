@@ -22,6 +22,7 @@ import com.kw.top.R;
 import com.kw.top.base.MVPBaseActivity;
 import com.kw.top.bean.BaseBean;
 import com.kw.top.bean.InfoBean;
+import com.kw.top.bean.event.UserAvatarEvent;
 import com.kw.top.tools.ComResultTools;
 import com.kw.top.tools.ConstantValue;
 import com.kw.top.ui.activity.login.BaseInfoActivity;
@@ -29,6 +30,8 @@ import com.kw.top.ui.activity.login.LoginActivity;
 import com.kw.top.utils.RxToast;
 import com.kw.top.utils.SPUtils;
 import com.kw.top.utils.TimeUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -266,6 +269,7 @@ public class EditInfoActivity extends MVPBaseActivity<PersonInfoContract.View, P
                 //保存
                 RxToast.normal("保存成功");
                 SPUtils.saveString(this, ConstantValue.KEY_NAME, nickname);
+                EventBus.getDefault().post(new UserAvatarEvent(null, nickname));
                 setResult(RESULT_OK);
                 finish();
             } else {

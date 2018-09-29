@@ -9,7 +9,9 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/avchatkit" />
             <option value="$PROJECT_DIR$/camera" />
+            <option value="$PROJECT_DIR$/faceunity" />
             <option value="$PROJECT_DIR$/picture_library" />
             <option value="$PROJECT_DIR$/ucrop" />
             <option value="$PROJECT_DIR$/uikit" />

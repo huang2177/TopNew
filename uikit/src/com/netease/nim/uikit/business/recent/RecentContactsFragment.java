@@ -1,6 +1,8 @@
 package com.netease.nim.uikit.business.recent;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -104,6 +106,7 @@ public class RecentContactsFragment extends TFragment {
     private void notifyDataSetChanged() {
         adapter.notifyDataSetChanged();
         boolean empty = items.isEmpty() && msgLoaded;
+//        boolean empty = items.isEmpty();
         emptyBg.setVisibility(empty ? View.VISIBLE : View.GONE);
         emptyHint.setHint("还没有会话，在通讯录中找个人聊聊吧！");
     }
@@ -236,7 +239,8 @@ public class RecentContactsFragment extends TFragment {
 
     private void showLongClickMenu(final RecentContact recent, final int position) {
         CustomAlertDialog alertDialog = new CustomAlertDialog(getActivity());
-        alertDialog.setTitle(UserInfoHelper.getUserTitleName(recent.getContactId(), recent.getSessionType()));
+//        alertDialog.setTitle(UserInfoHelper.getUserTitleName(recent.getContactId(), recent.getSessionType()));
+        alertDialog.setTitle("提示信息");
         String title = getString(R.string.main_msg_list_delete_chatting);
         alertDialog.addItem(title, new onSeparateItemClickListener() {
             @Override
@@ -255,45 +259,46 @@ public class RecentContactsFragment extends TFragment {
             }
         });
 
-        title = (isTagSet(recent, RECENT_TAG_STICKY) ? getString(R.string.main_msg_list_clear_sticky_on_top) : getString(R.string.main_msg_list_sticky_on_top));
-        alertDialog.addItem(title, new onSeparateItemClickListener() {
-            @Override
-            public void onClick() {
-                if (isTagSet(recent, RECENT_TAG_STICKY)) {
-                    removeTag(recent, RECENT_TAG_STICKY);
-                } else {
-                    addTag(recent, RECENT_TAG_STICKY);
-                }
-                NIMClient.getService(MsgService.class).updateRecent(recent);
+//        title = (isTagSet(recent, RECENT_TAG_STICKY) ? getString(R.string.main_msg_list_clear_sticky_on_top) : getString(R.string.main_msg_list_sticky_on_top));
+//        alertDialog.addItem(title, new onSeparateItemClickListener() {
+//            @Override
+//            public void onClick() {
+//                if (isTagSet(recent, RECENT_TAG_STICKY)) {
+//                    removeTag(recent, RECENT_TAG_STICKY);
+//                } else {
+//                    addTag(recent, RECENT_TAG_STICKY);
+//                }
+//                NIMClient.getService(MsgService.class).updateRecent(recent);
+//
+//                refreshMessages(false);
+//            }
+//        });
 
-                refreshMessages(false);
-            }
-        });
-
-        alertDialog.addItem("删除该聊天（仅服务器）", new onSeparateItemClickListener() {
-            @Override
-            public void onClick() {
-                NIMClient.getService(MsgService.class)
-                        .deleteRoamingRecentContact(recent.getContactId(), recent.getSessionType())
-                        .setCallback(new RequestCallback<Void>() {
-                            @Override
-                            public void onSuccess(Void param) {
-                                Toast.makeText(getActivity(), "delete success", Toast.LENGTH_SHORT).show();
-                            }
-
-                            @Override
-                            public void onFailed(int code) {
-                                Toast.makeText(getActivity(), "delete failed, code:" + code, Toast.LENGTH_SHORT).show();
-                            }
-
-                            @Override
-                            public void onException(Throwable exception) {
-
-                            }
-                        });
-            }
-        });
+//        alertDialog.addItem("删除该聊天（仅服务器）", new onSeparateItemClickListener() {
+//            @Override
+//            public void onClick() {
+//                NIMClient.getService(MsgService.class)
+//                        .deleteRoamingRecentContact(recent.getContactId(), recent.getSessionType())
+//                        .setCallback(new RequestCallback<Void>() {
+//                            @Override
+//                            public void onSuccess(Void param) {
+//                                Toast.makeText(getActivity(), "delete success", Toast.LENGTH_SHORT).show();
+//                            }
+//
+//                            @Override
+//                            public void onFailed(int code) {
+//                                Toast.makeText(getActivity(), "delete failed, code:" + code, Toast.LENGTH_SHORT).show();
+//                            }
+//
+//                            @Override
+//                            public void onException(Throwable exception) {
+//
+//                            }
+//                        });
+//            }
+//        });
         alertDialog.show();
+
     }
 
     private void addTag(RecentContact recent, long tag) {
@@ -312,7 +317,7 @@ public class RecentContactsFragment extends TFragment {
 
     private List<RecentContact> loadedRecents;
 
-    private void requestMessages(boolean delay) {
+    public void requestMessages(boolean delay) {
         if (msgLoaded) {
             return;
         }

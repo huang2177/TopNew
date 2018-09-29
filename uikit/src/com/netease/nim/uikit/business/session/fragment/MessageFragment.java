@@ -42,6 +42,7 @@ import com.netease.nimlib.sdk.robot.model.RobotAttachment;
 import com.netease.nimlib.sdk.robot.model.RobotMsgType;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -69,7 +70,6 @@ public class MessageFragment extends TFragment implements ModuleProxy {
 
     protected AitManager aitManager;
     private ArrayList<BaseAction> actions;
-    private View.OnClickListener mListener;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -408,7 +408,4 @@ public class MessageFragment extends TFragment implements ModuleProxy {
         messageListPanel.receiveReceipt();
     }
 
-    public void setRedPacketClickListener(View.OnClickListener listener) {
-        this.mListener = listener;
-    }
 }

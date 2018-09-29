@@ -5,13 +5,14 @@ import com.alibaba.fastjson.JSONObject;
 import com.netease.nimlib.sdk.msg.attachment.MsgAttachment;
 import com.netease.nimlib.sdk.msg.attachment.MsgAttachmentParser;
 
-/**
- * Created by zhoujianghua on 2015/4/9.
- */
+import static com.kw.top.redpacket.RedPacketAttachment.RED_PACKET;
+
 public class CustomAttachParser implements MsgAttachmentParser {
+
 
     private static final String KEY_TYPE = "type";
     private static final String KEY_DATA = "data";
+
 
     @Override
     public MsgAttachment parse(String json) {
@@ -21,7 +22,7 @@ public class CustomAttachParser implements MsgAttachmentParser {
             int type = object.getInteger(KEY_TYPE);
             JSONObject data = object.getJSONObject(KEY_DATA);
             switch (type) {
-                case CustomAttachmentType.RedPacket:
+                case RED_PACKET:
                     attachment = new RedPacketAttachment();
                     break;
             }

@@ -6,16 +6,19 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.StrictMode;
 import android.support.multidex.MultiDex;
-import android.text.TextUtils;
 
+import com.kw.top.R;
 import com.kw.top.crash.MyCrashHandler;
-import com.kw.top.tools.ConstantValue;
-import com.kw.top.utils.SPUtils;
+import com.kw.top.redpacket.CustomAttachParser;
+import com.kw.top.redpacket.MsgViewHolderRedPacket;
+import com.kw.top.redpacket.NimManger;
+import com.kw.top.redpacket.RedPacketAttachment;
+import com.kw.top.ui.activity.NewMainActivity;
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.SDKOptions;
 import com.netease.nimlib.sdk.StatusBarNotificationConfig;
-import com.netease.nimlib.sdk.auth.LoginInfo;
+import com.netease.nimlib.sdk.msg.MsgService;
 import com.netease.nimlib.sdk.util.NIMUtil;
 import com.qiniu.android.common.FixedZone;
 import com.qiniu.android.storage.Configuration;
@@ -68,31 +71,21 @@ public class BaseApplication extends Application {
     }
 
     private void initNetEase() {
-        NIMClient.init(this, loginInfo(), null);
+        NIMClient.init(this, null, options());
         if (NIMUtil.isMainProcess(this)) {
-//            NIMRedPacketClient.init(this);
+            NimManger.instance().init(this);
             initUIKit();
-//            initAVChatKit();
+            initAVChatKit();
         }
     }
 
-    private LoginInfo loginInfo() {
-        String netEaseToken = SPUtils.getString(this, ConstantValue.NET_EASE_TOKEN, "");
-        String netEaseAccount = SPUtils.getString(this, ConstantValue.NET_EASE_ACCOUNT, "");
-
-        if (!TextUtils.isEmpty(netEaseToken) && !TextUtils.isEmpty(netEaseAccount)) {
-            return new LoginInfo(netEaseAccount, netEaseToken);
-        }
-        return null;
-    }
 
     private SDKOptions options() {
         SDKOptions options = new SDKOptions();
-
         // 如果将新消息通知提醒托管给 SDK 完成，需要添加以下配置。否则无需设置。
         StatusBarNotificationConfig config = new StatusBarNotificationConfig();
-//        config.notificationEntrance = WelcomeActivity.class; // 点击通知栏跳转到该Activity
-//        config.notificationSmallIconId = R.drawable.ic_stat_notify_msg;
+        config.notificationEntrance = NewMainActivity.class; // 点击通知栏跳转到该Activity
+        config.notificationSmallIconId = R.mipmap.ic_launcher;
         // 呼吸灯配置
         config.ledARGB = Color.GREEN;
         config.ledOnMs = 1000;
@@ -112,39 +105,14 @@ public class BaseApplication extends Application {
 //        AVChatOptions avChatOptions = new AVChatOptions() {
 //            @Override
 //            public void logout(Context context) {
-//                MainActivity.logout(context, true);
+//                NewMainActivity.logout(context, true);
 //            }
 //        };
-//        avChatOptions.entranceActivity = WelcomeActivity.class;
-//        avChatOptions.notificationIconRes = R.drawable.ic_stat_notify_msg;
+//        avChatOptions.entranceActivity = NewMainActivity.class;
+//        avChatOptions.notificationIconRes = R.mipmap.ic_launcher;
 //        AVChatKit.init(avChatOptions);
-//
-//        // 初始化日志系统
-//        LogHelper.init();
-//        // 设置用户相关资料提供者
-//        AVChatKit.setUserInfoProvider(new IUserInfoProvider() {
-//            @Override
-//            public UserInfo getUserInfo(String account) {
-//                return NimUIKit.getUserInfoProvider().getUserInfo(account);
-//            }
-//
-//            @Override
-//            public String getUserDisplayName(String account) {
-//                return UserInfoHelper.getUserDisplayName(account);
-//            }
-//        });
-//        // 设置群组数据提供者
-//        AVChatKit.setTeamDataProvider(new ITeamDataProvider() {
-//            @Override
-//            public String getDisplayNameWithoutMe(String teamId, String account) {
-//                return TeamHelper.getDisplayNameWithoutMe(teamId, account);
-//            }
-//
-//            @Override
-//            public String getTeamMemberDisplayName(String teamId, String account) {
-//                return TeamHelper.getTeamMemberDisplayName(teamId, account);
-//            }
-//        });
+        // 初始化日志系统
+//        AVChatKit.setiLogUtil();
     }
 
     /**
@@ -154,14 +122,10 @@ public class BaseApplication extends Application {
         // 初始化
         NimUIKit.init(this);
 
-//        // IM 会话窗口的定制初始化。
-//        SessionHelper.init();
-//
-//        // 聊天室聊天窗口的定制初始化。
-//        ChatRoomSessionHelper.init();
-//
-//        // 通讯录列表定制初始化
-//        ContactHelper.init();
+        // IM 会话窗口的定制初始化。
+        NIMClient.getService(MsgService.class).registerCustomAttachmentParser(new CustomAttachParser());
+        NimUIKit.registerMsgItemViewHolder(RedPacketAttachment.class, MsgViewHolderRedPacket.class);
+
     }
 
     /**
