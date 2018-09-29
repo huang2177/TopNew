@@ -32,9 +32,11 @@ import com.netease.nim.avchatkit.module.AVChatControllerCallback;
 import com.netease.nim.avchatkit.module.AVSwitchListener;
 import com.netease.nimlib.sdk.avchat.AVChatManager;
 import com.netease.nimlib.sdk.avchat.constant.AVChatType;
+import com.netease.nimlib.sdk.avchat.constant.AVChatVideoScalingType;
 import com.netease.nimlib.sdk.avchat.model.AVChatCameraCapturer;
 import com.netease.nimlib.sdk.avchat.model.AVChatData;
 import com.netease.nimlib.sdk.avchat.model.AVChatSurfaceViewRenderer;
+import com.netease.nrtc.video.render.IVideoRender;
 
 import java.util.List;
 
@@ -260,31 +262,31 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
         }
     };
 
-//    private IVideoRender remoteRender;
-//    private IVideoRender localRender;
+    private IVideoRender remoteRender;
+    private IVideoRender localRender;
 
     // 大小图像显示切换
     private void switchRender(String user1, String user2) {
         String remoteId = TextUtils.equals(user1, AVChatKit.getAccount()) ? user2 : user1;
 
-//        if (remoteRender == null && localRender == null) {
-//            localRender = smallRender;
-//            remoteRender = largeRender;
-//        }
+        if (remoteRender == null && localRender == null) {
+            localRender = smallRender;
+            remoteRender = largeRender;
+        }
 
         //交换
-//        IVideoRender render = localRender;
-//        localRender = remoteRender;
-//        remoteRender = render;
+        IVideoRender render = localRender;
+        localRender = remoteRender;
+        remoteRender = render;
 
 
         //断开SDK视频绘制画布
-//        AVChatManager.getInstance().setupLocalVideoRender(null, false, 0);
-//        AVChatManager.getInstance().setupRemoteVideoRender(remoteId, null, false, 0);
+        AVChatManager.getInstance().setupLocalVideoRender(null, false, 0);
+        AVChatManager.getInstance().setupRemoteVideoRender(remoteId, null, false, 0);
 
         //重新关联上画布
-//        AVChatManager.getInstance().setupLocalVideoRender(localRender, false, AVChatVideoScalingType.SCALE_ASPECT_BALANCED);
-//        AVChatManager.getInstance().setupRemoteVideoRender(remoteId, remoteRender, false, AVChatVideoScalingType.SCALE_ASPECT_BALANCED);
+        AVChatManager.getInstance().setupLocalVideoRender(localRender, false, AVChatVideoScalingType.SCALE_ASPECT_BALANCED);
+        AVChatManager.getInstance().setupRemoteVideoRender(remoteId, remoteRender, false, AVChatVideoScalingType.SCALE_ASPECT_BALANCED);
 
     }
 
@@ -420,12 +422,12 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
         smallSizePreviewFrameLayout.setVisibility(View.VISIBLE);
 
         // 设置画布，加入到自己的布局中，用于呈现视频图像
-//        AVChatManager.getInstance().setupLocalVideoRender(null, false, AVChatVideoScalingType.SCALE_ASPECT_BALANCED);
-//        AVChatManager.getInstance().setupLocalVideoRender(smallRender, false, AVChatVideoScalingType.SCALE_ASPECT_BALANCED);
-        //addIntoSmallSizePreviewLayout(smallRender);
+        AVChatManager.getInstance().setupLocalVideoRender(null, false, AVChatVideoScalingType.SCALE_ASPECT_BALANCED);
+        AVChatManager.getInstance().setupLocalVideoRender(smallRender, false, AVChatVideoScalingType.SCALE_ASPECT_BALANCED);
+        addIntoSmallSizePreviewLayout(smallRender);
 
         smallSizePreviewFrameLayout.bringToFront();
-//        localRender = smallRender;
+        localRender = smallRender;
         localPreviewInSmallSize = true;
     }
 
@@ -445,14 +447,14 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
     public void initLargeSurfaceView(String account) {
         // 设置画布，加入到自己的布局中，用于呈现视频图像
         // account 要显示视频的用户帐号
-//        largeAccount = account;
-//        if (AVChatKit.getAccount().equals(account)) {
-//            AVChatManager.getInstance().setupLocalVideoRender(largeRender, false, AVChatVideoScalingType.SCALE_ASPECT_BALANCED);
-//        } else {
-//            AVChatManager.getInstance().setupRemoteVideoRender(account, largeRender, false, AVChatVideoScalingType.SCALE_ASPECT_BALANCED);
-//        }
-//        addIntoLargeSizePreviewLayout(largeRender);
-//        remoteRender = largeRender;
+        largeAccount = account;
+        if (AVChatKit.getAccount().equals(account)) {
+            AVChatManager.getInstance().setupLocalVideoRender(largeRender, false, AVChatVideoScalingType.SCALE_ASPECT_BALANCED);
+        } else {
+            AVChatManager.getInstance().setupRemoteVideoRender(account, largeRender, false, AVChatVideoScalingType.SCALE_ASPECT_BALANCED);
+        }
+        addIntoLargeSizePreviewLayout(largeRender);
+        remoteRender = largeRender;
     }
 
     private void addIntoLargeSizePreviewLayout(SurfaceView surfaceView) {

@@ -14,6 +14,7 @@ import com.netease.nim.avchatkit.config.AVChatOptions;
 import com.netease.nim.avchatkit.model.ITeamDataProvider;
 import com.netease.nim.avchatkit.model.IUserInfoProvider;
 import com.netease.nim.avchatkit.receiver.PhoneCallStateObserver;
+import com.netease.nim.avchatkit.teamavchat.activity.TeamAVChatActivity;
 import com.netease.nimlib.sdk.Observer;
 import com.netease.nimlib.sdk.avchat.AVChatManager;
 import com.netease.nimlib.sdk.avchat.constant.AVChatControlCommand;
@@ -161,7 +162,8 @@ public class AVChatKit {
      * @param teamName  群组名称
      */
     public static void outgoingTeamCall(Context context, boolean receivedCall, String teamId, String roomId, ArrayList<String> accounts, String teamName) {
-//        TeamAVChatActivity.startActivity(context, receivedCall, teamId, roomId, accounts, teamName);
+        TeamAVChatActivity.startActivity(context, receivedCall, teamId, roomId, accounts, teamName);
+
     }
 
     /**
@@ -187,7 +189,7 @@ public class AVChatKit {
             Log.e("Extra", "Extra Message->" + extra);
             if (PhoneCallStateObserver.getInstance().getPhoneCallState() != PhoneCallStateObserver.PhoneCallStateEnum.IDLE
                     || AVChatProfile.getInstance().isAVChatting()
-//                    || TeamAVChatProfile.sharedInstance().isTeamAVChatting()
+                    || TeamAVChatProfile.sharedInstance().isTeamAVChatting()
                     || AVChatManager.getInstance().getCurrentChatId() != 0) {
                 LogUtil.i(TAG, "reject incoming call data =" + data.toString() + " as local phone is not idle");
                 AVChatManager.getInstance().sendControlCommand(data.getChatId(), AVChatControlCommand.BUSY, null);
