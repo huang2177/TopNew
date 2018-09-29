@@ -171,7 +171,7 @@ public class DropManager {
     public Paint getCirclePaint() {
         if (circlePaint == null) {
             circlePaint = new Paint();
-            circlePaint.setColor(Color.RED);
+            circlePaint.setColor(Color.parseColor("#E7C375"));
             circlePaint.setAntiAlias(true);
         }
 

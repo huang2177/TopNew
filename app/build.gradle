@@ -97,4 +97,5 @@ dependencies {
 //    compile project(':jrmfRpWalletlib')
     //banner图
     implementation 'com.youth.banner:banner:1.4.10'
+    //compile project(path: ':avchatkit')
 }

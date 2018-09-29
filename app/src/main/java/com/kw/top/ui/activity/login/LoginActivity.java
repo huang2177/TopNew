@@ -31,6 +31,9 @@ import com.kw.top.R;
 import com.kw.top.app.AppManager;
 import com.kw.top.base.MVPBaseActivity;
 import com.kw.top.bean.BaseBean;
+import com.kw.top.bean.event.AppLoginEvent;
+import com.kw.top.bean.event.RefreshFriendEvent;
+import com.kw.top.bean.event.UserAvatarEvent;
 import com.kw.top.retrofit.Api;
 import com.kw.top.tools.ConstantValue;
 import com.kw.top.tools.Logger;
@@ -41,6 +44,8 @@ import com.kw.top.ui.activity.login.presenter.LoginPresenter;
 import com.kw.top.utils.RxToast;
 import com.kw.top.utils.SPUtils;
 import com.kw.top.utils.Tool;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -191,54 +196,65 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
             RxToast.normal(baseBean.getMsg());
             return;
         }
-        NewLoginBean loginBean = null;
         try {
-            loginBean = new Gson().fromJson(baseBean.getJsonData(), new TypeToken<NewLoginBean>() {
-            }.getType());
-        } catch (JsonSyntaxException e) {
-            e.printStackTrace();
-        }
-        SPUtils.saveString(this, ConstantValue.KEY_PROVE_STATE, loginBean.getUserInfo().getProveState() + "");
-        SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_TOKEN, loginBean.getToken());
+            NewLoginBean loginBean = new Gson().fromJson(baseBean.getJsonData(), NewLoginBean.class);
+
+            SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_PHONE, phone);
+            SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_TOKEN, loginBean.getToken());
+            SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_USER_ID, loginBean.getUserId());
+            SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_ACCOUNT, loginBean.getAccount());
+            SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_CHAT_PWD, loginBean.getPassword());
+            SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_SEX, loginBean.getUserInfo().getSex());
+            SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_HEAD, loginBean.getUserInfo().getHeadImg());
+            SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_NAME, loginBean.getUserInfo().getNickName());
+            SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_PROVE_STATE, loginBean.getUserInfo().getProveState());
+            SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_VIP_GRADE, loginBean.getUserInfo().getGrade());
+            SPUtils.saveString(this, ConstantValue.KEY_PROVE_STATE, loginBean.getUserInfo().getProveState() + "");
+
+            EventBus.getDefault().post(new RefreshFriendEvent(true));
+            EventBus.getDefault().post(new AppLoginEvent(true, loginBean.getToken()));
+            EventBus.getDefault().post(new UserAvatarEvent(loginBean.getUserInfo().getHeadImg(), loginBean.getUserInfo().getNickName()));
 
 
-        //如果状态等于1  就是没有注册的 区完善资料
-        if ("1".equals(loginBean.getRegisterState())) {
-            startActivity(SexActivity.class);
-            finish();
-            return;
-        }
+            //如果状态等于1  就是没有注册的 区完善资料
+            if ("1".equals(loginBean.getRegisterState())) {
+                startActivity(SexActivity.class);
+                finish();
+                return;
+            }
 
-        //认证状态(0 未认证,1 已认证,2 浏览超时,3审核中,4 未通过)
-        switch (loginBean.getUserInfo().getProveState()) {
-            case "0":
-                hideProgressDialog();
-                if (loginBean.getUserInfo().getSex().equals("1")) {
-                    //男
-                    startActivity(NewMainActivity.class);
-                } else if (loginBean.getUserInfo().getSex().equals("0")) {
-                    //女
+            //认证状态(0 未认证,1 已认证,2 浏览超时,3审核中,4 未通过)
+            switch (loginBean.getUserInfo().getProveState()) {
+                case "0":
+                    hideProgressDialog();
+                    if (loginBean.getUserInfo().getSex().equals("1")) {
+                        //男
+                        startActivity(NewMainActivity.class);
+                    } else if (loginBean.getUserInfo().getSex().equals("0")) {
+                        //女
+                        startActivity(VideoVerifyActivity.class);
+                    } else {
+                        startActivity(SexActivity.class);
+                    }
+                    break;
+                case "1":
+                    Loginchat(loginBean);
+                    break;
+                case "2":
+                    hideProgressDialog();
+                    startActivity(ManVipActivity.class);
+                    break;
+                case "3":
+                    hideProgressDialog();
+                    showHint();
+                    break;
+                case "4":
+                    hideProgressDialog();
+                    RxToast.normal("视频审核未通过，请重新认证");
                     startActivity(VideoVerifyActivity.class);
-                } else {
-                    startActivity(SexActivity.class);
-                }
-                break;
-            case "1":
-                Loginchat(loginBean);
-                break;
-            case "2":
-                hideProgressDialog();
-                startActivity(ManVipActivity.class);
-                break;
-            case "3":
-                hideProgressDialog();
-                showHint();
-                break;
-            case "4":
-                hideProgressDialog();
-                RxToast.normal("视频审核未通过，请重新认证");
-                startActivity(VideoVerifyActivity.class);
-                break;
+                    break;
+            }
+        } catch (Exception e) {
         }
     }
 
@@ -263,17 +279,6 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
      */
     @SuppressLint("StaticFieldLeak")
     private void Loginchat(final NewLoginBean loginBean) {
-        SPUtils.clear(this);
-        SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_TOKEN, loginBean.getToken());
-        SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_SEX, loginBean.getUserInfo().getSex());
-        SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_PHONE, phone);
-        SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_ACCOUNT, loginBean.getAccount());
-        SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_CHAT_PWD, loginBean.getPassword());
-        SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_HEAD, loginBean.getUserInfo().getHeadImg());
-        SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_NAME, loginBean.getUserInfo().getNickName());
-        SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_USER_ID, loginBean.getUserId());
-        SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_PROVE_STATE, loginBean.getUserInfo().getProveState());
-        SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_VIP_GRADE, loginBean.getUserInfo().getGrade());
         hideProgressDialog();
         if (TextUtils.isEmpty(loginBean.getUserInfo().getSex())) {
             startActivity(SexActivity.class);

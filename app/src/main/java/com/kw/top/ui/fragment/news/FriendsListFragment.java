@@ -41,6 +41,7 @@ import com.kw.top.utils.RxToast;
 import com.kw.top.utils.SPUtils;
 import com.kw.top.view.UILetterListView;
 import com.netease.nim.uikit.api.NimUIKit;
+import com.netease.nim.uikit.common.ui.dialog.CustomAlertDialog;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -68,16 +69,18 @@ public class FriendsListFragment extends MVPBaseFragment<NewsListContract.View, 
     UILetterListView mLetterLv;
     @BindView(R.id.friend_lv)
     ListView mFriendLv;
-    private List<FriendBean> mFriendList = new ArrayList<>();
     private List<SBFriendTagBean> mSBFriends = new ArrayList<>();
     private SBFriendAdapter mSBFriendAdapter;
     WindowManager mWindowManager;
     TextView mOverlay;
     Handler mHandler = new Handler();
     OverlayThread mOverlayThread;
+    private static FriendsListFragment fragment;
 
     public static FriendsListFragment newInstance(String type) {
-        FriendsListFragment fragment = new FriendsListFragment();
+        if (fragment == null) {
+            fragment = new FriendsListFragment();
+        }
         Bundle bundle = new Bundle();
         bundle.putString("TYPE", type);
         fragment.setArguments(bundle);
@@ -124,11 +127,6 @@ public class FriendsListFragment extends MVPBaseFragment<NewsListContract.View, 
         mLetterLv.setOnTouchingLetterChangedListener(new UILetterListView.OnTouchingLetterChangedListener() {
             @Override
             public void onTouchingLetterChanged(String s) {
-//                HashMap<String, Integer> alphaIndexer = mPresenter.getAlphaIndexer();
-//                if (alphaIndexer.get(s) != null) {
-//                    int position = alphaIndexer.get(s);
-//                    mBrandLv.setSelection(position + mBrandLv.getHeaderViewsCount());
-
                 for (int i = 0; i < mSBFriends.size(); i++) {
                     if (mSBFriends.get(i).getTag().equals(s)) {
                         mFriendLv.setSelection(i);
@@ -139,7 +137,6 @@ public class FriendsListFragment extends MVPBaseFragment<NewsListContract.View, 
                 mHandler.removeCallbacks(mOverlayThread);
                 // 延迟一秒后执行，让overlay为不可见
                 mHandler.postDelayed(mOverlayThread, 500);
-//                }
             }
         });
     }
@@ -171,7 +168,9 @@ public class FriendsListFragment extends MVPBaseFragment<NewsListContract.View, 
 
     @Override
     protected void initPresenter() {
-        mPresenter.getFriendsList(getToken());
+        if (mPresenter != null) {
+            mPresenter.getFriendsList(getToken());
+        }
     }
 
     @Override
@@ -244,7 +243,6 @@ public class FriendsListFragment extends MVPBaseFragment<NewsListContract.View, 
             SPUtils.clear(getActivity());
             startActivity(LoginActivity.class);
             getActivity().finish();
-            //ComResultTools.resultData(getActivity(), baseBean);
         }
     }
 
@@ -252,7 +250,6 @@ public class FriendsListFragment extends MVPBaseFragment<NewsListContract.View, 
     public void onRefreshFriend(RefreshFriendEvent friendEvent) {
         if (friendEvent.isRefresh())
             initPresenter();
-
     }
 
     private void deleteFriend(String friendId) {
@@ -266,12 +263,6 @@ public class FriendsListFragment extends MVPBaseFragment<NewsListContract.View, 
                     public void call(BaseBean baseBean) {
                         hideProgressDialog();
                         if (baseBean.isSuccess()) {
-//                            Iterator<FriendBean> iterator = mFriendList.iterator();
-//                            while (iterator.hasNext()) {
-//                                FriendBean bean = iterator.next();
-//                                if (bean.getFriendsId() == friendId)
-//                                    iterator.remove();   //注意这个地方
-//                            }
                             initPresenter();
                         }
                     }

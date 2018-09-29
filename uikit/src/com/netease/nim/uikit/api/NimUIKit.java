@@ -423,34 +423,6 @@ public class NimUIKit {
     }
 
     /**
-     * 设置“用户资料” 提供者
-     */
-    public static void setUserInfo(final UserInfo userInfo) {
-        IUserInfoProvider provider = new IUserInfoProvider() {
-            @Override
-            public UserInfo getUserInfo(String account) {
-                return userInfo;
-            }
-
-            @Override
-            public List getUserInfo(List accounts) {
-                return null;
-            }
-
-            @Override
-            public void getUserInfoAsync(String account, SimpleCallback callback) {
-
-            }
-
-            @Override
-            public void getUserInfoAsync(List accounts, SimpleCallback callback) {
-
-            }
-        };
-        NimUIKitImpl.initUserInfoProvider(provider);
-    }
-
-    /**
      * 获取 “用户资料” 变更监听管理者
      * UIKit 与 app 之间 userInfo 数据更新通知接口
      *
