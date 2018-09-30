@@ -7,10 +7,8 @@
         android:id="@+id/avchat_video_top_control"
         layout="@layout/video_switch_audio_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="22dp"
-        android:layout_marginTop="18dp"
         android:visibility="visible" />
 
     <include
@@ -25,7 +23,8 @@
         layout="@layout/video_call_bottom_switch_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"/>
 
     <include
         android:id="@+id/avchat_video_face_unity"
@@ -33,16 +32,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/avchat_video_bottom_control"/>
-
-    <include
-        android:id="@+id/avchat_record_layout"
-        layout="@layout/avchat_record_layout"
-        android:layout_above="@+id/avchat_video_bottom_control"
-        android:layout_marginBottom="15dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:visibility="invisible" />
 
     <include
         android:id="@+id/avchat_video_permission_control"

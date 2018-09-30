@@ -71,9 +71,11 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
      */
     //顶部控制按钮
     private View topRoot;
-    private View switchAudio;
-    private Chronometer time;
-    private TextView netUnstableTV;
+    private TextView topCareTV;
+    private TextView topNickNameTV;
+    private HeadImageView topHeadImg;
+    private TextView middleGiftShowTV;
+
     //中间控制按钮
     private View middleRoot;
     private HeadImageView headImg;
@@ -84,19 +86,14 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
     private TextView receiveTV;
     //底部控制按钮
     private View bottomRoot;
-    ToggleView switchCameraToggle;
-    ToggleView closeCameraToggle;
-    ToggleView muteToggle;
-    ImageView recordToggle;
-    ImageView hangUpImg;
+    private FrameLayout giftView;
+    private FrameLayout filterView;
+    private FrameLayout tipOffView;
+    private FrameLayout hangUpView;
     //face unity
     private View faceUnityRoot;
     //摄像头权限提示显示
     private View permissionRoot;
-    //record
-    private View recordView;
-    private View recordTip;
-    private View recordWarning;
 
     //render
     private AVChatSurfaceViewRenderer smallRender;
@@ -105,13 +102,10 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
     // state
     private boolean surfaceInit = false;
     private boolean videoInit = false;
-    private boolean shouldEnableToggle = false;
     public boolean canSwitchCamera = false;
-    private boolean isInSwitch = false;
     private boolean isPeerVideoOff = false;
     private boolean isLocalVideoOff = false;
     private boolean localPreviewInSmallSize = true;
-    private boolean isRecordWarning = false;
 
     // data
     private TouchZoneCallback touchZoneCallback;
@@ -125,15 +119,9 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
     private String largeAccount; // 显示在大图像的用户id
     private String smallAccount; // 显示在小图像的用户id
 
-    // move
-    private int lastX, lastY;
-    private int inX, inY;
-    private Rect paddingRect;
-
     private Context context;
     private View root;
     private AVChatController avChatController;
-    private AVSwitchListener avSwitchListener;
     private boolean isReleasedVideo = false;
 
     // touch zone
@@ -150,7 +138,6 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
         this.displayName = displayName;
         this.avChatController = avChatController;
         this.touchZoneCallback = touchZoneCallback;
-        this.avSwitchListener = avSwitchListener;
         this.smallRender = new AVChatSurfaceViewRenderer(context);
         this.largeRender = new AVChatSurfaceViewRenderer(context);
     }
@@ -168,13 +155,13 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
             touchLayout = surfaceView.findViewById(R.id.touch_zone);
             touchLayout.setOnTouchListener(touchListener);
 
-            smallSizePreviewFrameLayout = (FrameLayout) surfaceView.findViewById(R.id.small_size_preview_layout);
             smallSizePreviewLayout = (LinearLayout) surfaceView.findViewById(R.id.small_size_preview);
             smallSizePreviewCoverImg = (ImageView) surfaceView.findViewById(R.id.smallSizePreviewCoverImg);
-            smallSizePreviewFrameLayout.setOnTouchListener(smallPreviewTouchListener);
+            smallSizePreviewFrameLayout = (FrameLayout) surfaceView.findViewById(R.id.small_size_preview_layout);
+            smallSizePreviewFrameLayout.setOnClickListener(this);
 
-            largeSizePreviewLayout = (LinearLayout) surfaceView.findViewById(R.id.large_size_preview);
             largeSizePreviewCoverLayout = surfaceView.findViewById(R.id.notificationLayout);
+            largeSizePreviewLayout = (LinearLayout) surfaceView.findViewById(R.id.large_size_preview);
 
             surfaceInit = true;
         }
@@ -192,75 +179,6 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
         }
     };
 
-    private View.OnTouchListener smallPreviewTouchListener = new View.OnTouchListener() {
-        @Override
-        public boolean onTouch(final View v, MotionEvent event) {
-            int x = (int) event.getRawX();
-            int y = (int) event.getRawY();
-
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    lastX = x;
-                    lastY = y;
-                    int[] p = new int[2];
-                    smallSizePreviewFrameLayout.getLocationOnScreen(p);
-                    inX = x - p[0];
-                    inY = y - p[1];
-
-                    break;
-                case MotionEvent.ACTION_MOVE:
-                    final int diff = Math.max(Math.abs(lastX - x), Math.abs(lastY - y));
-                    if (diff < TOUCH_SLOP)
-                        break;
-
-                    if (paddingRect == null) {
-                        paddingRect = new Rect(ScreenUtil.dip2px(10), ScreenUtil.dip2px(20), ScreenUtil.dip2px(10),
-                                ScreenUtil.dip2px(70));
-                    }
-
-                    int destX, destY;
-                    if (x - inX <= paddingRect.left) {
-                        destX = paddingRect.left;
-                    } else if (x - inX + v.getWidth() >= ScreenUtil.screenWidth - paddingRect.right) {
-                        destX = ScreenUtil.screenWidth - v.getWidth() - paddingRect.right;
-                    } else {
-                        destX = x - inX;
-                    }
-
-                    if (y - inY <= paddingRect.top) {
-                        destY = paddingRect.top;
-                    } else if (y - inY + v.getHeight() >= ScreenUtil.screenHeight - paddingRect.bottom) {
-                        destY = ScreenUtil.screenHeight - v.getHeight() - paddingRect.bottom;
-                    } else {
-                        destY = y - inY;
-                    }
-
-                    FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) v.getLayoutParams();
-                    params.gravity = Gravity.NO_GRAVITY;
-                    params.leftMargin = destX;
-                    params.topMargin = destY;
-                    v.setLayoutParams(params);
-
-                    break;
-                case MotionEvent.ACTION_UP:
-                    if (Math.max(Math.abs(lastX - x), Math.abs(lastY - y)) <= 5) {
-                        if (largeAccount == null || smallAccount == null) {
-                            return true;
-                        }
-                        String temp;
-                        switchRender(smallAccount, largeAccount);
-                        temp = largeAccount;
-                        largeAccount = smallAccount;
-                        smallAccount = temp;
-                        switchAndSetLayout();
-                    }
-
-                    break;
-            }
-
-            return true;
-        }
-    };
 
     private IVideoRender remoteRender;
     private IVideoRender localRender;
@@ -294,14 +212,16 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
      * ************************** video 初始化 ***********************
      */
     private void findVideoViews() {
-        if (videoInit)
+        if (videoInit) {
             return;
+        }
         View videoRoot = root.findViewById(R.id.avchat_video_layout);
         topRoot = videoRoot.findViewById(R.id.avchat_video_top_control);
-        switchAudio = topRoot.findViewById(R.id.avchat_video_switch_audio);
-        switchAudio.setOnClickListener(this);
-        time = (Chronometer) topRoot.findViewById(R.id.avchat_video_time);
-        netUnstableTV = (TextView) topRoot.findViewById(R.id.avchat_video_netunstable);
+        topCareTV = topRoot.findViewById(R.id.avchat_video_care);
+        topHeadImg = topRoot.findViewById(R.id.avchat_video_avatar);
+        topNickNameTV = topRoot.findViewById(R.id.avchat_video_name);
+        middleGiftShowTV = topRoot.findViewById(R.id.avchat_video_gift_show);
+        topCareTV.setOnClickListener(this);
 
         middleRoot = videoRoot.findViewById(R.id.avchat_video_middle_control);
         headImg = middleRoot.findViewById(R.id.avchat_video_head);
@@ -314,34 +234,20 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
         refuseTV.setOnClickListener(this);
         receiveTV.setOnClickListener(this);
 
-        recordView = videoRoot.findViewById(R.id.avchat_record_layout);
-        recordTip = recordView.findViewById(R.id.avchat_record_tip);
-        recordWarning = recordView.findViewById(R.id.avchat_record_warning);
-
         bottomRoot = videoRoot.findViewById(R.id.avchat_video_bottom_control);
         faceUnityRoot = videoRoot.findViewById(R.id.avchat_video_face_unity);
 
-        switchCameraToggle = new ToggleView(bottomRoot.findViewById(R.id.avchat_switch_camera), ToggleState.DISABLE, this);
-        closeCameraToggle = new ToggleView(bottomRoot.findViewById(R.id.avchat_close_camera), ToggleState.DISABLE, this);
-        muteToggle = new ToggleView(bottomRoot.findViewById(R.id.avchat_video_mute), ToggleState.DISABLE, this);
-        recordToggle = (ImageView) bottomRoot.findViewById(R.id.avchat_video_record);
-        recordToggle.setEnabled(false);
-        recordToggle.setOnClickListener(this);
-        hangUpImg = (ImageView) bottomRoot.findViewById(R.id.avchat_video_logout);
-        hangUpImg.setOnClickListener(this);
+        giftView = bottomRoot.findViewById(R.id.fl_avchat_video_gif);
+        hangUpView = bottomRoot.findViewById(R.id.fl_avchat_video_logout);
+        filterView = bottomRoot.findViewById(R.id.fl_avchat_video_filter);
+        tipOffView = bottomRoot.findViewById(R.id.fl_avchat_video_tip_off);
+        giftView.setOnClickListener(this);
+        tipOffView.setOnClickListener(this);
+        filterView.setOnClickListener(this);
+        hangUpView.setOnClickListener(this);
 
         permissionRoot = videoRoot.findViewById(R.id.avchat_video_permission_control);
         videoInit = true;
-    }
-
-    public void onResume() {
-        surfaceViewFixBefore43(smallSizePreviewLayout, largeSizePreviewLayout);
-    }
-
-    public void onDestroy() {
-        if (time != null) {
-            time.stop();
-        }
     }
 
     /**
@@ -374,12 +280,10 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
         showProfile();//对方的详细信息
         showNotify(R.string.avchat_wait_recieve);
         setRefuseReceive(false);
-        shouldEnableToggle = true;
-        enableCameraToggle();   //使用音视频预览时这里可以开启切换摄像头按钮
         setTopRoot(false);
         setMiddleRoot(true);
         setBottomRoot(true);
-        setFaceUnityRoot(true);
+        setFaceUnityRoot(false);
 
         avChatController.doCalling(account, AVChatType.VIDEO, new AVChatControllerCallback<AVChatData>() {
             @Override
@@ -406,13 +310,10 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
         findSurfaceView();
         findVideoViews();
 
-        isInSwitch = false;
-        enableToggle();
-        setTime(true);
         setTopRoot(true);
         setMiddleRoot(false);
         setBottomRoot(true);
-        setFaceUnityRoot(true);
+        setFaceUnityRoot(false);
         showNoneCameraPermissionView(false);
     }
 
@@ -482,24 +383,14 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
 
         showNotificationLayout(AUDIO_TO_VIDEO_WAIT);
 
-        isInSwitch = true;
-        setTime(true);
         setTopRoot(true);
         setMiddleRoot(false);
         setBottomRoot(true);
         setFaceUnityRoot(true);
-
-        showRecordView(avChatController.isRecording(), isRecordWarning);
     }
 
     public void onAudioToVideoAgree(String largeAccount) {
         showVideoInitLayout();
-
-        muteToggle.toggle(AVChatManager.getInstance().isLocalAudioMuted() ? ToggleState.ON : ToggleState.OFF);
-        closeCameraToggle.toggle(ToggleState.OFF);
-        switchCameraToggle.off(false);
-        recordToggle.setEnabled(true);
-        recordToggle.setSelected(avChatController.isRecording());
 
         //打开视频
         isReleasedVideo = false;
@@ -518,7 +409,6 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
         }
 
         initLargeSurfaceView(largeAccount);
-        showRecordView(avChatController.isRecording(), isRecordWarning);
     }
 
     /********************** 界面显示 **********************************/
@@ -540,6 +430,8 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
     }
 
     private void setTopRoot(boolean visible) {
+        topHeadImg.loadBuddyAvatar(account);
+        topNickNameTV.setText(displayName);
         topRoot.setVisibility(visible ? View.VISIBLE : View.GONE);
         if (topRootHeight == 0) {
             Rect rect = new Rect();
@@ -567,37 +459,10 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
         faceUnityRoot.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
-    // 底部控制开关可用
-    private void enableToggle() {
-        if (shouldEnableToggle) {
-            if (canSwitchCamera && AVChatCameraCapturer.hasMultipleCameras()) {
-                switchCameraToggle.enable();
-            }
-            closeCameraToggle.enable();
-            muteToggle.enable();
-            recordToggle.setEnabled(true);
-            shouldEnableToggle = false;
-        }
-    }
-
-    private void setTime(boolean visible) {
-        time.setVisibility(visible ? View.VISIBLE : View.GONE);
-        if (visible) {
-            time.setBase(avChatController.getTimeBase());
-            time.start();
-        }
-    }
-
     public void showNoneCameraPermissionView(boolean show) {
         permissionRoot.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
-    private void enableCameraToggle() {
-        if (shouldEnableToggle) {
-            if (canSwitchCamera && AVChatCameraCapturer.hasMultipleCameras())
-                switchCameraToggle.enable();
-        }
-    }
 
     // 摄像头切换时，布局显隐
     private void switchAndSetLayout() {
@@ -638,24 +503,51 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
             doRefuseCall();
         } else if (i == R.id.receive) {
             doReceiveCall();
-        } else if (i == R.id.avchat_video_logout) {
+        } else if (i == R.id.fl_avchat_video_logout) {
             doHangUp();
-        } else if (i == R.id.avchat_video_mute) {
-            avChatController.toggleMute();
-        } else if (i == R.id.avchat_switch_camera) {
-            avChatController.switchCamera();
-        } else if (i == R.id.avchat_close_camera) {
-            closeCamera();
-        } else if (i == R.id.avchat_video_record) {
-            doToggleRecord();
-        } else if (i == R.id.avchat_video_switch_audio) {
-            if (isInSwitch) {
-                Toast.makeText(context, R.string.avchat_in_switch, Toast.LENGTH_SHORT).show();
-            } else {
-                avChatController.switchVideoToAudio(avSwitchListener);
-            }
-
+        } else if (i == R.id.fl_avchat_video_filter) {
+            doFilter();
+        } else if (i == R.id.fl_avchat_video_gif) {
+            doGift();
+        } else if (i == R.id.fl_avchat_video_tip_off) {
+            doTipOff();
+        } else if (i == R.id.avchat_video_care) {
+            doCare();
+        } else if (i == R.id.small_size_preview_layout) {
+            switchTemp();
         }
+    }
+
+    private void switchTemp() {
+        String temp;
+        switchRender(smallAccount, largeAccount);
+        temp = largeAccount;
+        largeAccount = smallAccount;
+        smallAccount = temp;
+        switchAndSetLayout();
+    }
+
+    private void doHangUp() {
+        releaseVideo();
+        avChatController.hangUp(AVChatExitCode.HANGUP);
+        closeSession();
+    }
+
+    private void doTipOff() {
+
+    }
+
+    private void doGift() {
+
+    }
+
+    //滤镜
+    private void doFilter() {
+
+    }
+
+    private void doCare() {
+
     }
 
     // 拒绝来电
@@ -666,7 +558,6 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
 
     private void doReceiveCall() {
         showNotify(R.string.avchat_connecting);
-        shouldEnableToggle = true;
         avChatController.receive(AVChatType.VIDEO, new AVChatControllerCallback<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
@@ -680,12 +571,6 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
         });
     }
 
-    private void doHangUp() {
-        releaseVideo();
-        avChatController.hangUp(AVChatExitCode.HANGUP);
-        closeSession();
-    }
-
 
     public void releaseVideo() {
         if (isReleasedVideo) {
@@ -694,22 +579,6 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
         isReleasedVideo = true;
         AVChatManager.getInstance().stopVideoPreview();
         AVChatManager.getInstance().disableVideo();
-    }
-
-    /**
-     * ********************** 开关摄像头 **********************
-     */
-
-    private void closeCamera() {
-        if (!AVChatManager.getInstance().isLocalVideoMuted()) {
-            // 关闭摄像头
-            AVChatManager.getInstance().muteLocalVideo(true);
-            localVideoOff();
-        } else {
-            // 打开摄像头
-            AVChatManager.getInstance().muteLocalVideo(false);
-            localVideoOn();
-        }
     }
 
 
@@ -784,67 +653,12 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
      * ******************** 录制 ***************************
      */
 
-    private void doToggleRecord() {
-        avChatController.toggleRecord(AVChatType.VIDEO.getValue(), account, new AVChatController.RecordCallback() {
-            @Override
-            public void onRecordUpdate(boolean isRecording) {
-                showRecordView(isRecording, isRecordWarning);
-            }
-        });
-    }
-
-    public void showRecordView(boolean show, boolean warning) {
-        if (show) {
-            recordToggle.setEnabled(true);
-            recordToggle.setSelected(true);
-            recordView.setVisibility(View.VISIBLE);
-            recordTip.setVisibility(View.VISIBLE);
-            if (warning) {
-                recordWarning.setVisibility(View.VISIBLE);
-            } else {
-                recordWarning.setVisibility(View.GONE);
-            }
-        } else {
-            recordToggle.setSelected(false);
-            recordView.setVisibility(View.INVISIBLE);
-            recordTip.setVisibility(View.INVISIBLE);
-            recordWarning.setVisibility(View.GONE);
-        }
-    }
-
-    public void showRecordWarning() {
-        isRecordWarning = true;
-        showRecordView(avChatController.isRecording(), isRecordWarning);
-    }
-
-    public void resetRecordTip() {
-        isRecordWarning = false;
-        avChatController.setRecording(false);
-        showRecordView(false, isRecordWarning);
-    }
-
     private void closeSession() {
         ((Activity) context).finish();
     }
 
     public AVChatData getAvChatData() {
         return avChatData;
-    }
-
-    private void surfaceViewFixBefore43(ViewGroup front, ViewGroup back) {
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            if (back.getChildCount() > 0) {
-                View child = back.getChildAt(0);
-                back.removeView(child);
-                back.addView(child);
-            }
-
-            if (front.getChildCount() > 0) {
-                View child = front.getChildAt(0);
-                front.removeView(child);
-                front.addView(child);
-            }
-        }
     }
 
 }

@@ -1,11 +1,8 @@
 package com.kw.top.ui.fragment.news;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 
 import com.kw.top.base.FriendBean;
@@ -20,8 +17,6 @@ import com.netease.nimlib.sdk.msg.model.RecentContact;
 import com.netease.nimlib.sdk.uinfo.model.UserInfo;
 
 import org.greenrobot.eventbus.EventBus;
-
-import java.util.Map;
 
 /**
  * 最近回话列表
@@ -57,9 +52,10 @@ public class RecentSessionFragment extends RecentContactsFragment implements Rec
     public String getDigestOfAttachment(RecentContact recent, MsgAttachment attachment) {
         if (attachment instanceof RedPacketAttachment) {
             return "[红包]";
-        } else  if (attachment instanceof AVChatAttachment) { //目前只有视频
-            return "[视频]";
-        }{
+        } else if (attachment instanceof AVChatAttachment) { //目前只有视频
+            return "[视频聊天]";
+        }
+        {
             return recent.getContent();
         }
     }

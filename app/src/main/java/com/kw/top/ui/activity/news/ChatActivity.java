@@ -28,6 +28,8 @@ import com.netease.nimlib.sdk.msg.model.IMMessage;
 
 import java.util.Arrays;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -90,18 +92,12 @@ public class ChatActivity extends MyEaseBaseActivity implements View.OnClickList
 
     @Override
     public void onAvatarClicked(Context context, IMMessage message) {
-        Map<String, Object> extension = message.getRemoteExtension();
-        if (extension != null) {
-            Object o = extension.get(message.getFromAccount());
-            if (o != null) {
-                String userId = o.toString();
-                if (!TextUtils.isEmpty(userId) && userId.contains(".")) {
-                    userId = userId.substring(0, userId.indexOf("."));
-                }
-                Intent intent = new Intent(context, HomePageDetailsActivity.class);
-                intent.putExtra(ConstantValue.KEY_USER_ID, userId);
-                context.startActivity(intent);
-            }
+        String account = message.getFromAccount().replace(ConstantValue.ACCOUNT_TEXT,"");
+        if (!TextUtils.isEmpty(account)) {
+            int userId = Integer.parseInt(account);
+            Intent intent = new Intent(context, HomePageDetailsActivity.class);
+            intent.putExtra(ConstantValue.KEY_USER_ID, String.valueOf(userId));
+            context.startActivity(intent);
         }
     }
 

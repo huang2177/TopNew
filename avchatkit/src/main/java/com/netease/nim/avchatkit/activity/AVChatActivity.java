@@ -129,7 +129,7 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         // 若来电或去电未接通时，点击home。另外一方挂断通话。从最近任务列表恢复，则finish
         if (needFinish) {
@@ -165,7 +165,6 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
         cancelCallingNotifier();
 
         if (hasOnPause) {
-            avChatVideoUI.onResume();
             avChatController.resumeVideo();
             hasOnPause = false;
         }
@@ -200,15 +199,6 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
         } catch (Exception e) {
 
         }
-
-//        if (avChatAudioUI != null) {
-//            avChatAudioUI.onDestroy();
-//        }
-
-        if (avChatVideoUI != null) {
-            avChatVideoUI.onDestroy();
-        }
-
         registerObserves(false);
         AVChatProfile.getInstance().setAVChatting(false);
         cancelCallingNotifier();
@@ -320,11 +310,11 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
             } else {
                 Toast.makeText(AVChatActivity.this, "录制已结束.", Toast.LENGTH_SHORT).show();
             }
-            if (state == AVChatType.VIDEO.getValue()) {
-                avChatVideoUI.resetRecordTip();
-            } else {
-                //avChatAudioUI.resetRecordTip();
-            }
+//            if (state == AVChatType.VIDEO.getValue()) {
+//                //avChatVideoUI.resetRecordTip();
+//            } else {
+//                //avChatAudioUI.resetRecordTip();
+//            }
         }
 
         @Override
@@ -338,14 +328,14 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
             if (state == AVChatType.AUDIO.getValue()) {
                 //avChatAudioUI.resetRecordTip();
             } else {
-                avChatVideoUI.resetRecordTip();
+                //avChatVideoUI.resetRecordTip();
             }
         }
 
         @Override
         public void onLowStorageSpaceWarning(long availableSize) {
             if (state == AVChatType.VIDEO.getValue()) {
-                avChatVideoUI.showRecordWarning();
+                //avChatVideoUI.showRecordWarning();
             } else {
                 //avChatAudioUI.showRecordWarning();
             }

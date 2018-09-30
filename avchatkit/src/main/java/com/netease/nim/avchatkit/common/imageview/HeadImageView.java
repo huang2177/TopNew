@@ -115,7 +115,6 @@ public class HeadImageView extends CircleImageView {
         if (TextUtils.isEmpty(url)) {
             return url;
         }
-
         return thumbSize > 0 ? NosThumbImageUtil.makeImageThumbUrl(url, NosThumbParam.ThumbType.Crop, thumbSize, thumbSize) : url;
     }
 

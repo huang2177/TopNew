@@ -1,71 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingTop="20dp">
 
-    <RelativeLayout
-        android:id="@+id/switch_mode_top_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <RelativeLayout
-            android:id="@+id/avchat_video_switch_audio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/video_audio_mode_switch_bg"
-            android:clickable="true"
-            android:descendantFocusability="blocksDescendants"
-            android:visibility="gone">
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_gravity="center"
-                android:background="@color/transparent"
-                android:clickable="false"
-                android:drawableLeft="@drawable/avchat_switch_mode_audio_icon"
-                android:drawablePadding="5dip"
-                android:shadowColor="#353738"
-                android:shadowDy="-1"
-                android:shadowRadius="1"
-                android:text="@string/avchat_switch_to_audio"
-                android:textColor="@color/white"
-                android:textSize="13sp"
-                android:visibility="visible" />
-            <!--</FrameLayout>-->
-        </RelativeLayout>
-
-        <Chronometer
-            android:id="@+id/avchat_video_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerInParent="true"
-            android:layout_centerVertical="true"
-            android:textColor="@color/white"
-            android:textSize="13sp"
-            android:visibility="visible" />
-    </RelativeLayout>
-
-    <TextView
-        android:id="@+id/avchat_video_netunstable"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/switch_mode_top_layout"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:paddingBottom="8dip"
-        android:paddingLeft="11dip"
-        android:paddingRight="10dip"
-        android:paddingTop="10dip"
-        android:shadowColor="#353738"
-        android:shadowDy="-1"
-        android:shadowRadius="1"
-        android:text="@string/avchat_network_unstable_notificaton"
-        android:textColor="@color/white"
-        android:textSize="13sp"
-        android:visibility="gone" />
+        android:background="@drawable/image_video_avatar_bg">
+
+        <com.netease.nim.avchatkit.common.imageview.HeadImageView
+            android:id="@+id/avchat_video_avatar"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="4dp" />
+
+        <TextView
+            android:id="@+id/avchat_video_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_16" />
+
+        <TextView
+            android:id="@+id/avchat_video_care"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/image_video_care_bg"
+            android:gravity="center"
+            android:text="关注"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_16" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="110dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/avchat_video_gift_show"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="50dp"
+            android:layout_marginRight="116dp"
+            android:background="@drawable/image_video_gift_show_bg"
+            android:gravity="center_vertical"
+            android:paddingLeft="5dp"
+            android:text="@string/app_name"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_16"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/avchat_video_promise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="116dp"
+            android:background="@drawable/image_video_promise_bg"
+            android:ellipsize="end"
+            android:lineSpacingMultiplier="1.4"
+            android:maxLines="2"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:text="@string/avchat_video_promise"
+            android:textColor="@color/successColor"
+            android:textSize="@dimen/sp_14" />
+    </LinearLayout>
+
 
 </RelativeLayout>

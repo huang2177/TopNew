@@ -30,11 +30,11 @@
 
     <FrameLayout
         android:id="@+id/small_size_preview_layout"
-        android:layout_width="64dp"
-        android:layout_height="98dp"
+        android:layout_width="80dp"
+        android:layout_height="120dp"
         android:layout_gravity="right|bottom"
+        android:layout_marginBottom="80dp"
         android:layout_marginRight="16dp"
-        android:layout_marginTop="18dp"
         android:visibility="gone">
 
         <LinearLayout
