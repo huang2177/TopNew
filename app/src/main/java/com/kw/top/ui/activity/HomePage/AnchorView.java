@@ -33,10 +33,5 @@ public interface AnchorView {
     void sendGiftResult(BaseBean baseBean);
 
 
-    /**
-     * 关注主播
-     *
-     * @param baseBean
-     */
-    void AddFollowResult(BaseBean baseBean);
+
 }

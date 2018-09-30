@@ -568,4 +568,23 @@ public interface ApiService {
     @POST("api/videoController/addMyFollow")
     Observable<BaseBean> addMyFollow(@Query("followId") String followId, @Query("token") String token);
 
+
+    /**
+     * 取消关注
+     * @param followId
+     * @param token
+     * @return
+     */
+    @POST("api/videoController/deleteMyFollow")
+    Observable<BaseBean> daleteMyFollow(@Query("followId") String followId, @Query("token") String token);
+
+
+    /**
+     * 查询排行榜
+     * @param token
+     * @return
+     */
+    @POST("api/videoController/getRankingList")
+    Observable<BaseBean> getRankingList(@Query("type") String type, @Query("nowPage") String nowPage, @Query("pageNum") String pageNum, @Query("token") String token);
+
 }

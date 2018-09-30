@@ -1,5 +1,6 @@
 package com.kw.top.ui.activity;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -479,5 +480,11 @@ public class NewMainActivity extends MyEaseBaseActivity implements TabLayout.OnT
 
     public static void logout(Context context, boolean b) {
 
+    }
+
+    @SuppressLint("MissingSuperCall")
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        //不做任何保存操作  防止程序意外崩溃重启后fragment的视图叠加
     }
 }

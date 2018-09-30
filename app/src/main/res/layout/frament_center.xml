@@ -7,7 +7,6 @@
     android:orientation="vertical">
 
 
-
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -263,7 +262,8 @@
             <RelativeLayout
                 android:id="@+id/rl_conn_service"
                 android:layout_width="match_parent"
-                android:layout_height="45dp">
+                android:layout_height="45dp"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -286,16 +286,15 @@
                     android:src="@drawable/ic_me_more" />
             </RelativeLayout>
 
-            <TextView style="@style/line_white" />
+            <TextView
+                style="@style/line_white"
+                android:visibility="gone" />
 
 
         </LinearLayout>
 
 
-
     </android.support.v4.widget.NestedScrollView>
-
-
 
 
 </LinearLayout>

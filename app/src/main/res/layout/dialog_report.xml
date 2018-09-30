@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black_bg"
+    android:gravity="bottom"
+    android:orientation="vertical"
+    android:paddingBottom="20dp">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:paddingTop="10dp"
+        android:text="举  报"
+        android:textColor="@color/colorWhite"
+        android:textSize="18.0sp"
+        android:visibility="gone" />
+
+
+    <EditText
+        android:id="@+id/report_ed"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_add"
+        android:gravity="start"
+        android:hint="请填写您需要举报的内容"
+        android:padding="10dp"
+        android:textColor="@color/colorWhite"
+        android:textColorHint="@color/colorWhite"
+        android:textSize="14.0sp" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/report_commit_tv"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="15dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_report_bg"
+            android:gravity="center"
+            android:text="提交"
+            android:textColor="@color/black"
+            android:textSize="16.0sp" />
+
+        <TextView
+            android:id="@+id/report_cancel_tv"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="30dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_report_bg"
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="@color/black"
+            android:textSize="16.0sp" />
+    </LinearLayout>
+
+</LinearLayout>

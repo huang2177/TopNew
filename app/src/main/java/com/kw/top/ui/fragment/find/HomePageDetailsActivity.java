@@ -6,19 +6,12 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import com.google.gson.reflect.TypeToken;
 import com.kw.top.R;
 import com.kw.top.adapter.GiftAdapter;
 import com.kw.top.base.BaseActivity_;
@@ -26,11 +19,11 @@ import com.kw.top.bean.BaseBean;
 import com.kw.top.bean.GiftBean;
 import com.kw.top.retrofit.Api;
 import com.kw.top.retrofit.HttpHost;
-import com.kw.top.tools.ComResultTools;
 import com.kw.top.tools.ConstantValue;
 import com.kw.top.tools.GlideTools;
-import com.kw.top.ui.activity.HomePage.AnchorPresenter;
-import com.kw.top.ui.activity.HomePage.AnchorView;
+import com.kw.top.ui.activity.HomePage.HomePageFollow;
+import com.kw.top.ui.activity.HomePage.HomePageView;
+import com.kw.top.ui.activity.circle.UserCircleActivity;
 import com.kw.top.ui.activity.login.LoginActivity;
 import com.kw.top.ui.fragment.find.adapter.GlideImageLoader;
 import com.kw.top.ui.fragment.find.adapter.HomeFriendsAdapter;
@@ -39,6 +32,7 @@ import com.kw.top.ui.fragment.find.baen.HomeInfoBean;
 import com.kw.top.utils.RxToast;
 import com.kw.top.utils.SPUtils;
 import com.kw.top.utils.StatusUtil;
+import com.kw.top.view.GiftDialog;
 import com.netease.nim.avchatkit.AVChatKit;
 import com.netease.nim.avchatkit.activity.AVChatActivity;
 import com.netease.nim.uikit.business.uinfo.UserInfoHelper;
@@ -56,13 +50,11 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
-import static com.netease.nim.uikit.api.NimUIKit.getAccount;
-
 /**
  * Created by shibing on 2018/9/24.
  */
 
-public class HomePageDetailsActivity extends BaseActivity_ implements AnchorView {
+public class HomePageDetailsActivity extends BaseActivity_ implements HomePageView {
 
 
     @BindView(R.id.detalis_banner)
@@ -124,8 +116,9 @@ public class HomePageDetailsActivity extends BaseActivity_ implements AnchorView
     private Dialog dialog;
     private String friend = "0";
     private String receiveUserId;
-    private AnchorPresenter anchorPresenter;
+    private HomePageFollow homePageFollow;
     private String follow, friends;
+    private GiftDialog giftDialog;
 
     @Override
     public int getContentView() {
@@ -150,11 +143,10 @@ public class HomePageDetailsActivity extends BaseActivity_ implements AnchorView
             StatusUtil.setStatusBar(this, false, false);
             StatusUtil.setStatusTextColor(false, this);
         }
-        anchorPresenter = new AnchorPresenter(this, this);
+        homePageFollow = new HomePageFollow(this, this);
         listBanner = new ArrayList<>();
         userId = getIntent().getStringExtra(ConstantValue.KEY_USER_ID);
         getHonePageData(userId, getToken());
-        anchorPresenter.queryAllGift(getToken());   //查询所有的礼物
     }
 
 
@@ -190,22 +182,28 @@ public class HomePageDetailsActivity extends BaseActivity_ implements AnchorView
                 finish();
                 break;
             case R.id.tv_gd:      //朋友圈更多
+                UserCircleActivity.startActivity(this, userId);
                 break;
             case R.id.image_add:  //添加好友
-                showGiftDialog("0");
+                giftDialog = new GiftDialog(this, "0", receiveUserId, getToken());
+                giftDialog.show();
+                //showGiftDialog("0");
                 break;
             case R.id.iamge_lw:   //曾送礼物
-                showGiftDialog("1");
+                giftDialog = new GiftDialog(this, "1", receiveUserId, getToken());
+                giftDialog.show();
+                //showGiftDialog("1");
                 break;
             case R.id.iamge_sp:   //与她视频
                 call();
                 break;
             case R.id.tv_follow:
                 if (follow.equals("1")) {
-                    tvFollow.setEnabled(false);
-                    return;
+                    homePageFollow.delaeteFollow(userId, getToken());
+                } else {
+                    homePageFollow.addFollow(userId, getToken());
                 }
-                anchorPresenter.addFollow(userId, getToken());
+
                 break;
         }
     }
@@ -309,104 +307,19 @@ public class HomePageDetailsActivity extends BaseActivity_ implements AnchorView
 
 
     /**
-     * 礼物dialog
-     */
-    private void showGiftDialog(final String type) {
-        View view = LayoutInflater.from(this).inflate(R.layout.dialog_add_friend, null);
-        GridView gridView = view.findViewById(R.id.grid_view);
-        mGiftAdapter = new GiftAdapter(this);
-        gridView.setAdapter(mGiftAdapter);
-        mGiftAdapter.setList(type.equals("1") ? mAllGiftList : mDiamondList);
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                dialog.dismiss();
-                if (type.equals("1")) {
-                    anchorPresenter.sendGift(mAllGiftList.get(i).getGiftId() + "", "1", receiveUserId, getToken());
-                } else {
-                    anchorPresenter.sendGiftAddFriend(mDiamondList.get(i).getGiftId() + "", "1", receiveUserId, getToken());
-                }
-            }
-        });
-        dialog = new Dialog(this, R.style.charge_dialog_style);
-        dialog.setContentView(view);
-        dialog.setCanceledOnTouchOutside(true);
-        Window window = dialog.getWindow();
-        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        window.setGravity(Gravity.BOTTOM); // 此处可以设置dialog显示的位置
-        window.setWindowAnimations(R.style.popupAnimation); // 添加动画
-        dialog.show();
-    }
-
-
-    /**
-     * 查询所有的礼物
-     *
-     * @param baseBean
-     */
-    @Override
-    public void queryAllGiftResult(BaseBean baseBean) {
-        hideProgressDialog();
-        if (null != baseBean && baseBean.isSuccess()) {
-            List<GiftBean> giftBeans = new Gson().fromJson(baseBean.getJsonData(), new TypeToken<List<GiftBean>>() {
-            }.getType());
-            mAllGiftList.addAll(giftBeans);
-            for (GiftBean gift : giftBeans) {
-                if (gift.getAmountType().equals("1"))
-                    mDiamondList.add(gift);
-            }
-        } else {
-            RxToast.normal(baseBean.getMsg());
-        }
-    }
-
-    /**
-     * 添加好友
-     *
-     * @param baseBean
-     */
-    @Override
-    public void addFriendResult(BaseBean baseBean) {
-        hideProgressDialog();
-        if (null != baseBean && baseBean.isSuccess()) {
-            RxToast.normal("申请成功,请等待好友同意");
-        } else if (baseBean.getCode().equals("-44")) {
-            RxToast.normal(getResources().getString(R.string.login_out));
-            SPUtils.clear(this);
-            startActivity(LoginActivity.class);
-        } else {
-            RxToast.normal(baseBean.getMsg());
-        }
-    }
-
-    /**
-     * 赠送礼物
-     *
-     * @param baseBean
-     */
-    @Override
-    public void sendGiftResult(BaseBean baseBean) {
-        if (baseBean == null) {
-            RxToast.normal(getResources().getString(R.string.net_error));
-        } else if (baseBean.isSuccess()) {
-            RxToast.normal("赠送成功");
-        } else {
-            ComResultTools.resultData(this, baseBean);
-        }
-    }
-
-    /**
      * 添加关注
-     *
-     * @param baseBean
      */
     @Override
-    public void AddFollowResult(BaseBean baseBean) {
-        if (!baseBean.isSuccess()) {
-            return;
+    public void AddFollowResult(String string) {
+        if (string.equals("add")) {
+            RxToast.normal("关注成功");
+            follow = "1";
+            tvFollow.setText("已关注");
+        } else {
+            RxToast.normal("取消关注成功");
+            follow = "0";
+            tvFollow.setText("关注");
         }
-        RxToast.normal("关注成功");
-        follow = "1";
-        tvFollow.setText("已关注");
+
     }
 }

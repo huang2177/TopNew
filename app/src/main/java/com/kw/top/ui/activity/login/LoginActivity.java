@@ -24,8 +24,6 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
-import com.google.gson.reflect.TypeToken;
 import com.jaeger.library.StatusBarUtil;
 import com.kw.top.R;
 import com.kw.top.app.AppManager;
@@ -36,7 +34,6 @@ import com.kw.top.bean.event.RefreshFriendEvent;
 import com.kw.top.bean.event.UserAvatarEvent;
 import com.kw.top.retrofit.Api;
 import com.kw.top.tools.ConstantValue;
-import com.kw.top.tools.Logger;
 import com.kw.top.ui.activity.NewMainActivity;
 import com.kw.top.ui.activity.login.bean.NewLoginBean;
 import com.kw.top.ui.activity.login.contract.LoginContract;
@@ -116,7 +113,7 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
         } else {
             initLocation();
         }
-        ed_qh.setCursorVisible(true);   //隐藏+区号的  光标
+        ed_qh.setCursorVisible(false);   //隐藏+区号的  光标
     }
 
 
@@ -155,7 +152,7 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
     }
 
 
-    @OnClick({R.id.tv_send_code, R.id.but_login})
+    @OnClick({R.id.tv_send_code, R.id.but_login, R.id.tv_qh})
     public void OnClick(View view) {
         switch (view.getId()) {
             case R.id.tv_send_code:
@@ -163,6 +160,9 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
                 break;
             case R.id.but_login:
                 Login();
+                break;
+            case R.id.tv_qh:
+                ed_qh.setCursorVisible(true);
                 break;
         }
     }

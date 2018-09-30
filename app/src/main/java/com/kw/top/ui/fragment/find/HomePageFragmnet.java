@@ -13,11 +13,8 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.kw.top.R;
 import com.kw.top.base.BaseFragment;
-import com.kw.top.bean.AllUserBean;
 import com.kw.top.bean.BaseBean;
 import com.kw.top.retrofit.Api;
-import com.kw.top.tools.ConstantValue;
-import com.kw.top.tools.Logger;
 import com.kw.top.ui.activity.login.LoginActivity;
 import com.kw.top.ui.fragment.find.adapter.GlideImageLoader;
 import com.kw.top.ui.fragment.find.adapter.HomePageAdapter;
@@ -25,6 +22,7 @@ import com.kw.top.ui.fragment.find.baen.HomeBean;
 import com.kw.top.utils.OnItemClickListener;
 import com.kw.top.utils.RxToast;
 import com.kw.top.utils.SPUtils;
+import com.kw.top.view.ReportDialog;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
@@ -32,6 +30,7 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
+import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,7 +48,7 @@ import static com.scwang.smartrefresh.layout.constant.SpinnerStyle.FixedBehind;
  * Created by shibing on 2018/9/24.
  */
 
-public class HomePageFragmnet extends BaseFragment implements OnItemClickListener, OnRefreshListener, OnLoadMoreListener {
+public class HomePageFragmnet extends BaseFragment implements OnItemClickListener, OnRefreshListener, OnLoadMoreListener, OnBannerListener {
 
 
     @BindView(R.id.banner)
@@ -65,7 +64,7 @@ public class HomePageFragmnet extends BaseFragment implements OnItemClickListene
     @BindView(R.id.refresh_layout)
     SmartRefreshLayout mRefreshLayout;
 
-    private String type = "01";
+    private String type;
     private int nowPage = 1, pageNum = 20;
 
     private List<HomeBean> beanList;
@@ -73,7 +72,7 @@ public class HomePageFragmnet extends BaseFragment implements OnItemClickListene
     private List<HomeBean> RefreshList;
 
     public static HomePageFragmnet pageFragmnet;
-    private List<String> listBanner;
+    private List<Integer> listBanner;
     private HomePageAdapter adapter;
 
     public static HomePageFragmnet newInstance() {
@@ -92,7 +91,7 @@ public class HomePageFragmnet extends BaseFragment implements OnItemClickListene
 
     @Override
     public void initData() {
-        getHonePageData(type, nowPage + "", pageNum + "", getToken());
+        getHonePageData("01", nowPage + "", pageNum + "", getToken());
     }
 
     @Override
@@ -148,14 +147,15 @@ public class HomePageFragmnet extends BaseFragment implements OnItemClickListene
                 getHonePageData(type, nowPage + "", pageNum + "", getToken());
                 break;
             case R.id.home_search:
+                //ReportDialog reportDialog = new ReportDialog(getActivity());
+                //reportDialog.show();
                 break;
         }
     }
 
 
     private void initBanner() {
-        listBanner = Arrays.asList("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1537798939698&di=4dd961771014cef12cd6905f2d810623&imgtype=0&src=http%3A%2F%2Fhiphotos.baidu.com%2Fimage%2F%2577%3D%2537%2533%2530%3B%2563%2572%256F%2570%3D%2530%2C%2532%2538%2C%2537%2533%2530%2C%2534%2530%2535%2Fsign%3D1cd79e93a164034f0fcdc0059ff81a43%2Fd000baa1cd11728b103cdc6cc2fcc3cec3fd2c6e.jpg",
-                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1537798939697&di=2c9b26acf60d5f147b505cdd859fc9e1&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimage%2Fc0%253Dshijue1%252C0%252C0%252C294%252C40%2Fsign%3D924562cf9b2397ddc274904731ebd8c2%2Fa044ad345982b2b727df62ec3badcbef76099b52.jpg");
+        listBanner = Arrays.asList(R.drawable.ic_banner3, R.drawable.ic_banner2);
         banner.setBannerStyle(1);
         banner.setImageLoader(new GlideImageLoader());  //设置图片加载器
         banner.setImages(listBanner);  //设置图片集合
@@ -163,6 +163,7 @@ public class HomePageFragmnet extends BaseFragment implements OnItemClickListene
         banner.setDelayTime(3000);   //设置轮播时间
         banner.setIndicatorGravity(BannerConfig.CENTER);//设置指示器位置（当banner模式中有指示器时）
         banner.start();//banner设置方法全部调用完毕时最后调用
+        banner.setOnBannerListener(this);
     }
 
 
@@ -243,7 +244,8 @@ public class HomePageFragmnet extends BaseFragment implements OnItemClickListene
 
     @Override
     public void onItemClick(int position) {
-        RxToast.normal("排行榜");
+        Intent intent = new Intent(getActivity(), RankingListActivity.class);
+        startActivity(intent);
 
     }
 
@@ -257,5 +259,23 @@ public class HomePageFragmnet extends BaseFragment implements OnItemClickListene
     public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
         nowPage++;
         getHonePageData(type, nowPage + "", pageNum + "", getToken());
+    }
+
+
+    /**
+     * banner  监听事件
+     *
+     * @param position
+     */
+    @Override
+    public void OnBannerClick(int position) {
+        switch (position) {
+            case 0:
+                startActivity(RuleActivity.class);
+                break;
+            case 1:
+                startActivity(RankingListActivity.class);
+                break;
+        }
     }
 }

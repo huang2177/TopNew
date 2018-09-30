@@ -25,6 +25,7 @@ public class AnchorPresenter {
         this.anchorView = anchorView;
     }
 
+
     /**
      * 查询所有的礼物
      *
@@ -117,26 +118,7 @@ public class AnchorPresenter {
     }
 
 
-    public void addFollow(String followId, String token) {
-        Api.getApiService().addMyFollow(followId, token)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .unsubscribeOn(Schedulers.io())
-                .subscribe(new Action1<BaseBean>() {
-                    @Override
-                    public void call(BaseBean baseBean) {
-                        if (!baseBean.isSuccess()) {
-                            return;
-                        }
-                        anchorView.AddFollowResult(baseBean);
-                    }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        anchorView.AddFollowResult(null);
-                    }
-                });
-    }
+
 
 
 }

@@ -93,7 +93,7 @@ public class BaseApplication extends Application {
         StatusBarNotificationConfig config = new StatusBarNotificationConfig();
         config.notificationEntrance = NewMainActivity.class; // 点击通知栏跳转到该Activity
         config.notificationSmallIconId = R.mipmap.ic_launcher;
-        options.sdkStorageRootPath = FileUtil.getAppCacheDir(this) + "/nim";
+        options.sdkStorageRootPath = FileUtil.getAppCacheDir(this) + "/nim"; 
         // 呼吸灯配置
         config.ledARGB = Color.GREEN;
         config.ledOnMs = 1000;

@@ -46,6 +46,7 @@ import com.kw.top.ui.activity.news.ChatActivity;
 import com.kw.top.utils.DisplayUtils;
 import com.kw.top.utils.RxToast;
 import com.kw.top.utils.SPUtils;
+import com.kw.top.utils.StatusUtil;
 import com.kw.top.view.ScrollGridView;
 
 import java.util.ArrayList;
@@ -113,6 +114,10 @@ public class FindDetailsActivity extends BaseActivity implements View.OnClickLis
 
     public void initView() {
 
+        if (true) {
+            StatusUtil.setStatusBar(this, false, false);
+            StatusUtil.setStatusTextColor(false, this);
+        }
         userId = getIntent().getStringExtra("USERID");
         if (TextUtils.isEmpty(userId)) {
             RxToast.normal("用户信息异常");

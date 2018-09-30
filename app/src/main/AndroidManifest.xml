@@ -296,6 +296,8 @@
         <activity android:name=".ui.activity.login.ChoiceSexActivity" />
         <activity android:name=".ui.activity.MaleActivity" />
         <activity android:name=".ui.fragment.find.HomePageDetailsActivity" />
+        <activity android:name=".ui.fragment.find.RankingListActivity" />
+        <activity android:name=".ui.fragment.find.RuleActivity" />
 
 
         <!-- Required SDK 核心功能-->
