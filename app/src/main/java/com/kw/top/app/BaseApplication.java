@@ -10,15 +10,21 @@ import android.support.multidex.MultiDex;
 import com.kw.top.R;
 import com.kw.top.crash.MyCrashHandler;
 import com.kw.top.redpacket.CustomAttachParser;
+import com.kw.top.redpacket.MsgViewHolderAVChat;
 import com.kw.top.redpacket.MsgViewHolderRedPacket;
 import com.kw.top.redpacket.NimManger;
 import com.kw.top.redpacket.RedPacketAttachment;
 import com.kw.top.ui.activity.NewMainActivity;
+import com.netease.nim.avchatkit.AVChatKit;
+import com.netease.nim.avchatkit.config.AVChatOptions;
+import com.netease.nim.avchatkit.model.IUserInfoProvider;
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.SDKOptions;
 import com.netease.nimlib.sdk.StatusBarNotificationConfig;
+import com.netease.nimlib.sdk.avchat.model.AVChatAttachment;
 import com.netease.nimlib.sdk.msg.MsgService;
+import com.netease.nimlib.sdk.uinfo.model.UserInfo;
 import com.netease.nimlib.sdk.util.NIMUtil;
 import com.qiniu.android.common.FixedZone;
 import com.qiniu.android.storage.Configuration;
@@ -102,16 +108,28 @@ public class BaseApplication extends Application {
      * 初始化音视频模块
      */
     private void initAVChatKit() {
-//        AVChatOptions avChatOptions = new AVChatOptions() {
-//            @Override
-//            public void logout(Context context) {
-//                NewMainActivity.logout(context, true);
-//            }
-//        };
-//        avChatOptions.entranceActivity = NewMainActivity.class;
-//        avChatOptions.notificationIconRes = R.mipmap.ic_launcher;
-//        AVChatKit.init(avChatOptions);
-        // 初始化日志系统
+        AVChatOptions avChatOptions = new AVChatOptions() {
+            @Override
+            public void logout(Context context) {
+                NewMainActivity.logout(context, true);
+            }
+        };
+        avChatOptions.entranceActivity = NewMainActivity.class;
+        avChatOptions.notificationIconRes = R.mipmap.ic_launcher;
+        AVChatKit.init(avChatOptions);
+        AVChatKit.setContext(this);
+        AVChatKit.setUserInfoProvider(new IUserInfoProvider() {
+            @Override
+            public UserInfo getUserInfo(String account) {
+                return null;
+            }
+
+            @Override
+            public String getUserDisplayName(String account) {
+                return null;
+            }
+        });
+//         初始化日志系统
 //        AVChatKit.setiLogUtil();
     }
 
@@ -122,10 +140,11 @@ public class BaseApplication extends Application {
         // 初始化
         NimUIKit.init(this);
 
-        // IM 会话窗口的定制初始化。
+        // 注册定义消息解析器
         NIMClient.getService(MsgService.class).registerCustomAttachmentParser(new CustomAttachParser());
         NimUIKit.registerMsgItemViewHolder(RedPacketAttachment.class, MsgViewHolderRedPacket.class);
 
+        NimUIKit.registerMsgItemViewHolder(AVChatAttachment.class, MsgViewHolderAVChat.class);
     }
 
     /**

@@ -27,8 +27,8 @@ android {
 
 dependencies {
     api fileTree(include: '*.jar', dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+    api 'com.android.support:appcompat-v7:26.1.0'
+    api 'com.android.support.constraint:constraint-layout:1.1.2'
     api 'com.android.support:design:26.1.0'
     api 'me.everything:overscroll-decor-android:1.0.4'
     api 'me.leolin:ShortcutBadger:1.1.17@aar'

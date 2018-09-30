@@ -9,19 +9,19 @@ import java.util.List;
 public class HomeInfoBean {
 
 
-    /**
-     * giftList : [{"giftAmount":520,"headImg":"dd5bfab10189f94e44476"},{"giftAmount":199,"headImg":"62fad7ce314eea7a14481"},{"giftAmount":199,"headImg":"iOS_ddd5807d-2b29-4adf-8466-a0d08b4cab1c5651_1536143673.jpg"}]
-     * followNum : {"followNum":0}
-     * userInfoMap : {"birthday":"1997-07-31","headImg":"dd5bfab10189f94e7330","totalAssets":"100万-500万","qualityLife":"轻微奢侈","nickName":"薛薛薛宝","smoke":"偶尔一根","userId":96,"drink":"小酌一杯","objective":"交盆友","constellation":"狮子座","grade":"1","stature":"168","yearIncome":"100万以下","job":"模特","profit":"10","age":"21"}
-     * photoalbumList : [{"picture":"[\"dd5bfab10189f94e2182\""},{"picture":"\"dd5bfab10189f94e2183\""},{"picture":"\"dd5bfab10189f94e2184\"]"}]
-     * follow : 0
-     * pictureList : [{"dynamicPic":"dd5bfab10189f94e20748"},{"dynamicPic":"dd5bfab10189f94e11035"}]
-     */
-
     private FollowNumBean followNum;
     private UserInfoMapBean userInfoMap;
     private String follow;
     private String friends;
+    private String account;
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public String getAccount() {
+        return account.contains(".") ? account.substring(0, account.indexOf(".")) : account;
+    }
 
     public String getFriends() {
         return friends;

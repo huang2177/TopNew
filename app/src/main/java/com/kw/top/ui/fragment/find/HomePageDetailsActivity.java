@@ -39,6 +39,10 @@ import com.kw.top.ui.fragment.find.baen.HomeInfoBean;
 import com.kw.top.utils.RxToast;
 import com.kw.top.utils.SPUtils;
 import com.kw.top.utils.StatusUtil;
+import com.netease.nim.avchatkit.AVChatKit;
+import com.netease.nim.avchatkit.activity.AVChatActivity;
+import com.netease.nim.uikit.business.uinfo.UserInfoHelper;
+import com.netease.nimlib.sdk.avchat.constant.AVChatType;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 
@@ -51,6 +55,8 @@ import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
+
+import static com.netease.nim.uikit.api.NimUIKit.getAccount;
 
 /**
  * Created by shibing on 2018/9/24.
@@ -192,10 +198,7 @@ public class HomePageDetailsActivity extends BaseActivity_ implements AnchorView
                 showGiftDialog("1");
                 break;
             case R.id.iamge_sp:   //与她视频
-//                AVChatKit.outgoingCall(this, getAccount()
-//                        , UserInfoHelper.getUserDisplayName(getAccount())
-//                        , AVChatType.VIDEO.getValue()
-//                        , AVChatActivity.FROM_INTERNAL);
+                call();
                 break;
             case R.id.tv_follow:
                 if (follow.equals("1")) {
@@ -205,6 +208,20 @@ public class HomePageDetailsActivity extends BaseActivity_ implements AnchorView
                 anchorPresenter.addFollow(userId, getToken());
                 break;
         }
+    }
+
+    /**
+     * 视频
+     */
+    private void call() {
+        if (homeInfoBean == null) {
+            return;
+        }
+        AVChatKit.outgoingCall(this
+                , String.valueOf(homeInfoBean.getAccount())
+                , UserInfoHelper.getUserDisplayName(String.valueOf(homeInfoBean.getAccount()))
+                , AVChatType.VIDEO.getValue()
+                , AVChatActivity.FROM_INTERNAL);
     }
 
 
@@ -242,8 +259,7 @@ public class HomePageDetailsActivity extends BaseActivity_ implements AnchorView
     private void SuccessData(BaseBean baseBean) {
         if (baseBean.isSuccess()) {
             try {
-                homeInfoBean = new Gson().fromJson(baseBean.getJsonData(), new TypeToken<HomeInfoBean>() {
-                }.getType());
+                homeInfoBean = new Gson().fromJson(baseBean.getJsonData(), HomeInfoBean.class);
                 //banner图
                 photoalbumListBeans = homeInfoBean.getPhotoalbumList();
                 listBanner.clear();

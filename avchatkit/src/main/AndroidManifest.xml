@@ -8,7 +8,6 @@
             android:name="com.netease.nim.avchatkit.activity.AVChatActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait"
-            android:theme="@style/FullScreenTheme"
             android:windowSoftInputMode="stateAlwaysHidden" />
 
         <!-- 音视频 -->

@@ -26,7 +26,6 @@ import com.netease.nim.avchatkit.module.AVSwitchListener;
 import com.netease.nim.avchatkit.module.SimpleAVChatStateObserver;
 import com.netease.nim.avchatkit.notification.AVChatNotification;
 import com.netease.nim.avchatkit.receiver.PhoneCallStateObserver;
-import com.netease.nim.avchatkit.ui.AVChatAudioUI;
 import com.netease.nim.avchatkit.ui.AVChatVideoUI;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.Observer;
@@ -74,7 +73,7 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
     // view
     private View root;
     private View videoRoot;
-    private View audioRoot;
+    //private View audioRoot;
     private View surfaceRoot;
 
     // state
@@ -91,7 +90,7 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
     private String displayName; // 对方的显示昵称
 
     private AVChatController avChatController;
-    private AVChatAudioUI avChatAudioUI; // 音频界面
+    //private AVChatAudioUI avChatAudioUI; // 音频界面
     private AVChatVideoUI avChatVideoUI; // 视频界面
 
     // face unity
@@ -130,6 +129,8 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         // 若来电或去电未接通时，点击home。另外一方挂断通话。从最近任务列表恢复，则finish
         if (needFinish) {
             finish();
@@ -140,7 +141,6 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
         AVChatProfile.getInstance().activityLaunched();
 
         dismissKeyguard();
-
         root = LayoutInflater.from(this).inflate(R.layout.avchat_activity, null);
         setContentView(root);
 
@@ -201,9 +201,9 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
 
         }
 
-        if (avChatAudioUI != null) {
-            avChatAudioUI.onDestroy();
-        }
+//        if (avChatAudioUI != null) {
+//            avChatAudioUI.onDestroy();
+//        }
 
         if (avChatVideoUI != null) {
             avChatVideoUI.onDestroy();
@@ -249,7 +249,7 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
 
     private void initData() {
         avChatController = new AVChatController(this, avChatData);
-        avChatAudioUI = new AVChatAudioUI(this, root, avChatData, displayName, avChatController, this);
+        //avChatAudioUI = new AVChatAudioUI(this, root, avChatData, displayName, avChatController, this);
         avChatVideoUI = new AVChatVideoUI(this, root, avChatData, displayName, avChatController, this, this);
     }
 
@@ -271,26 +271,26 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
      */
 
     private void showUI() {
-        audioRoot = root.findViewById(R.id.avchat_audio_layout);
+        //audioRoot = root.findViewById(R.id.avchat_audio_layout);
         videoRoot = root.findViewById(R.id.avchat_video_layout);
         surfaceRoot = root.findViewById(R.id.avchat_surface_layout);
         if (state == AVChatType.AUDIO.getValue()) {
-            // 音频
-            audioRoot.setVisibility(View.VISIBLE);
-            videoRoot.setVisibility(View.GONE);
-            surfaceRoot.setVisibility(View.GONE);
-            if (mIsInComingCall) {
-                // 来电
-                AVChatSoundPlayer.instance().play(AVChatSoundPlayer.RingerTypeEnum.RING);
-                avChatAudioUI.showIncomingCall(avChatData);
-            } else {
-                // 去电
-                AVChatSoundPlayer.instance().play(AVChatSoundPlayer.RingerTypeEnum.CONNECTING);
-                avChatAudioUI.doOutGoingCall(receiverId);
-            }
+//            // 音频
+//            audioRoot.setVisibility(View.VISIBLE);
+//            videoRoot.setVisibility(View.GONE);
+//            surfaceRoot.setVisibility(View.GONE);
+//            if (mIsInComingCall) {
+//                // 来电
+//                AVChatSoundPlayer.instance().play(AVChatSoundPlayer.RingerTypeEnum.RING);
+//                avChatAudioUI.showIncomingCall(avChatData);
+//            } else {
+//                // 去电
+//                AVChatSoundPlayer.instance().play(AVChatSoundPlayer.RingerTypeEnum.CONNECTING);
+//                avChatAudioUI.doOutGoingCall(receiverId);
+//            }
         } else {
             // 视频
-            audioRoot.setVisibility(View.GONE);
+            //audioRoot.setVisibility(View.GONE);
             videoRoot.setVisibility(View.VISIBLE);
             surfaceRoot.setVisibility(View.VISIBLE);
             if (mIsInComingCall) {
@@ -323,7 +323,7 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
             if (state == AVChatType.VIDEO.getValue()) {
                 avChatVideoUI.resetRecordTip();
             } else {
-                avChatAudioUI.resetRecordTip();
+                //avChatAudioUI.resetRecordTip();
             }
         }
 
@@ -336,7 +336,7 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
                 Toast.makeText(AVChatActivity.this, "录制已结束.", Toast.LENGTH_SHORT).show();
             }
             if (state == AVChatType.AUDIO.getValue()) {
-                avChatAudioUI.resetRecordTip();
+                //avChatAudioUI.resetRecordTip();
             } else {
                 avChatVideoUI.resetRecordTip();
             }
@@ -347,7 +347,7 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
             if (state == AVChatType.VIDEO.getValue()) {
                 avChatVideoUI.showRecordWarning();
             } else {
-                avChatAudioUI.showRecordWarning();
+                //avChatAudioUI.showRecordWarning();
             }
         }
 
@@ -381,7 +381,7 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
                 avChatController.setTimeBase(SystemClock.elapsedRealtime());
 
             if (state == AVChatType.AUDIO.getValue()) {
-                avChatAudioUI.showAudioInitLayout();
+                //avChatAudioUI.showAudioInitLayout();
             } else {
                 // 接通以后，自己是小屏幕显示图像，对方是大屏幕显示图像
                 avChatVideoUI.initSmallSurfaceView(AVChatKit.getAccount());
@@ -591,16 +591,16 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
         state = AVChatType.AUDIO.getValue();
         videoRoot.setVisibility(View.GONE);
         surfaceRoot.setVisibility(View.GONE);
-        audioRoot.setVisibility(View.VISIBLE);
+        //audioRoot.setVisibility(View.VISIBLE);
         avChatVideoUI.onVideoToAudio();
         // 判断是否静音，扬声器是否开启，对界面相应控件进行显隐处理。
-        avChatAudioUI.onVideoToAudio(AVChatManager.getInstance().isLocalAudioMuted(),
-                AVChatManager.getInstance().speakerEnabled());
+//        avChatAudioUI.onVideoToAudio(AVChatManager.getInstance().isLocalAudioMuted(),
+//                AVChatManager.getInstance().speakerEnabled());
     }
 
     @Override
     public void onAudioToVideo() {
-        audioRoot.setVisibility(View.GONE);
+        //audioRoot.setVisibility(View.GONE);
         videoRoot.setVisibility(View.VISIBLE);
         surfaceRoot.setVisibility(View.VISIBLE);
         avChatVideoUI.onAudioToVideo();
@@ -610,7 +610,7 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
     public void onReceiveAudioToVideoAgree() {
         // 同意切换为视频
         state = AVChatType.VIDEO.getValue();
-        audioRoot.setVisibility(View.GONE);
+       // audioRoot.setVisibility(View.GONE);
         videoRoot.setVisibility(View.VISIBLE);
         surfaceRoot.setVisibility(View.VISIBLE);
         avChatVideoUI.onAudioToVideoAgree(avChatData != null ? avChatData.getAccount() : receiverId);
@@ -619,15 +619,15 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
     private void rejectAudioToVideo() {
         videoRoot.setVisibility(View.GONE);
         surfaceRoot.setVisibility(View.GONE);
-        audioRoot.setVisibility(View.VISIBLE);
-        avChatAudioUI.showAudioInitLayout();
+        //audioRoot.setVisibility(View.VISIBLE);
+        //avChatAudioUI.showAudioInitLayout();
     }
 
     private void incomingAudioToVideo() {
         videoRoot.setVisibility(View.GONE);
         surfaceRoot.setVisibility(View.GONE);
-        audioRoot.setVisibility(View.VISIBLE);
-        avChatAudioUI.showIncomingAudioToVideo();
+        //audioRoot.setVisibility(View.VISIBLE);
+        //avChatAudioUI.showIncomingAudioToVideo();
     }
 
     /**
@@ -662,7 +662,7 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
      */
 
     private void initFaceU() {
-        showOrHideFaceULayout(false); // hide default
+        showOrHideFaceULayout(true); // hide default
 
         if (VersionUtil.isCompatible(Build.VERSION_CODES.JELLY_BEAN_MR2) && FaceU.hasAuthorized()) {
             // async load FaceU

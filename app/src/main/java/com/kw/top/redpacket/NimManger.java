@@ -6,18 +6,18 @@ import android.text.TextUtils;
 import com.kw.top.base.EaseTokenBean;
 import com.kw.top.bean.BaseBean;
 import com.kw.top.bean.event.AppLoginEvent;
-import com.kw.top.bean.event.MsgCountEvent;
 import com.kw.top.bean.event.UserAvatarEvent;
 import com.kw.top.retrofit.Api;
 import com.kw.top.retrofit.HttpHost;
 import com.kw.top.tools.ConstantValue;
-import com.kw.top.ui.activity.news.ChatActivity;
 import com.kw.top.utils.RxToast;
 import com.kw.top.utils.SPUtils;
+import com.netease.nim.avchatkit.AVChatKit;
+import com.netease.nim.avchatkit.model.IUserInfoProvider;
 import com.netease.nim.uikit.api.NimUIKit;
-import com.netease.nim.uikit.business.session.constant.RequestCode;
 import com.netease.nim.uikit.business.session.module.MsgForwardFilter;
 import com.netease.nim.uikit.business.session.module.MsgRevokeFilter;
+import com.netease.nim.uikit.business.uinfo.UserInfoHelper;
 import com.netease.nim.uikit.impl.cache.DataCacheManager;
 import com.netease.nim.uikit.impl.cache.FriendDataCache;
 import com.netease.nim.uikit.impl.cache.NimUserInfoCache;
@@ -29,6 +29,7 @@ import com.netease.nimlib.sdk.auth.LoginInfo;
 import com.netease.nimlib.sdk.msg.model.IMMessage;
 import com.netease.nimlib.sdk.uinfo.UserService;
 import com.netease.nimlib.sdk.uinfo.constant.UserInfoFieldEnum;
+import com.netease.nimlib.sdk.uinfo.model.UserInfo;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -116,6 +117,8 @@ public class NimManger implements MsgForwardFilter, MsgRevokeFilter {
                     public void onResult(int code, LoginInfo param, Throwable exception) {
                         if (param != null && code == ResponseCode.RES_SUCCESS) {
                             NimUIKit.loginSuccess(account);
+                            AVChatKit.setAccount(account);
+                            AVChatKit.setUserInfoProvider(new UserInfoProviderImpl());
                             SPUtils.saveString(mContext, ConstantValue.NET_EASE_TOKEN, param.getToken());
                         } else {
                             RxToast.normal("登录云信失败");
@@ -164,5 +167,17 @@ public class NimManger implements MsgForwardFilter, MsgRevokeFilter {
 
     public void onDestroy() {
         EventBus.getDefault().unregister(this);
+    }
+
+    class UserInfoProviderImpl extends IUserInfoProvider {
+        @Override
+        public UserInfo getUserInfo(final String account) {
+            return NimUIKit.getUserInfoProvider().getUserInfo(account);
+        }
+
+        @Override
+        public String getUserDisplayName(String account) {
+            return UserInfoHelper.getUserDisplayName(account);
+        }
     }
 }

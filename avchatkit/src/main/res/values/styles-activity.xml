@@ -20,8 +20,9 @@
         <item name="android:itemTextAppearance">?android:attr/actionMenuTextAppearance</item>
     </style>
 
-    <style name="FullScreenTheme" parent="@android:style/Theme.Light.NoTitleBar.Fullscreen">
-        <!-- Customize your theme here. -->
+    <style name="FullScreenTheme" >
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
     </style>
 
     <!-- navigation style -->

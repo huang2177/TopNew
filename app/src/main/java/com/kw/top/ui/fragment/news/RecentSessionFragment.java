@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import com.kw.top.base.FriendBean;
@@ -13,6 +14,7 @@ import com.kw.top.ui.activity.news.ChatActivity;
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.business.recent.RecentContactsCallback;
 import com.netease.nim.uikit.business.recent.RecentContactsFragment;
+import com.netease.nimlib.sdk.avchat.model.AVChatAttachment;
 import com.netease.nimlib.sdk.msg.attachment.MsgAttachment;
 import com.netease.nimlib.sdk.msg.model.RecentContact;
 import com.netease.nimlib.sdk.uinfo.model.UserInfo;
@@ -55,7 +57,9 @@ public class RecentSessionFragment extends RecentContactsFragment implements Rec
     public String getDigestOfAttachment(RecentContact recent, MsgAttachment attachment) {
         if (attachment instanceof RedPacketAttachment) {
             return "[红包]";
-        } else {
+        } else  if (attachment instanceof AVChatAttachment) { //目前只有视频
+            return "[视频]";
+        }{
             return recent.getContent();
         }
     }
