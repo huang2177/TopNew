@@ -80,7 +80,6 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
     private View middleRoot;
     private HeadImageView headImg;
     private TextView nickNameTV;
-    private TextView notifyTV;
     private View refuse_receive;
     private TextView refuseTV;
     private TextView receiveTV;
@@ -226,7 +225,6 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
         middleRoot = videoRoot.findViewById(R.id.avchat_video_middle_control);
         headImg = middleRoot.findViewById(R.id.avchat_video_head);
         nickNameTV = (TextView) middleRoot.findViewById(R.id.avchat_video_nickname);
-        notifyTV = (TextView) middleRoot.findViewById(R.id.avchat_video_notify);
 
         refuse_receive = middleRoot.findViewById(R.id.avchat_video_refuse_receive);
         refuseTV = (TextView) refuse_receive.findViewById(R.id.refuse);
@@ -254,6 +252,7 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
      * ********************** 视频流程 **********************
      */
 
+    //来电
     public void showIncomingCall(AVChatData avChatData) {
         this.avChatData = avChatData;
         this.account = avChatData.getAccount();
@@ -262,7 +261,6 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
         findVideoViews();
 
         showProfile();//对方的详细信息
-        showNotify(R.string.avchat_video_call_request);
         setRefuseReceive(true);
         receiveTV.setText(R.string.avchat_pickup);
         setTopRoot(false);
@@ -271,6 +269,7 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
         setFaceUnityRoot(false);
     }
 
+    //去电
     public void doOutgoingCall(String account) {
         this.account = account;
 
@@ -278,11 +277,10 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
         findVideoViews();
 
         showProfile();//对方的详细信息
-        showNotify(R.string.avchat_wait_recieve);
         setRefuseReceive(false);
         setTopRoot(false);
         setMiddleRoot(true);
-        setBottomRoot(true);
+        setBottomRoot(false);
         setFaceUnityRoot(false);
 
         avChatController.doCalling(account, AVChatType.VIDEO, new AVChatControllerCallback<AVChatData>() {
@@ -368,48 +366,6 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
         largeSizePreviewCoverLayout.setVisibility(View.GONE);
     }
 
-    /**
-     * ******************* 音视频切换 *******************
-     */
-
-    public void onVideoToAudio() {
-        isReleasedVideo = true;
-        smallSizePreviewFrameLayout.setVisibility(View.INVISIBLE);
-    }
-
-    public void onAudioToVideo() {
-        findVideoViews();
-        findSurfaceView();
-
-        showNotificationLayout(AUDIO_TO_VIDEO_WAIT);
-
-        setTopRoot(true);
-        setMiddleRoot(false);
-        setBottomRoot(true);
-        setFaceUnityRoot(true);
-    }
-
-    public void onAudioToVideoAgree(String largeAccount) {
-        showVideoInitLayout();
-
-        //打开视频
-        isReleasedVideo = false;
-        smallRender = new AVChatSurfaceViewRenderer(context);
-        largeRender = new AVChatSurfaceViewRenderer(context);
-
-        //打开视频
-        AVChatManager.getInstance().enableVideo();
-        AVChatManager.getInstance().startVideoPreview();
-
-        initSmallSurfaceView(AVChatKit.getAccount());
-        // 是否在发送视频 即摄像头是否开启
-        if (AVChatManager.getInstance().isLocalVideoMuted()) {
-            AVChatManager.getInstance().muteLocalVideo(false);
-            localVideoOn();
-        }
-
-        initLargeSurfaceView(largeAccount);
-    }
 
     /********************** 界面显示 **********************************/
 
@@ -419,19 +375,14 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
         nickNameTV.setText(displayName);
     }
 
-    // 显示通知
-    private void showNotify(int resId) {
-        notifyTV.setText(resId);
-        notifyTV.setVisibility(View.VISIBLE);
-    }
 
     private void setRefuseReceive(boolean visible) {
-        refuse_receive.setVisibility(visible ? View.VISIBLE : View.GONE);
+        receiveTV.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
     private void setTopRoot(boolean visible) {
-        topHeadImg.loadBuddyAvatar(account);
         topNickNameTV.setText(displayName);
+        topHeadImg.loadBuddyAvatar(account);
         topRoot.setVisibility(visible ? View.VISIBLE : View.GONE);
         if (topRootHeight == 0) {
             Rect rect = new Rect();
@@ -455,7 +406,6 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
         if (faceUnityRoot == null) {
             return;
         }
-
         faceUnityRoot.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
@@ -543,7 +493,7 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
 
     //滤镜
     private void doFilter() {
-
+        setFaceUnityRoot(true);
     }
 
     private void doCare() {
@@ -557,7 +507,6 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
     }
 
     private void doReceiveCall() {
-        showNotify(R.string.avchat_connecting);
         avChatController.receive(AVChatType.VIDEO, new AVChatControllerCallback<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
@@ -579,17 +528,6 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
         isReleasedVideo = true;
         AVChatManager.getInstance().stopVideoPreview();
         AVChatManager.getInstance().disableVideo();
-    }
-
-
-    // 对方打开了摄像头
-    private void localVideoOn() {
-        isLocalVideoOff = false;
-        if (localPreviewInSmallSize) {
-            smallSizePreviewCoverImg.setVisibility(View.GONE);
-        } else {
-            largeSizePreviewCoverLayout.setVisibility(View.GONE);
-        }
     }
 
     // 本地关闭了摄像头

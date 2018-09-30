@@ -239,7 +239,6 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
 
     private void initData() {
         avChatController = new AVChatController(this, avChatData);
-        //avChatAudioUI = new AVChatAudioUI(this, root, avChatData, displayName, avChatController, this);
         avChatVideoUI = new AVChatVideoUI(this, root, avChatData, displayName, avChatController, this, this);
     }
 
@@ -261,39 +260,19 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
      */
 
     private void showUI() {
-        //audioRoot = root.findViewById(R.id.avchat_audio_layout);
         videoRoot = root.findViewById(R.id.avchat_video_layout);
         surfaceRoot = root.findViewById(R.id.avchat_surface_layout);
-        if (state == AVChatType.AUDIO.getValue()) {
-//            // 音频
-//            audioRoot.setVisibility(View.VISIBLE);
-//            videoRoot.setVisibility(View.GONE);
-//            surfaceRoot.setVisibility(View.GONE);
-//            if (mIsInComingCall) {
-//                // 来电
-//                AVChatSoundPlayer.instance().play(AVChatSoundPlayer.RingerTypeEnum.RING);
-//                avChatAudioUI.showIncomingCall(avChatData);
-//            } else {
-//                // 去电
-//                AVChatSoundPlayer.instance().play(AVChatSoundPlayer.RingerTypeEnum.CONNECTING);
-//                avChatAudioUI.doOutGoingCall(receiverId);
-//            }
+        videoRoot.setVisibility(View.VISIBLE);
+        surfaceRoot.setVisibility(View.VISIBLE);
+        if (mIsInComingCall) {
+            // 来电
+            AVChatSoundPlayer.instance().play(AVChatSoundPlayer.RingerTypeEnum.RING);
+            avChatVideoUI.showIncomingCall(avChatData);
         } else {
-            // 视频
-            //audioRoot.setVisibility(View.GONE);
-            videoRoot.setVisibility(View.VISIBLE);
-            surfaceRoot.setVisibility(View.VISIBLE);
-            if (mIsInComingCall) {
-                // 来电
-                AVChatSoundPlayer.instance().play(AVChatSoundPlayer.RingerTypeEnum.RING);
-                avChatVideoUI.showIncomingCall(avChatData);
-            } else {
-                // 去电
-                AVChatSoundPlayer.instance().play(AVChatSoundPlayer.RingerTypeEnum.CONNECTING);
-                avChatVideoUI.doOutgoingCall(receiverId);
-            }
+            // 去电
+            AVChatSoundPlayer.instance().play(AVChatSoundPlayer.RingerTypeEnum.CONNECTING);
+            avChatVideoUI.doOutgoingCall(receiverId);
         }
-
     }
 
     /**
@@ -304,41 +283,14 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
     private SimpleAVChatStateObserver avchatStateObserver = new SimpleAVChatStateObserver() {
         @Override
         public void onAVRecordingCompletion(String account, String filePath) {
-            if (account != null && filePath != null && filePath.length() > 0) {
-                String msg = "音视频录制已结束, " + "账号：" + account + " 录制文件已保存至：" + filePath;
-                Toast.makeText(AVChatActivity.this, msg, Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(AVChatActivity.this, "录制已结束.", Toast.LENGTH_SHORT).show();
-            }
-//            if (state == AVChatType.VIDEO.getValue()) {
-//                //avChatVideoUI.resetRecordTip();
-//            } else {
-//                //avChatAudioUI.resetRecordTip();
-//            }
         }
 
         @Override
         public void onAudioRecordingCompletion(String filePath) {
-            if (filePath != null && filePath.length() > 0) {
-                String msg = "音频录制已结束, 录制文件已保存至：" + filePath;
-                Toast.makeText(AVChatActivity.this, msg, Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(AVChatActivity.this, "录制已结束.", Toast.LENGTH_SHORT).show();
-            }
-            if (state == AVChatType.AUDIO.getValue()) {
-                //avChatAudioUI.resetRecordTip();
-            } else {
-                //avChatVideoUI.resetRecordTip();
-            }
         }
 
         @Override
         public void onLowStorageSpaceWarning(long availableSize) {
-            if (state == AVChatType.VIDEO.getValue()) {
-                //avChatVideoUI.showRecordWarning();
-            } else {
-                //avChatAudioUI.showRecordWarning();
-            }
         }
 
         @Override
@@ -443,7 +395,7 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
         }
     };
 
-    // 监听音视频模式切换通知, 对方音视频开关通知
+    // 对方音视频开关通知
     Observer<AVChatControlEvent> callControlObserver = new Observer<AVChatControlEvent>() {
         @Override
         public void onEvent(AVChatControlEvent netCallControlNotification) {
@@ -451,27 +403,12 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
         }
     };
 
-    // 处理音视频切换请求和对方音视频开关通知
+    // 对方音视频开关通知
     private void handleCallControl(AVChatControlEvent notification) {
         if (AVChatManager.getInstance().getCurrentChatId() != notification.getChatId()) {
             return;
         }
         switch (notification.getControlCommand()) {
-            case AVChatControlCommand.SWITCH_AUDIO_TO_VIDEO:
-                incomingAudioToVideo();
-                break;
-            case AVChatControlCommand.SWITCH_AUDIO_TO_VIDEO_AGREE:
-                // 对方同意切成视频啦
-                state = AVChatType.VIDEO.getValue();
-                avChatVideoUI.onAudioToVideoAgree(notification.getAccount());
-                break;
-            case AVChatControlCommand.SWITCH_AUDIO_TO_VIDEO_REJECT:
-                rejectAudioToVideo();
-                Toast.makeText(AVChatActivity.this, R.string.avchat_switch_video_reject, Toast.LENGTH_SHORT).show();
-                break;
-            case AVChatControlCommand.SWITCH_VIDEO_TO_AUDIO:
-                onVideoToAudio();
-                break;
             case AVChatControlCommand.NOTIFY_VIDEO_OFF:
                 // 收到对方关闭画面通知
                 if (state == AVChatType.VIDEO.getValue()) {
@@ -485,7 +422,7 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
                 }
                 break;
             default:
-                Toast.makeText(this, "对方发来指令值：" + notification.getControlCommand(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "对方发来指令值：" + notification.getControlCommand(), Toast.LENGTH_SHORT).show();
                 break;
         }
     }
@@ -578,47 +515,16 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
 
     @Override
     public void onVideoToAudio() {
-        state = AVChatType.AUDIO.getValue();
-        videoRoot.setVisibility(View.GONE);
-        surfaceRoot.setVisibility(View.GONE);
-        //audioRoot.setVisibility(View.VISIBLE);
-        avChatVideoUI.onVideoToAudio();
-        // 判断是否静音，扬声器是否开启，对界面相应控件进行显隐处理。
-//        avChatAudioUI.onVideoToAudio(AVChatManager.getInstance().isLocalAudioMuted(),
-//                AVChatManager.getInstance().speakerEnabled());
     }
 
     @Override
     public void onAudioToVideo() {
-        //audioRoot.setVisibility(View.GONE);
-        videoRoot.setVisibility(View.VISIBLE);
-        surfaceRoot.setVisibility(View.VISIBLE);
-        avChatVideoUI.onAudioToVideo();
     }
 
     @Override
     public void onReceiveAudioToVideoAgree() {
-        // 同意切换为视频
-        state = AVChatType.VIDEO.getValue();
-       // audioRoot.setVisibility(View.GONE);
-        videoRoot.setVisibility(View.VISIBLE);
-        surfaceRoot.setVisibility(View.VISIBLE);
-        avChatVideoUI.onAudioToVideoAgree(avChatData != null ? avChatData.getAccount() : receiverId);
     }
 
-    private void rejectAudioToVideo() {
-        videoRoot.setVisibility(View.GONE);
-        surfaceRoot.setVisibility(View.GONE);
-        //audioRoot.setVisibility(View.VISIBLE);
-        //avChatAudioUI.showAudioInitLayout();
-    }
-
-    private void incomingAudioToVideo() {
-        videoRoot.setVisibility(View.GONE);
-        surfaceRoot.setVisibility(View.GONE);
-        //audioRoot.setVisibility(View.VISIBLE);
-        //avChatAudioUI.showIncomingAudioToVideo();
-    }
 
     /**
      * ****************** 通知栏 ********************
@@ -708,7 +614,7 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
 
     private void releaseVideo() {
         if (state == AVChatType.VIDEO.getValue()) {
-           avChatVideoUI.releaseVideo();
+            avChatVideoUI.releaseVideo();
         }
     }
 

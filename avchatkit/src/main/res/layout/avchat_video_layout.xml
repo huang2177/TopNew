@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <include
         android:id="@+id/avchat_video_top_control"
         layout="@layout/video_switch_audio_layout"
@@ -24,21 +25,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginBottom="20dp" />
 
     <include
         android:id="@+id/avchat_video_face_unity"
         layout="@layout/faceu_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/avchat_video_bottom_control"/>
+        android:layout_above="@+id/avchat_video_bottom_control" />
 
     <include
         android:id="@+id/avchat_video_permission_control"
         layout="@layout/avchat_video_permission_layout"
-        android:layout_marginTop="170dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:visibility="gone" />
 
 </RelativeLayout>
