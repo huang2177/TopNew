@@ -32,7 +32,7 @@
         layout="@layout/faceu_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/avchat_video_bottom_control" />
+        android:visibility="gone" />
 
     <include
         android:id="@+id/avchat_video_permission_control"

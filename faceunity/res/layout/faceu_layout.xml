@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@color/percent60translucentBlack"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <Button
             android:id="@+id/btn_choose_effect"
@@ -20,7 +21,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/colorTranslucent"
-            android:onClick="onClick"
             android:padding="@dimen/min_space"
             android:text="道具"
             android:textColor="@color/faceunityYellow"
@@ -33,7 +33,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/colorTranslucent"
-            android:onClick="onClick"
             android:padding="@dimen/min_space"
             android:text="滤镜"
             android:textColor="@color/colorWhite"
@@ -46,7 +45,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/colorTranslucent"
-            android:onClick="onClick"
             android:padding="@dimen/min_space"
             android:text="磨皮"
             android:textColor="@color/colorWhite"
@@ -59,7 +57,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/colorTranslucent"
-            android:onClick="onClick"
             android:padding="@dimen/min_space"
             android:text="美白"
             android:textColor="@color/colorWhite"
@@ -72,7 +69,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/colorTranslucent"
-            android:onClick="onClick"
             android:padding="@dimen/min_space"
             android:text="红润"
             android:textColor="@color/colorWhite"
@@ -85,7 +81,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/colorTranslucent"
-            android:onClick="onClick"
             android:padding="@dimen/min_space"
             android:text="美型"
             android:textColor="@color/colorWhite"
@@ -98,21 +93,20 @@
         android:id="@+id/effect_beauty_select"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/face_u_control"
-        android:layout_gravity="bottom">
+        android:layout_alignParentBottom="true">
         <!--effect select-->
         <android.support.v7.widget.RecyclerView
             android:id="@+id/effect_recycle_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom" />
+            android:layout_gravity="bottom"
+            android:visibility="gone" />
         <!--filter select-->
         <android.support.v7.widget.RecyclerView
             android:id="@+id/filter_recycle_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:visibility="gone" />
+            android:layout_marginBottom="220dp" />
         <!--blur level select-->
         <LinearLayout
             android:id="@+id/blur_level_select_block"

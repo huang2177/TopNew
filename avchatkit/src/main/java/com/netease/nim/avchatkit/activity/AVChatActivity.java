@@ -558,15 +558,14 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
      */
 
     private void initFaceU() {
-        showOrHideFaceULayout(true); // hide default
-
-        if (VersionUtil.isCompatible(Build.VERSION_CODES.JELLY_BEAN_MR2) && FaceU.hasAuthorized()) {
+        //showOrHideFaceULayout(false); // hide default
+        if (VersionUtil.isCompatible(Build.VERSION_CODES.JELLY_BEAN_MR2)) {
             // async load FaceU
             FaceU.createAndAttach(AVChatActivity.this, findView(R.id.avchat_video_face_unity), new FaceU.Response<FaceU>() {
                 @Override
                 public void onResult(FaceU faceU) {
                     AVChatActivity.this.faceU = faceU;
-                    showOrHideFaceULayout(true); // show
+                    //showOrHideFaceULayout(false); // show
                 }
             });
         }
@@ -596,8 +595,7 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
         if (faceU == null) {
             return;
         }
-
-        faceU.showOrHideLayout();
+        //faceU.showOrHideLayout();
     }
 
     // 主动挂断

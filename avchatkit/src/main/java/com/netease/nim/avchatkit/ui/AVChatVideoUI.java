@@ -51,8 +51,6 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
     private static final int PEER_CLOSE_CAMERA = 0;
     private static final int LOCAL_CLOSE_CAMERA = 1;
     private static final int AUDIO_TO_VIDEO_WAIT = 2;
-    private static final int TOUCH_SLOP = 10;
-    private static final String TAG = AVChatVideoUI.class.getSimpleName();
 
     private final String[] BASIC_PERMISSIONS = new String[]{Manifest.permission.CAMERA,};
 
@@ -493,7 +491,7 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
 
     //滤镜
     private void doFilter() {
-        setFaceUnityRoot(true);
+        setFaceUnityRoot(faceUnityRoot.getVisibility() == View.GONE);
     }
 
     private void doCare() {
