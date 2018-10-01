@@ -483,6 +483,7 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
         releaseVideo();
         avChatController.hangUp(AVChatExitCode.HANGUP);
         closeSession();
+        
     }
 
     //举报
