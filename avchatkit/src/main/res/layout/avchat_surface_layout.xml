@@ -25,8 +25,7 @@
         android:shadowDy="1"
         android:shadowRadius="1"
         android:textColor="@color/video_call_peer_close_cameral_text_color"
-        android:textSize="16sp"
-        android:background="@drawable/avchat_call_bg" />
+        android:textSize="16sp"/>
 
     <FrameLayout
         android:id="@+id/small_size_preview_layout"
