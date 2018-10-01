@@ -1,9 +1,8 @@
 package com.kw.top.ui.activity.HomePage;
 
-import android.app.Activity;
-
 import com.kw.top.bean.BaseBean;
 import com.kw.top.retrofit.Api;
+import com.kw.top.ui.fragment.find.HomePageDetailsActivity;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -15,13 +14,11 @@ import rx.schedulers.Schedulers;
 
 public class HomePageFollow {
 
-    private HomePageView view;
-    private Activity mActivity;
+    private HomePageDetailsActivity mActivity;
 
 
-    public HomePageFollow(Activity mActivity, HomePageView view) {
+    public HomePageFollow(HomePageDetailsActivity mActivity) {
         this.mActivity = mActivity;
-        this.view = view;
     }
 
 
@@ -40,12 +37,12 @@ public class HomePageFollow {
                         if (!baseBean.isSuccess()) {
                             return;
                         }
-                        view.AddFollowResult("add");
+                        mActivity.AddFollowResult("add");
                     }
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-                        view.AddFollowResult(null);
+                        mActivity.AddFollowResult(null);
                     }
                 });
     }
@@ -66,12 +63,40 @@ public class HomePageFollow {
                         if (!baseBean.isSuccess()) {
                             return;
                         }
-                        view.AddFollowResult("delate");
+                        mActivity.AddFollowResult("delate");
                     }
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-                        view.AddFollowResult(null);
+                        mActivity.AddFollowResult(null);
+                    }
+                });
+    }
+
+    /**
+     * 获取首页数据
+     *
+     * @param userId
+     * @param token
+     */
+    public void getHonePageData(String userId, String token) {
+        mActivity.showProgressDialog();
+        Api.getApiService().getuserInfoHomepage(userId, token)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(new Action1<BaseBean>() {
+                    @Override
+                    public void call(BaseBean baseBean) {
+                        mActivity.hideProgressDialog();
+                        mActivity.SuccessData(baseBean);
+
+
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        mActivity.hideProgressDialog();
                     }
                 });
     }

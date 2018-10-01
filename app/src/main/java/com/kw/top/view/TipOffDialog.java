@@ -8,15 +8,16 @@ import android.widget.TextView;
 import com.kw.top.R;
 
 /**
+ * Des:视频聊天的举报事件Dialog
  * Created by Administrator on 2018/9/30.
  */
 
-public class ReportDialog extends XBottomDialog {
+public class TipOffDialog extends XBottomDialog {
     private EditText editText;
     private TextView tvCommit, tvCancel;
     private String content;
 
-    public ReportDialog(@NonNull Activity activity) {
+    public TipOffDialog(@NonNull Activity activity) {
         super(activity);
     }
 

@@ -1,6 +1,6 @@
 package com.kw.top.ui.fragment.find;
 
-import android.app.Dialog;
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -13,11 +13,9 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.kw.top.R;
-import com.kw.top.adapter.GiftAdapter;
 import com.kw.top.base.BaseActivity_;
 import com.kw.top.bean.BaseBean;
-import com.kw.top.bean.GiftBean;
-import com.kw.top.retrofit.Api;
+import com.netease.nim.avchatkit.event.VideoChatEvent;
 import com.kw.top.retrofit.HttpHost;
 import com.kw.top.tools.ConstantValue;
 import com.kw.top.tools.GlideTools;
@@ -33,6 +31,7 @@ import com.kw.top.utils.RxToast;
 import com.kw.top.utils.SPUtils;
 import com.kw.top.utils.StatusUtil;
 import com.kw.top.view.GiftDialog;
+import com.kw.top.view.TipOffDialog;
 import com.netease.nim.avchatkit.AVChatKit;
 import com.netease.nim.avchatkit.activity.AVChatActivity;
 import com.netease.nim.uikit.business.uinfo.UserInfoHelper;
@@ -40,22 +39,22 @@ import com.netease.nimlib.sdk.avchat.constant.AVChatType;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by shibing on 2018/9/24.
  */
 
 public class HomePageDetailsActivity extends BaseActivity_ implements HomePageView {
-
 
     @BindView(R.id.detalis_banner)
     Banner banner;
@@ -109,15 +108,9 @@ public class HomePageDetailsActivity extends BaseActivity_ implements HomePageVi
     private List<HomeInfoBean.PhotoalbumListBean> photoalbumListBeans;
 
 
-    private GiftAdapter mGiftAdapter;
-
-    private List<GiftBean> mDiamondList = new ArrayList<>();//钻石list
-    private List<GiftBean> mAllGiftList = new ArrayList<>();//所有礼物list
-    private Dialog dialog;
-    private String friend = "0";
     private String receiveUserId;
     private HomePageFollow homePageFollow;
-    private String follow, friends;
+    private String follow;
     private GiftDialog giftDialog;
 
     @Override
@@ -143,10 +136,11 @@ public class HomePageDetailsActivity extends BaseActivity_ implements HomePageVi
             StatusUtil.setStatusBar(this, false, false);
             StatusUtil.setStatusTextColor(false, this);
         }
-        homePageFollow = new HomePageFollow(this, this);
+        homePageFollow = new HomePageFollow(this);
         listBanner = new ArrayList<>();
         userId = getIntent().getStringExtra(ConstantValue.KEY_USER_ID);
-        getHonePageData(userId, getToken());
+        homePageFollow.getHonePageData(userId, getToken());
+        EventBus.getDefault().register(this);
     }
 
 
@@ -185,25 +179,16 @@ public class HomePageDetailsActivity extends BaseActivity_ implements HomePageVi
                 UserCircleActivity.startActivity(this, userId);
                 break;
             case R.id.image_add:  //添加好友
-                giftDialog = new GiftDialog(this, "0", receiveUserId, getToken());
-                giftDialog.show();
-                //showGiftDialog("0");
+                showGifDialog("0", this);
                 break;
             case R.id.iamge_lw:   //曾送礼物
-                giftDialog = new GiftDialog(this, "1", receiveUserId, getToken());
-                giftDialog.show();
-                //showGiftDialog("1");
+                showGifDialog("1", this);
                 break;
             case R.id.iamge_sp:   //与她视频
                 call();
                 break;
             case R.id.tv_follow:
-                if (follow.equals("1")) {
-                    homePageFollow.delaeteFollow(userId, getToken());
-                } else {
-                    homePageFollow.addFollow(userId, getToken());
-                }
-
+                follow();
                 break;
         }
     }
@@ -222,39 +207,26 @@ public class HomePageDetailsActivity extends BaseActivity_ implements HomePageVi
                 , AVChatActivity.FROM_INTERNAL);
     }
 
-
-    /**
-     * 获取首页数据
-     */
-    private void getHonePageData(String anchorId, String token) {
-        showProgressDialog();
-        Api.getApiService().getuserInfoHomepage(anchorId, token)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .unsubscribeOn(Schedulers.io())
-                .subscribe(new Action1<BaseBean>() {
-                    @Override
-                    public void call(BaseBean baseBean) {
-                        hideProgressDialog();
-                        SuccessData(baseBean);
-
-
-                    }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        hideProgressDialog();
-                    }
-                });
-
+    public void follow() {
+        if (follow.equals("1")) {
+            homePageFollow.delaeteFollow(userId, getToken());
+        } else {
+            homePageFollow.addFollow(userId, getToken());
+        }
     }
+
+    public void showGifDialog(String type, Activity context) {
+        giftDialog = new GiftDialog(context, type, receiveUserId, getToken());
+        giftDialog.show();
+    }
+
 
     /**
      * 数据处理
      *
      * @param baseBean
      */
-    private void SuccessData(BaseBean baseBean) {
+    public void SuccessData(BaseBean baseBean) {
         if (baseBean.isSuccess()) {
             try {
                 homeInfoBean = new Gson().fromJson(baseBean.getJsonData(), HomeInfoBean.class);
@@ -292,7 +264,6 @@ public class HomePageDetailsActivity extends BaseActivity_ implements HomePageVi
                     tvFollow.setText("关注");
                 }
                 follow = homeInfoBean.getFollow();   //是否关注
-                friends = homeInfoBean.getFriends(); //是否为好友
 
             } catch (JsonSyntaxException e) {
                 e.printStackTrace();
@@ -320,6 +291,30 @@ public class HomePageDetailsActivity extends BaseActivity_ implements HomePageVi
             follow = "0";
             tvFollow.setText("关注");
         }
+    }
 
+
+    /**
+     * 视频聊天页面相关事件
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onVideoChatEvent(VideoChatEvent event) {
+        switch (event.type) {
+            case VideoChatEvent.FOLLOW:
+                follow();
+                break;
+            case VideoChatEvent.TIP_OFF:
+                new TipOffDialog(event.context).show();
+                break;
+            case VideoChatEvent.GIT_DIALOG:
+                showGifDialog("0", event.context);
+                break;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().register(this);
     }
 }

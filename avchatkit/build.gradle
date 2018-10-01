@@ -27,4 +27,6 @@ dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
     api project(':faceunity')
     api project(':uikit')
+    //事件总线
+    api 'org.greenrobot:eventbus:3.0.0'
 }

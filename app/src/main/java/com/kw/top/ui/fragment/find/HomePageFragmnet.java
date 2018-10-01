@@ -22,7 +22,6 @@ import com.kw.top.ui.fragment.find.baen.HomeBean;
 import com.kw.top.utils.OnItemClickListener;
 import com.kw.top.utils.RxToast;
 import com.kw.top.utils.SPUtils;
-import com.kw.top.view.ReportDialog;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
@@ -147,7 +146,7 @@ public class HomePageFragmnet extends BaseFragment implements OnItemClickListene
                 getHonePageData(type, nowPage + "", pageNum + "", getToken());
                 break;
             case R.id.home_search:
-                //ReportDialog reportDialog = new ReportDialog(getActivity());
+                //TipOffDialog reportDialog = new TipOffDialog(getActivity());
                 //reportDialog.show();
                 break;
         }

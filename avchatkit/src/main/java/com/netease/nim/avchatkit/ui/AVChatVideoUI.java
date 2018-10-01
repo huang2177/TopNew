@@ -28,6 +28,7 @@ import com.netease.nim.avchatkit.common.widgets.ToggleState;
 import com.netease.nim.avchatkit.common.widgets.ToggleView;
 import com.netease.nim.avchatkit.constant.AVChatExitCode;
 import com.netease.nim.avchatkit.controll.AVChatController;
+import com.netease.nim.avchatkit.event.VideoChatEvent;
 import com.netease.nim.avchatkit.module.AVChatControllerCallback;
 import com.netease.nim.avchatkit.module.AVSwitchListener;
 import com.netease.nimlib.sdk.avchat.AVChatManager;
@@ -37,6 +38,8 @@ import com.netease.nimlib.sdk.avchat.model.AVChatCameraCapturer;
 import com.netease.nimlib.sdk.avchat.model.AVChatData;
 import com.netease.nimlib.sdk.avchat.model.AVChatSurfaceViewRenderer;
 import com.netease.nrtc.video.render.IVideoRender;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -475,18 +478,21 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
         switchAndSetLayout();
     }
 
+    //挂断视频
     private void doHangUp() {
         releaseVideo();
         avChatController.hangUp(AVChatExitCode.HANGUP);
         closeSession();
     }
 
+    //举报
     private void doTipOff() {
-
+        EventBus.getDefault().post(new VideoChatEvent(VideoChatEvent.TIP_OFF, (Activity) context));
     }
 
+    //送礼物
     private void doGift() {
-
+        EventBus.getDefault().post(new VideoChatEvent(VideoChatEvent.GIT_DIALOG, (Activity) context));
     }
 
     //滤镜
@@ -494,8 +500,9 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
         setFaceUnityRoot(faceUnityRoot.getVisibility() == View.GONE);
     }
 
+    //关注
     private void doCare() {
-
+        EventBus.getDefault().post(new VideoChatEvent(VideoChatEvent.FOLLOW));
     }
 
     // 拒绝来电
