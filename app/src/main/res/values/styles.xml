@@ -181,7 +181,7 @@
         <item name="android:backgroundDimEnabled">false</item>
         <item name="android:backgroundDimAmount">0.6</item>
         <item name="android:windowTitleStyle">@null</item>
-        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowAnimationStyle">@style/popupAnimation</item>
         <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
     </style>
 

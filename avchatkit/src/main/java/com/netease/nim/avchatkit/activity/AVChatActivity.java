@@ -221,7 +221,7 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
 
     //是否需要恢复音视频
     public static boolean isNeedResume() {
-        return hasOnPause && !needFinish && isUserFinish;
+        return hasOnPause && !needFinish;
     }
 
     /**

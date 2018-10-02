@@ -160,16 +160,17 @@ public class VideoChatHelper extends Handler implements Runnable {
     }
 
     public void onResume() {
-        while (true) {
-
-        }
-//        if (AVChatActivity.isNeedResume()) {
-
-//            Intent localIntent = new Intent();
-//            localIntent.setClass(context, AVChatActivity.class);
-//            localIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//            context.startActivity(localIntent);
-//        }
+//        postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                if (AVChatActivity.isNeedResume()) {
+//                    Intent localIntent = new Intent();
+//                    localIntent.setClass(context, AVChatActivity.class);
+//                    localIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//                    context.startActivity(localIntent);
+//                }
+//            }
+//        }, 300);
     }
 
     private void onDestroy() {

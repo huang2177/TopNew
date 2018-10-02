@@ -1,8 +1,14 @@
 package com.kw.top.view;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -21,7 +27,7 @@ import rx.schedulers.Schedulers;
  * Created by Administrator on 2018/9/30.
  */
 
-public class TipOffDialog extends XBottomDialog {
+public class TipOffDialog extends Dialog implements View.OnClickListener {
     private EditText editText;
     private TextView tvCommit, tvCancel;
     private String token;
@@ -29,24 +35,33 @@ public class TipOffDialog extends XBottomDialog {
     private String roomNum;
 
     public TipOffDialog(@NonNull Activity activity, String roomNum, String token) {
-        super(activity);
+        super(activity, R.style.tran_dialog);
         this.roomNum = roomNum;
         this.token = token;
     }
 
     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(getLayoutId());
+        WindowManager.LayoutParams params = getWindow().getAttributes();
+        params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        params.gravity = Gravity.BOTTOM;
+        getWindow().setAttributes(params);
+        initView();
+        setListener();
+    }
+
     protected int getLayoutId() {
         return R.layout.dialog_report;
     }
 
-    @Override
     protected void initView() {
         editText = findViewById(R.id.report_ed);
         tvCommit = findViewById(R.id.report_commit_tv);
         tvCancel = findViewById(R.id.report_cancel_tv);
     }
 
-    @Override
     protected void setListener() {
         tvCommit.setOnClickListener(this);
         tvCancel.setOnClickListener(this);
@@ -59,8 +74,7 @@ public class TipOffDialog extends XBottomDialog {
                 dismiss();
                 break;
             case R.id.report_commit_tv:
-                content = editText.getText().toString();   //最多只能输入50个字
-                report(roomNum, content, token);
+                report(roomNum, token);
                 break;
         }
     }
@@ -69,7 +83,16 @@ public class TipOffDialog extends XBottomDialog {
     /**
      * 举报
      */
-    public void report(String roomNum, String content, String token) {
+    public void report(String roomNum, String token) {
+        content = editText.getText().toString();
+        if (TextUtils.isEmpty(content)) {
+            RxToast.normal("请输入举报内容!");
+            return;
+        }
+        if (content.length() > 50) {
+            RxToast.normal("最多只能输入50个字!");
+            return;
+        }
         Api.getApiService().report(roomNum, content, token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
