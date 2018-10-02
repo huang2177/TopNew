@@ -1,4 +1,4 @@
-package com.kw.top.ui.fragment.find.baen;
+package com.kw.top.ui.fragment.find.bean;
 
 /**
  * Created by Administrator on 2018/9/30.

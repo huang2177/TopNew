@@ -15,7 +15,7 @@ import com.kw.top.retrofit.HttpHost;
 import com.kw.top.tools.GlideTools;
 import com.kw.top.ui.activity.login.LoginActivity;
 import com.kw.top.ui.fragment.find.adapter.RanKingAdapter;
-import com.kw.top.ui.fragment.find.baen.RankingBean;
+import com.kw.top.ui.fragment.find.bean.RankingBean;
 import com.kw.top.utils.RxToast;
 import com.kw.top.utils.SPUtils;
 import com.kw.top.view.XListView;

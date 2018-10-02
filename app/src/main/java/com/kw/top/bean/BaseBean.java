@@ -30,13 +30,10 @@ public class BaseBean<T> implements Serializable {
     }
 
     public boolean isSuccess() {
-        if ("0000".equals(getCode())) {
-            return true;
-        }
-        return false;
+        return "0000".equals(getCode());
     }
 
-    public String getJsonData(){
+    public String getJsonData() {
         return new Gson().toJson(data);
     }
 

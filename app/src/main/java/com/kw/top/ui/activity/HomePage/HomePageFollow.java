@@ -37,7 +37,7 @@ public class HomePageFollow {
                         if (!baseBean.isSuccess()) {
                             return;
                         }
-                        mActivity.AddFollowResult("add");
+                        mActivity.AddFollowResult("1");
                     }
                 }, new Action1<Throwable>() {
                     @Override
@@ -63,7 +63,7 @@ public class HomePageFollow {
                         if (!baseBean.isSuccess()) {
                             return;
                         }
-                        mActivity.AddFollowResult("delate");
+                        mActivity.AddFollowResult("0");
                     }
                 }, new Action1<Throwable>() {
                     @Override

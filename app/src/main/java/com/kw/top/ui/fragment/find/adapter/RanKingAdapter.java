@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide;
 import com.kw.top.R;
 import com.kw.top.retrofit.HttpHost;
 import com.kw.top.tools.GlideTools;
-import com.kw.top.ui.fragment.find.baen.RankingBean;
+import com.kw.top.ui.fragment.find.bean.RankingBean;
 
 import java.util.List;
 

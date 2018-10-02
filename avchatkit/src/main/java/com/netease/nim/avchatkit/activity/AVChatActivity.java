@@ -1,5 +1,6 @@
 package com.netease.nim.avchatkit.activity;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -21,12 +22,14 @@ import com.netease.nim.avchatkit.common.log.LogUtil;
 import com.netease.nim.avchatkit.constant.AVChatExitCode;
 import com.netease.nim.avchatkit.controll.AVChatController;
 import com.netease.nim.avchatkit.controll.AVChatSoundPlayer;
+import com.netease.nim.avchatkit.event.VideoChatEvent;
 import com.netease.nim.avchatkit.module.AVChatTimeoutObserver;
 import com.netease.nim.avchatkit.module.AVSwitchListener;
 import com.netease.nim.avchatkit.module.SimpleAVChatStateObserver;
 import com.netease.nim.avchatkit.notification.AVChatNotification;
 import com.netease.nim.avchatkit.receiver.PhoneCallStateObserver;
 import com.netease.nim.avchatkit.ui.AVChatVideoUI;
+import com.netease.nim.uikit.business.session.helper.VideoMessageHelper;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.Observer;
 import com.netease.nimlib.sdk.StatusCode;
@@ -44,6 +47,8 @@ import com.netease.nimlib.sdk.avchat.model.AVChatData;
 import com.netease.nimlib.sdk.avchat.model.AVChatOnlineAckEvent;
 import com.netease.nimlib.sdk.avchat.model.AVChatVideoFrame;
 
+import org.greenrobot.eventbus.EventBus;
+
 /**
  * 音视频主界面
  * 1、初始化
@@ -55,7 +60,7 @@ import com.netease.nimlib.sdk.avchat.model.AVChatVideoFrame;
  * Created by winnie on 2017/12/10.
  */
 
-public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallback, AVSwitchListener {
+public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallback {
     // constant
     private static final String TAG = "AVChatActivity";
     private static final String KEY_IN_CALLING = "KEY_IN_CALLING";
@@ -73,15 +78,15 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
     // view
     private View root;
     private View videoRoot;
-    //private View audioRoot;
     private View surfaceRoot;
 
     // state
     private static boolean needFinish = true; // 若来电或去电未接通时，点击home。另外一方挂断通话。从最近任务列表恢复，则finish
     private boolean mIsInComingCall = false;// is incoming call or outgoing call
     private boolean isCallEstablished = false; // 电话是否接通
-    private boolean isUserFinish = false;
-    private boolean hasOnPause = false; // 是否暂停音视频
+    private static boolean isUserFinish = false;
+    private static boolean hasOnPause = false; // 是否暂停音视频
+    private boolean needResumeVideo = false; // 是否需要恢复视频
 
     // data
     private AVChatData avChatData; // config for connect video server
@@ -90,7 +95,6 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
     private String displayName; // 对方的显示昵称
 
     private AVChatController avChatController;
-    //private AVChatAudioUI avChatAudioUI; // 音频界面
     private AVChatVideoUI avChatVideoUI; // 视频界面
 
     // face unity
@@ -129,7 +133,6 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         // 若来电或去电未接通时，点击home。另外一方挂断通话。从最近任务列表恢复，则finish
         if (needFinish) {
@@ -155,7 +158,6 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
         notifier = new AVChatNotification(this);
         notifier.init(receiverId != null ? receiverId : avChatData.getAccount(), displayName);
 
-        // face unity
         initFaceU();
     }
 
@@ -204,6 +206,7 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
         cancelCallingNotifier();
         destroyFaceU();
         needFinish = true;
+        EventBus.getDefault().post(new VideoChatEvent(VideoChatEvent.CLOSE_ROOM_SUCCESS));
     }
 
     // 设置窗口flag，亮屏并且解锁/覆盖在锁屏界面上
@@ -214,6 +217,11 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
                         WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON |
                         WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
         );
+    }
+
+    //是否需要恢复音视频
+    public static boolean isNeedResume() {
+        return hasOnPause && !needFinish && isUserFinish;
     }
 
     /**
@@ -239,7 +247,7 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
 
     private void initData() {
         avChatController = new AVChatController(this, avChatData);
-        avChatVideoUI = new AVChatVideoUI(this, root, avChatData, displayName, avChatController, this, this);
+        avChatVideoUI = new AVChatVideoUI(this, root, avChatData, displayName, avChatController, this);
     }
 
 
@@ -508,22 +516,6 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
             }
         }
     };
-
-    /**
-     * ******************** 音视频切换接口 ********************
-     */
-
-    @Override
-    public void onVideoToAudio() {
-    }
-
-    @Override
-    public void onAudioToVideo() {
-    }
-
-    @Override
-    public void onReceiveAudioToVideoAgree() {
-    }
 
 
     /**

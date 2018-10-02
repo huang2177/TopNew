@@ -10,6 +10,7 @@ import com.kw.top.bean.BaseBean;
 import com.kw.top.bean.CircleDetailsBean;
 import com.kw.top.bean.LoginBean;
 import com.kw.top.retrofit.Api;
+import com.kw.top.ui.activity.login.bean.NewLoginBean;
 import com.kw.top.ui.activity.login.contract.LoginContract;
 import com.kw.top.utils.RxToast;
 
@@ -38,10 +39,10 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
 
                     }
                 })
-                .subscribe(new Action1<BaseBean>() {
+                .subscribe(new Action1<BaseBean<NewLoginBean>>() {
                     @Override
-                    public void call(BaseBean baseBean) {
-                            mView.loginResult(baseBean);
+                    public void call(BaseBean<NewLoginBean> baseBean) {
+                        mView.loginResult(baseBean);
 
                     }
                 }, new Action1<Throwable>() {

@@ -23,7 +23,6 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
-import com.google.gson.Gson;
 import com.jaeger.library.StatusBarUtil;
 import com.kw.top.R;
 import com.kw.top.app.AppManager;
@@ -189,7 +188,7 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
 
 
     @Override
-    public void loginResult(final BaseBean baseBean) {
+    public void loginResult(BaseBean<NewLoginBean> baseBean) {
         if (null == baseBean) return;
         if (!baseBean.isSuccess()) {
             hideProgressDialog();
@@ -197,7 +196,7 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
             return;
         }
         try {
-            NewLoginBean loginBean = new Gson().fromJson(baseBean.getJsonData(), NewLoginBean.class);
+            NewLoginBean loginBean = baseBean.getData();
 
             SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_PHONE, phone);
             SPUtils.saveString(LoginActivity.this, ConstantValue.KEY_TOKEN, loginBean.getToken());

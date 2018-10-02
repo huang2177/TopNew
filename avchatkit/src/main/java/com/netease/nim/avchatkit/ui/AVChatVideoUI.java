@@ -2,30 +2,25 @@ package com.netease.nim.avchatkit.ui;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Rect;
-import android.os.Build;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Chronometer;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.netease.nim.avchatkit.AVChatKit;
 import com.netease.nim.avchatkit.R;
 import com.netease.nim.avchatkit.common.imageview.HeadImageView;
 import com.netease.nim.avchatkit.common.permission.BaseMPermission;
-import com.netease.nim.avchatkit.common.util.ScreenUtil;
 import com.netease.nim.avchatkit.common.widgets.ToggleListener;
-import com.netease.nim.avchatkit.common.widgets.ToggleState;
-import com.netease.nim.avchatkit.common.widgets.ToggleView;
 import com.netease.nim.avchatkit.constant.AVChatExitCode;
 import com.netease.nim.avchatkit.controll.AVChatController;
 import com.netease.nim.avchatkit.event.VideoChatEvent;
@@ -34,12 +29,14 @@ import com.netease.nim.avchatkit.module.AVSwitchListener;
 import com.netease.nimlib.sdk.avchat.AVChatManager;
 import com.netease.nimlib.sdk.avchat.constant.AVChatType;
 import com.netease.nimlib.sdk.avchat.constant.AVChatVideoScalingType;
-import com.netease.nimlib.sdk.avchat.model.AVChatCameraCapturer;
 import com.netease.nimlib.sdk.avchat.model.AVChatData;
 import com.netease.nimlib.sdk.avchat.model.AVChatSurfaceViewRenderer;
 import com.netease.nrtc.video.render.IVideoRender;
 
+
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -130,8 +127,7 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
     }
 
     public AVChatVideoUI(Context context, View root, AVChatData avChatData, String displayName,
-                         AVChatController avChatController, TouchZoneCallback touchZoneCallback,
-                         AVSwitchListener avSwitchListener) {
+                         AVChatController avChatController, TouchZoneCallback touchZoneCallback) {
         this.context = context;
         this.root = root;
         this.avChatData = avChatData;
@@ -140,6 +136,8 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
         this.touchZoneCallback = touchZoneCallback;
         this.smallRender = new AVChatSurfaceViewRenderer(context);
         this.largeRender = new AVChatSurfaceViewRenderer(context);
+
+        EventBus.getDefault().register(this);
     }
 
     /**
@@ -483,7 +481,7 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
         releaseVideo();
         avChatController.hangUp(AVChatExitCode.HANGUP);
         closeSession();
-        
+        EventBus.getDefault().unregister(this);
     }
 
     //举报
@@ -498,12 +496,14 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
 
     //滤镜
     private void doFilter() {
-        setFaceUnityRoot(faceUnityRoot.getVisibility() == View.GONE);
+//        setFaceUnityRoot(faceUnityRoot.getVisibility() == View.GONE);
+        EventBus.getDefault().post(new VideoChatEvent(VideoChatEvent.CLOSE_ROOM));
     }
 
     //关注
     private void doCare() {
-        EventBus.getDefault().post(new VideoChatEvent(VideoChatEvent.FOLLOW));
+        EventBus.getDefault().post(new VideoChatEvent(VideoChatEvent.PROMISE_RECHARGE));
+//        EventBus.getDefault().post(new VideoChatEvent(VideoChatEvent.FOLLOW));
     }
 
     // 拒绝来电
@@ -593,9 +593,7 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
     }
 
 
-    /**
-     * ******************** 录制 ***************************
-     */
+    /**********************录制**********************/
 
     private void closeSession() {
         ((Activity) context).finish();
@@ -605,4 +603,42 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
         return avChatData;
     }
 
+
+    /************视频聊天页面相关事件**********************/
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onVideoChatEvent(VideoChatEvent event) {
+        switch (event.type) {
+            case VideoChatEvent.FOLLOW_SUCCESS:
+                if (topCareTV != null) {
+                    topCareTV.setText(event.followType);
+                }
+                break;
+            case VideoChatEvent.GIT_SHOW:
+                middleGiftShowTV.setVisibility(View.VISIBLE);
+                break;
+            case VideoChatEvent.CLOSE_ROOM:
+                doHangUp();
+                break;
+            case VideoChatEvent.PROMISE_RECHARGE:
+                new AlertDialog.Builder(context)
+                        .setTitle("提示信息")
+                        .setMessage("您的金币不足，请充值！")
+                        .setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                EventBus.getDefault().post(new VideoChatEvent(VideoChatEvent.RECHARGE, (Activity) context));
+                            }
+                        })
+                        .setPositiveButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .create()
+                        .show();
+                break;
+        }
+    }
 }

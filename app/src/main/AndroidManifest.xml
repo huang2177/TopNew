@@ -40,8 +40,6 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <!-- Required -->
     <permission
         android:name="com.kw.top.permission.JPUSH_MESSAGE"

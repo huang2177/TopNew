@@ -11,6 +11,10 @@ import com.kw.top.bean.SendGiftBean;
 import com.kw.top.bean.SendRedBean;
 import com.kw.top.bean.SplashBean;
 import com.kw.top.bean.VersionBean;
+import com.kw.top.ui.activity.login.bean.NewLoginBean;
+import com.kw.top.ui.fragment.find.bean.HomeBean;
+import com.kw.top.ui.fragment.find.bean.RoomNumBean;
+import com.kw.top.ui.fragment.find.bean.WatchStateBean;
 
 import java.util.List;
 import java.util.Map;
@@ -45,8 +49,8 @@ public interface ApiService {
      * @return
      */
     @POST("api/userController/login1")
-    Observable<BaseBean> login1(@Query("phone") String phone, @Query("phoneCode") String phoneCode,
-                                @Query("areaCode") String areaCode);
+    Observable<BaseBean<NewLoginBean>> login1(@Query("phone") String phone, @Query("phoneCode") String phoneCode,
+                                              @Query("areaCode") String areaCode);
 
 
     @POST("api/videoController/getYunXinToken")
@@ -551,11 +555,12 @@ public interface ApiService {
      * @return
      */
     @POST("api/videoController/getAllUserList")
-    Observable<BaseBean> getAllUserList(@Query("type") String type, @Query("nowPage") String nowPage, @Query("pageNum") String pageNum, @Query("token") String token);
+    Observable<BaseBean<List<HomeBean>>> getAllUserList(@Query("type") String type, @Query("nowPage") String nowPage, @Query("pageNum") String pageNum, @Query("token") String token);
 
 
     /**
      * 查看主播主页
+     *
      * @param anchorId
      * @param token
      * @return
@@ -564,13 +569,13 @@ public interface ApiService {
     Observable<BaseBean> getuserInfoHomepage(@Query("anchorId") String anchorId, @Query("token") String token);
 
 
-
     @POST("api/videoController/addMyFollow")
     Observable<BaseBean> addMyFollow(@Query("followId") String followId, @Query("token") String token);
 
 
     /**
      * 取消关注
+     *
      * @param followId
      * @param token
      * @return
@@ -581,10 +586,40 @@ public interface ApiService {
 
     /**
      * 查询排行榜
+     *
      * @param token
      * @return
      */
     @POST("api/videoController/getRankingList")
     Observable<BaseBean> getRankingList(@Query("type") String type, @Query("nowPage") String nowPage, @Query("pageNum") String pageNum, @Query("token") String token);
 
+    /**
+     * 直播界面举报
+     */
+    @POST("api/videoController/report")
+    Observable<BaseBean> report(@Query("roomNum") String roomNum
+            , @Query("reportContent") String nowPage
+            , @Query("token") String token);
+
+    /**
+     * 创建房间
+     */
+    @POST("api/videoController/createLiveRoom")
+    Observable<BaseBean<RoomNumBean>> createRoom(@Query("anchorId") String anchorId
+            , @Query("audienceId") String audienceId
+            , @Query("token") String token);
+
+    /**
+     * 关闭房间
+     */
+    @POST("api/videoController/closeLiveRoom")
+    Observable<BaseBean> closeRoom(@Query("roomNum") String roomNum
+            , @Query("token") String token);
+
+    /**
+     * 查看用户钻石是否够继续观看直播
+     */
+    @POST("api/videoController/isAdequate")
+    Observable<BaseBean<WatchStateBean>> isAdequate(@Query("roomNum") String roomNum
+            , @Query("token") String token);
 }

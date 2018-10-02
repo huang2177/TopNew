@@ -15,6 +15,7 @@ import com.google.gson.JsonSyntaxException;
 import com.kw.top.R;
 import com.kw.top.base.BaseActivity_;
 import com.kw.top.bean.BaseBean;
+import com.kw.top.ui.fragment.find.videohelper.VideoChatHelper;
 import com.netease.nim.avchatkit.event.VideoChatEvent;
 import com.kw.top.retrofit.HttpHost;
 import com.kw.top.tools.ConstantValue;
@@ -26,16 +27,11 @@ import com.kw.top.ui.activity.login.LoginActivity;
 import com.kw.top.ui.fragment.find.adapter.GlideImageLoader;
 import com.kw.top.ui.fragment.find.adapter.HomeFriendsAdapter;
 import com.kw.top.ui.fragment.find.adapter.HomeGiftAdapter;
-import com.kw.top.ui.fragment.find.baen.HomeInfoBean;
+import com.kw.top.ui.fragment.find.bean.HomeInfoBean;
 import com.kw.top.utils.RxToast;
 import com.kw.top.utils.SPUtils;
 import com.kw.top.utils.StatusUtil;
 import com.kw.top.view.GiftDialog;
-import com.kw.top.view.TipOffDialog;
-import com.netease.nim.avchatkit.AVChatKit;
-import com.netease.nim.avchatkit.activity.AVChatActivity;
-import com.netease.nim.uikit.business.uinfo.UserInfoHelper;
-import com.netease.nimlib.sdk.avchat.constant.AVChatType;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 
@@ -112,6 +108,7 @@ public class HomePageDetailsActivity extends BaseActivity_ implements HomePageVi
     private HomePageFollow homePageFollow;
     private String follow;
     private GiftDialog giftDialog;
+    private VideoChatHelper chatHelper;
 
     @Override
     public int getContentView() {
@@ -155,9 +152,6 @@ public class HomePageDetailsActivity extends BaseActivity_ implements HomePageVi
     }
 
 
-    /**
-     *
-     */
     private void initBanner() {
         banner.setBannerStyle(1);
         banner.setImageLoader(new GlideImageLoader());  //设置图片加载器
@@ -179,10 +173,10 @@ public class HomePageDetailsActivity extends BaseActivity_ implements HomePageVi
                 UserCircleActivity.startActivity(this, userId);
                 break;
             case R.id.image_add:  //添加好友
-                showGifDialog("0", this);
+                showGifDialog("0");
                 break;
             case R.id.iamge_lw:   //曾送礼物
-                showGifDialog("1", this);
+                showGifDialog("1");
                 break;
             case R.id.iamge_sp:   //与她视频
                 call();
@@ -197,14 +191,10 @@ public class HomePageDetailsActivity extends BaseActivity_ implements HomePageVi
      * 视频
      */
     private void call() {
-        if (homeInfoBean == null) {
-            return;
+        if (homeInfoBean != null) {
+            chatHelper = new VideoChatHelper();
+            chatHelper.createRoom(this, userId, homeInfoBean.getFollow());
         }
-        AVChatKit.outgoingCall(this
-                , String.valueOf(homeInfoBean.getAccount())
-                , UserInfoHelper.getUserDisplayName(String.valueOf(homeInfoBean.getAccount()))
-                , AVChatType.VIDEO.getValue()
-                , AVChatActivity.FROM_INTERNAL);
     }
 
     public void follow() {
@@ -215,8 +205,10 @@ public class HomePageDetailsActivity extends BaseActivity_ implements HomePageVi
         }
     }
 
-    public void showGifDialog(String type, Activity context) {
-        giftDialog = new GiftDialog(context, type, receiveUserId, getToken());
+    public void showGifDialog(String type) {
+        if (giftDialog == null) {
+            giftDialog = new GiftDialog(this, type, receiveUserId, getToken());
+        }
         giftDialog.show();
     }
 
@@ -281,8 +273,8 @@ public class HomePageDetailsActivity extends BaseActivity_ implements HomePageVi
      * 添加关注
      */
     @Override
-    public void AddFollowResult(String string) {
-        if (string.equals("add")) {
+    public void AddFollowResult(String type) {
+        if (type.equals("1")) {
             RxToast.normal("关注成功");
             follow = "1";
             tvFollow.setText("已关注");
@@ -291,6 +283,7 @@ public class HomePageDetailsActivity extends BaseActivity_ implements HomePageVi
             follow = "0";
             tvFollow.setText("关注");
         }
+        EventBus.getDefault().post(new VideoChatEvent(VideoChatEvent.FOLLOW_SUCCESS, type));
     }
 
 
@@ -303,18 +296,20 @@ public class HomePageDetailsActivity extends BaseActivity_ implements HomePageVi
             case VideoChatEvent.FOLLOW:
                 follow();
                 break;
-            case VideoChatEvent.TIP_OFF:
-                new TipOffDialog(event.context).show();
-                break;
-            case VideoChatEvent.GIT_DIALOG:
-                showGifDialog("0", event.context);
-                break;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (chatHelper != null) {
+            chatHelper.onResume();
         }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().register(this);
+        EventBus.getDefault().unregister(this);
     }
 }

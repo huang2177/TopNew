@@ -187,7 +187,7 @@ public abstract class BaseActivity_ extends AppCompatActivity {
     }
 
     public String getToken() {
-        String token = SPUtils.getString(this, ConstantValue.KEY_TOKEN, "");
+        String token = SPUtils.getString(this, ConstantValue.KEY_TOKEN);
         Log.e("tag", "================= token " + token);
         return token;
     }

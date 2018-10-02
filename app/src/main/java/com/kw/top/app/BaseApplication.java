@@ -15,17 +15,15 @@ import com.kw.top.redpacket.MsgViewHolderRedPacket;
 import com.kw.top.redpacket.NimManger;
 import com.kw.top.redpacket.RedPacketAttachment;
 import com.kw.top.ui.activity.NewMainActivity;
-import com.kw.top.utils.FileUtil;
+import com.kw.top.ui.fragment.find.videohelper.VideoChatHelper;
 import com.netease.nim.avchatkit.AVChatKit;
 import com.netease.nim.avchatkit.config.AVChatOptions;
-import com.netease.nim.avchatkit.model.IUserInfoProvider;
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.SDKOptions;
 import com.netease.nimlib.sdk.StatusBarNotificationConfig;
 import com.netease.nimlib.sdk.avchat.model.AVChatAttachment;
 import com.netease.nimlib.sdk.msg.MsgService;
-import com.netease.nimlib.sdk.uinfo.model.UserInfo;
 import com.netease.nimlib.sdk.util.NIMUtil;
 import com.qiniu.android.common.FixedZone;
 import com.qiniu.android.storage.Configuration;
@@ -93,7 +91,7 @@ public class BaseApplication extends Application {
         StatusBarNotificationConfig config = new StatusBarNotificationConfig();
         config.notificationEntrance = NewMainActivity.class; // 点击通知栏跳转到该Activity
         config.notificationSmallIconId = R.mipmap.ic_launcher;
-        options.sdkStorageRootPath = FileUtil.getAppCacheDir(this) + "/nim"; 
+//        options.sdkStorageRootPath = FileUtil.getAppCacheDir(this) + "/nim";
         // 呼吸灯配置
         config.ledARGB = Color.GREEN;
         config.ledOnMs = 1000;
@@ -116,23 +114,16 @@ public class BaseApplication extends Application {
                 NewMainActivity.logout(context, true);
             }
         };
+        AVChatKit.InComingCallListener callListener = new AVChatKit.InComingCallListener() {
+            @Override
+            public void inComingCall() {
+                new VideoChatHelper().init(getApplicationContext());
+            }
+        };
         avChatOptions.entranceActivity = NewMainActivity.class;
         avChatOptions.notificationIconRes = R.mipmap.ic_launcher;
-        AVChatKit.init(avChatOptions);
+        AVChatKit.init(avChatOptions, callListener);
         AVChatKit.setContext(this);
-        AVChatKit.setUserInfoProvider(new IUserInfoProvider() {
-            @Override
-            public UserInfo getUserInfo(String account) {
-                return null;
-            }
-
-            @Override
-            public String getUserDisplayName(String account) {
-                return null;
-            }
-        });
-//         初始化日志系统
-//        AVChatKit.setiLogUtil();
     }
 
     /**

@@ -54,8 +54,6 @@ public class GiftDialog extends XBottomDialog implements AdapterView.OnItemClick
     @Override
     protected void initView() {
         gridView = findViewById(R.id.grid_view);
-
-
     }
 
     @Override

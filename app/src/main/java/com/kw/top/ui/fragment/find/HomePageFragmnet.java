@@ -18,7 +18,7 @@ import com.kw.top.retrofit.Api;
 import com.kw.top.ui.activity.login.LoginActivity;
 import com.kw.top.ui.fragment.find.adapter.GlideImageLoader;
 import com.kw.top.ui.fragment.find.adapter.HomePageAdapter;
-import com.kw.top.ui.fragment.find.baen.HomeBean;
+import com.kw.top.ui.fragment.find.bean.HomeBean;
 import com.kw.top.utils.OnItemClickListener;
 import com.kw.top.utils.RxToast;
 import com.kw.top.utils.SPUtils;
@@ -184,9 +184,9 @@ public class HomePageFragmnet extends BaseFragment implements OnItemClickListene
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
-                .subscribe(new Action1<BaseBean>() {
+                .subscribe(new Action1<BaseBean<List<HomeBean>>>() {
                     @Override
-                    public void call(BaseBean baseBean) {
+                    public void call(BaseBean<List<HomeBean>> baseBean) {
                         hideProgressDialog();
                         SuccessData(baseBean);
 
@@ -202,11 +202,10 @@ public class HomePageFragmnet extends BaseFragment implements OnItemClickListene
     }
 
 
-    private void SuccessData(BaseBean baseBean) {
+    private void SuccessData(BaseBean<List<HomeBean>> baseBean) {
         if (baseBean.isSuccess()) {
             try {
-                beanList = new Gson().fromJson(baseBean.getJsonData(), new TypeToken<List<HomeBean>>() {
-                }.getType());
+                beanList = baseBean.getData();
 
                 if (nowPage == 1) {
                     RefreshList.clear();

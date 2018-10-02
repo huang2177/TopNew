@@ -1,4 +1,4 @@
-package com.kw.top.ui.fragment.find.baen;
+package com.kw.top.ui.fragment.find.bean;
 
 import java.util.List;
 
