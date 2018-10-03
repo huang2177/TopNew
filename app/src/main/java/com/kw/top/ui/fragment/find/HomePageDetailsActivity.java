@@ -201,16 +201,15 @@ public class HomePageDetailsActivity extends BaseActivity_ implements HomePageVi
     }
 
     public void follow() {
-//        if (follow.equals("1")) {
-//            homePageFollow.delaeteFollow(userId, getToken());
-//        } else {
-//            homePageFollow.addFollow(userId, getToken());
-//        }
-
-        Event event = new Event(1, 100000000, 60);
-        event.setConfig("hello");
-        event.setBroadcastOnlineOnly(true);
-        NIMClient.getService(EventSubscribeService.class).publishEvent(event);
+        if (follow.equals("1")) {
+            homePageFollow.delaeteFollow(userId, getToken());
+        } else {
+            homePageFollow.addFollow(userId, getToken());
+        }
+//        Event event = new Event(1, 100000000, 60);
+//        event.setConfig("hello");
+//        event.setBroadcastOnlineOnly(true);
+//        NIMClient.getService(EventSubscribeService.class).publishEvent(event);
     }
 
     public void showGifDialog(String type) {

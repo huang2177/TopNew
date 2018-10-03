@@ -56,11 +56,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginRight="116dp"
             android:layout_marginBottom="50dp"
+            android:layout_marginRight="116dp"
             android:background="@drawable/shape_r45_ff2b73"
+            android:paddingBottom="4dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
+            android:paddingTop="4dp"
             android:visibility="gone">
 
             <TextView
@@ -91,10 +93,10 @@
             android:ellipsize="end"
             android:lineSpacingMultiplier="1.4"
             android:maxLines="2"
-            android:paddingLeft="5dp"
-            android:paddingTop="2dp"
-            android:paddingRight="5dp"
             android:paddingBottom="2dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="2dp"
             android:text="@string/avchat_video_promise"
             android:textColor="@color/successColor"
             android:textSize="@dimen/sp_14" />

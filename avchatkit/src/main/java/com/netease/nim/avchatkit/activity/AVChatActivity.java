@@ -168,6 +168,7 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
 
         notifier = new AVChatNotification(this);
         notifier.init(receiverId != null ? receiverId : avChatData.getAccount(), displayName);
+        EventBus.getDefault().post(new VideoChatEvent(VideoChatEvent.OPEN_CHAT, this));
 
         initFaceU();
     }
@@ -247,30 +248,30 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
                 avChatData = (AVChatData) getIntent().getSerializableExtra(KEY_CALL_CONFIG);
                 state = avChatData.getChatType().getValue();
 
-                EventSubscribeRequest request = new EventSubscribeRequest();
-                request.setExpiry(60);
-                request.setEventType(1);
-                request.setPublishers(Arrays.asList(avChatData.getAccount()));
-                NIMClient.getService(EventSubscribeService.class).subscribeEvent(request).setCallback(new RequestCallbackWrapper<List<String>>() {
-                    @Override
-                    public void onResult(int code, List<String> result, Throwable exception) {
-                        if (code == ResponseCode.RES_SUCCESS) {
-                            Log.e("huang -- onResult", "----11");
-                            if (result != null) {
-                                Log.e("huang -- onResult", result.size() + "----11");
-                            }
-                        } else {
-                            Log.e("huang -- onResult", code + "----22");
-                        }
-                    }
-                });
-
-                NIMClient.getService(EventSubscribeServiceObserver.class).observeEventChanged(new Observer<List<Event>>() {
-                    @Override
-                    public void onEvent(List<Event> events) {
-                        Log.e("huang -- onEvent", events.size() + "----");
-                    }
-                }, true);
+//                EventSubscribeRequest request = new EventSubscribeRequest();
+//                request.setExpiry(60);
+//                request.setEventType(1);
+//                request.setPublishers(Arrays.asList(avChatData.getAccount()));
+//                NIMClient.getService(EventSubscribeService.class).subscribeEvent(request).setCallback(new RequestCallbackWrapper<List<String>>() {
+//                    @Override
+//                    public void onResult(int code, List<String> result, Throwable exception) {
+//                        if (code == ResponseCode.RES_SUCCESS) {
+//                            Log.e("huang -- onResult", "----11");
+//                            if (result != null) {
+//                                Log.e("huang -- onResult", result.size() + "----11");
+//                            }
+//                        } else {
+//                            Log.e("huang -- onResult", code + "----22");
+//                        }
+//                    }
+//                });
+//
+//                NIMClient.getService(EventSubscribeServiceObserver.class).observeEventChanged(new Observer<List<Event>>() {
+//                    @Override
+//                    public void onEvent(List<Event> events) {
+//                        Log.e("huang -- onEvent", events.size() + "----");
+//                    }
+//                }, true);
                 break;
             case FROM_INTERNAL: // outgoing call
                 receiverId = getIntent().getStringExtra(KEY_ACCOUNT);

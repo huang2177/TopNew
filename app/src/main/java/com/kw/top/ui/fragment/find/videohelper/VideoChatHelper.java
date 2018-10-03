@@ -1,14 +1,19 @@
 package com.kw.top.ui.fragment.find.videohelper;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.util.Log;
+import android.view.WindowManager;
 
 import com.kw.top.tools.ConstantValue;
 import com.kw.top.ui.activity.user_center.MyAccountActivity;
 import com.kw.top.utils.RxToast;
 import com.kw.top.utils.SPUtils;
+import com.kw.top.utils.ScreenUtil;
 import com.kw.top.view.GiftDialog;
 import com.kw.top.view.TipOffDialog;
 import com.netease.nim.avchatkit.AVChatKit;
@@ -39,6 +44,7 @@ public class VideoChatHelper extends Handler implements Runnable {
     private static final long DELAYED = 1000 * 60;
 
     private Context context;
+    private Activity chatContext;
 
     private String roomNum;
     private String anchorId;
@@ -46,7 +52,6 @@ public class VideoChatHelper extends Handler implements Runnable {
     private VideoChatView mChatView;
 
     private String token;
-    private boolean isInitVideo;
     private GiftDialog giftDialog;
     private TipOffDialog tipOffDialog;
 
@@ -105,7 +110,7 @@ public class VideoChatHelper extends Handler implements Runnable {
     }
 
     private void startChat() {
-        if (!isInitVideo) {
+        if (chatContext == null) {
             removeCallbacks(this);
             post(this);
             AVChatKit.outgoingCall(context
@@ -114,24 +119,23 @@ public class VideoChatHelper extends Handler implements Runnable {
                     , AVChatType.VIDEO.getValue()
                     , AVChatActivity.FROM_INTERNAL);
             EventBus.getDefault().post(new VideoChatEvent(VideoChatEvent.FOLLOW_SUCCESS, followType));
-            isInitVideo = true;
         }
     }
 
     private void promise() {
-        if (isInitVideo) {
-            EventBus.getDefault().post(new VideoChatEvent(VideoChatEvent.PROMISE_RECHARGE));
+        if (chatContext != null) {
+            showRechargeDialog(chatContext);
         } else {
             startChat();
         }
     }
 
     private void closeChat() {
-        if (isInitVideo) {
+        if (chatContext != null) {
             removeCallbacks(this);
             EventBus.getDefault().post(new VideoChatEvent(VideoChatEvent.CLOSE_ROOM));
         } else {
-            RxToast.normal("您的金币不足，请充值！");
+            showRechargeDialog(context);
         }
     }
 
@@ -142,33 +146,35 @@ public class VideoChatHelper extends Handler implements Runnable {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onVideoChatEvent(VideoChatEvent event) {
         switch (event.type) {
+            case VideoChatEvent.OPEN_CHAT:
+                chatContext = event.context;
+                break;
             case VideoChatEvent.CLOSE_ROOM_SUCCESS: //关闭直播
                 onDestroy();
                 mChatView.closeRoom(roomNum, token);
                 break;
-            case VideoChatEvent.RECHARGE: //去充值
-                event.context.startActivity(new Intent(event.context, MyAccountActivity.class));
-                break;
             case VideoChatEvent.TIP_OFF:  // 举报dialog
-                if (event.context.isFinishing() || event.context.isDestroyed()) {
+                if (isChatFinished()) {
                     return;
                 }
                 if (tipOffDialog == null) {
-                    tipOffDialog = new TipOffDialog(event.context, roomNum, token);
+                    tipOffDialog = new TipOffDialog(chatContext, roomNum, token);
                 }
                 tipOffDialog.show();
                 break;
             case VideoChatEvent.GIT_DIALOG: //送礼物Dialog
-                if (event.context.isFinishing() || event.context.isDestroyed()) {
+                if (isChatFinished()) {
                     return;
                 }
                 if (giftDialog == null) {
-                    giftDialog = new GiftDialog(event.context, "1", anchorId, token);
+                    giftDialog = new GiftDialog(chatContext, "1", anchorId, token);
                 }
                 giftDialog.show();
                 break;
+
         }
     }
+
 
     public void onResume() {
 //        postDelayed(new Runnable() {
@@ -182,6 +188,37 @@ public class VideoChatHelper extends Handler implements Runnable {
 //                }
 //            }
 //        }, 300);
+    }
+
+    public void showRechargeDialog(Context context) {
+        if (isChatFinished() && context instanceof AVChatActivity) {
+            return;
+        }
+        AlertDialog dialog = new AlertDialog.Builder(context)
+                .setTitle("提示信息")
+                .setMessage("您的金币不足，请充值！")
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        chatContext.startActivity(new Intent(chatContext, MyAccountActivity.class));
+                        dialog.dismiss();
+                    }
+                })
+                .create();
+        WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
+        params.width = ScreenUtil.getScreenWidth(context) * 4 / 5;
+        dialog.getWindow().setAttributes(params);
+        dialog.show();
+    }
+
+    private boolean isChatFinished() {
+        return chatContext == null || chatContext.isFinishing() || chatContext.isDestroyed();
     }
 
     private void onDestroy() {

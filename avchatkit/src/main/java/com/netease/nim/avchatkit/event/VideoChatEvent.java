@@ -10,6 +10,9 @@ import android.text.TextUtils;
  */
 
 public class VideoChatEvent {
+    //已打开聊天界面
+    public static final int OPEN_CHAT = -1;
+
     //聊天界面的关注事件
     public static final int FOLLOW = 0;
 
@@ -24,12 +27,6 @@ public class VideoChatEvent {
 
     //聊天界面点击送礼物事件
     public static final int GIT_SHOW = 4;
-
-    //金币不足 请充值
-    public static final int PROMISE_RECHARGE = 5;
-
-    //去充值
-    public static final int RECHARGE = 6;
 
     //金币用完 关闭聊天
     public static final int CLOSE_ROOM = 7;

@@ -504,14 +504,12 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
 
     //滤镜
     private void doFilter() {
-//        setFaceUnityRoot(faceUnityRoot.getVisibility() == View.GONE);
-        EventBus.getDefault().post(new VideoChatEvent(VideoChatEvent.CLOSE_ROOM));
+        setFaceUnityRoot(faceUnityRoot.getVisibility() == View.GONE);
     }
 
     //关注
     private void doCare() {
-        EventBus.getDefault().post(new VideoChatEvent(VideoChatEvent.PROMISE_RECHARGE));
-//        EventBus.getDefault().post(new VideoChatEvent(VideoChatEvent.FOLLOW));
+        EventBus.getDefault().post(new VideoChatEvent(VideoChatEvent.FOLLOW));
     }
 
     // 拒绝来电
@@ -617,35 +615,16 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onVideoChatEvent(VideoChatEvent event) {
         switch (event.type) {
-            case VideoChatEvent.FOLLOW_SUCCESS:
-                if (topCareTV != null) {
-                    topCareTV.setText(event.followType);
-                }
-                break;
             case VideoChatEvent.GIT_SHOW:
                 showGift(event);
                 break;
             case VideoChatEvent.CLOSE_ROOM:
                 doHangUp();
                 break;
-            case VideoChatEvent.PROMISE_RECHARGE:
-                new AlertDialog.Builder(context)
-                        .setTitle("提示信息")
-                        .setMessage("您的金币不足，请充值！")
-                        .setNegativeButton("确定", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                EventBus.getDefault().post(new VideoChatEvent(VideoChatEvent.RECHARGE, (Activity) context));
-                            }
-                        })
-                        .setPositiveButton("取消", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .create()
-                        .show();
+            case VideoChatEvent.FOLLOW_SUCCESS:
+                if (topCareTV != null) {
+                    topCareTV.setText(event.followType);
+                }
                 break;
         }
     }
