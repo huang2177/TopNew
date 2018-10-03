@@ -51,20 +51,35 @@
         android:layout_marginBottom="110dp"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/avchat_video_gift_show"
+        <LinearLayout
+            android:id="@+id/avchat_video_gift_root"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="116dp"
             android:layout_marginBottom="50dp"
-            android:background="@drawable/image_video_gift_show_bg"
-            android:gravity="center_vertical"
-            android:paddingLeft="5dp"
-            android:text="@string/app_name"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp_16"
-            android:visibility="gone" />
+            android:background="@drawable/shape_r45_ff2b73"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/avchat_video_gift_show"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_16" />
+
+            <ImageView
+                android:id="@+id/avchat_video_gift_img"
+                android:layout_width="wrap_content"
+                android:layout_height="33dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"
+                android:scaleType="fitXY" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/avchat_video_promise"

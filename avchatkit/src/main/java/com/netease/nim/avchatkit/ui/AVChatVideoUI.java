@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.netease.nim.avchatkit.AVChatKit;
 import com.netease.nim.avchatkit.R;
 import com.netease.nim.avchatkit.common.imageview.HeadImageView;
@@ -73,6 +74,8 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
     private TextView topNickNameTV;
     private HeadImageView topHeadImg;
     private TextView middleGiftShowTV;
+    private ImageView middleGiftShowIV;
+    private LinearLayout middleGiftRoot;
 
     //中间控制按钮
     private View middleRoot;
@@ -99,7 +102,7 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
     // state
     private boolean surfaceInit = false;
     private boolean videoInit = false;
-    public boolean canSwitchCamera = false;
+    private boolean canSwitchCamera = false;
     private boolean isPeerVideoOff = false;
     private boolean isLocalVideoOff = false;
     private boolean localPreviewInSmallSize = true;
@@ -120,6 +123,7 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
     private View root;
     private AVChatController avChatController;
     private boolean isReleasedVideo = false;
+    private boolean mIsInComingCall; //是否是来电
 
     // touch zone
     public interface TouchZoneCallback {
@@ -128,8 +132,8 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
 
     public AVChatVideoUI(Context context, View root, AVChatData avChatData, String displayName,
                          AVChatController avChatController, TouchZoneCallback touchZoneCallback) {
-        this.context = context;
         this.root = root;
+        this.context = context;
         this.avChatData = avChatData;
         this.displayName = displayName;
         this.avChatController = avChatController;
@@ -219,6 +223,8 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
         topHeadImg = topRoot.findViewById(R.id.avchat_video_avatar);
         topNickNameTV = topRoot.findViewById(R.id.avchat_video_name);
         middleGiftShowTV = topRoot.findViewById(R.id.avchat_video_gift_show);
+        middleGiftShowIV = topRoot.findViewById(R.id.avchat_video_gift_img);
+        middleGiftRoot = topRoot.findViewById(R.id.avchat_video_gift_root);
         topCareTV.setOnClickListener(this);
 
         middleRoot = videoRoot.findViewById(R.id.avchat_video_middle_control);
@@ -253,6 +259,7 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
 
     //来电
     public void showIncomingCall(AVChatData avChatData) {
+        mIsInComingCall = true;
         this.avChatData = avChatData;
         this.account = avChatData.getAccount();
 
@@ -270,6 +277,7 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
 
     //去电
     public void doOutgoingCall(String account) {
+        mIsInComingCall = false;
         this.account = account;
 
         findSurfaceView();
@@ -615,7 +623,7 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
                 }
                 break;
             case VideoChatEvent.GIT_SHOW:
-                middleGiftShowTV.setVisibility(View.VISIBLE);
+                showGift(event);
                 break;
             case VideoChatEvent.CLOSE_ROOM:
                 doHangUp();
@@ -639,6 +647,17 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
                         .create()
                         .show();
                 break;
+        }
+    }
+
+    //展示已送的礼物
+    private void showGift(VideoChatEvent event) {
+        middleGiftRoot.setVisibility(View.VISIBLE);
+        Glide.with(context).load(event.giftUrl).into(middleGiftShowIV);
+        if (mIsInComingCall) {
+            middleGiftShowTV.setText(displayName + "赠送了" + event.giftName);
+        } else {
+            middleGiftShowTV.setText("赠送" + displayName + event.giftName);
         }
     }
 }

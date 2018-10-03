@@ -15,12 +15,20 @@ import com.netease.nim.avchatkit.model.ITeamDataProvider;
 import com.netease.nim.avchatkit.model.IUserInfoProvider;
 import com.netease.nim.avchatkit.receiver.PhoneCallStateObserver;
 import com.netease.nim.avchatkit.teamavchat.activity.TeamAVChatActivity;
+import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.Observer;
+import com.netease.nimlib.sdk.RequestCallbackWrapper;
+import com.netease.nimlib.sdk.ResponseCode;
 import com.netease.nimlib.sdk.avchat.AVChatManager;
 import com.netease.nimlib.sdk.avchat.constant.AVChatControlCommand;
 import com.netease.nimlib.sdk.avchat.model.AVChatData;
+import com.netease.nimlib.sdk.event.EventSubscribeService;
+import com.netease.nimlib.sdk.event.EventSubscribeServiceObserver;
+import com.netease.nimlib.sdk.event.model.Event;
+import com.netease.nimlib.sdk.event.model.EventSubscribeRequest;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 云信音视频组件定制化入口

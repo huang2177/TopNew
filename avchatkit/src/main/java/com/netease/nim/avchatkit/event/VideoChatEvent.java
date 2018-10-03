@@ -38,6 +38,8 @@ public class VideoChatEvent {
     public static final int CLOSE_ROOM_SUCCESS = 8;
 
     public int type;
+    public String giftUrl;
+    public String giftName;
     public Activity context;
     public String followType;
 
@@ -48,6 +50,12 @@ public class VideoChatEvent {
     public VideoChatEvent(int type, String followType) {
         this.type = type;
         this.followType = TextUtils.equals("1", followType) ? "已关注" : "关注";
+    }
+
+    public VideoChatEvent(int type, String giftUrl, String giftName) {
+        this.type = type;
+        this.giftUrl = giftUrl;
+        this.giftName = giftName;
     }
 
     public VideoChatEvent(int type, Activity context) {
