@@ -1,4 +1,4 @@
-package com.kw.top.base;
+package com.kw.top.bean;
 
 import java.io.Serializable;
 

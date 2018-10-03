@@ -11,7 +11,7 @@
  either express or implied. See the License for the specific language governing
  permissions and limitations under the License.
  */
-package com.kw.top.runtimepermissions;
+package com.kw.top.permissions;
 
 import android.Manifest;
 import android.app.Activity;

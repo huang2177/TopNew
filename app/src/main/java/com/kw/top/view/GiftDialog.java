@@ -13,9 +13,14 @@ import com.kw.top.R;
 import com.kw.top.adapter.GiftAdapter;
 import com.kw.top.bean.BaseBean;
 import com.kw.top.bean.GiftBean;
+import com.kw.top.retrofit.HttpHost;
 import com.kw.top.ui.activity.HomePage.AnchorPresenter;
 import com.kw.top.ui.activity.HomePage.AnchorView;
 import com.kw.top.utils.RxToast;
+import com.netease.nim.avchatkit.activity.AVChatActivity;
+import com.netease.nim.avchatkit.event.VideoChatEvent;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,12 +32,13 @@ import java.util.List;
 public class GiftDialog extends XBottomDialog implements AdapterView.OnItemClickListener, AnchorView {
 
 
-    private GiftAdapter giftAdapter;
     private GridView gridView;
     private AnchorPresenter anchorPresenter;
     private List<GiftBean> mDiamondList;//钻石list
     private List<GiftBean> mAllGiftList;//所有礼物list
     private String type, receiveUserId, Token;
+
+    private int clickPosition;
 
     public GiftDialog(@NonNull Activity activity, String type, String receiveUserId, String Token) {
         super(activity);
@@ -65,6 +71,7 @@ public class GiftDialog extends XBottomDialog implements AdapterView.OnItemClick
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         dismiss();
         if (type.equals("1")) {
+            clickPosition = i;
             anchorPresenter.sendGift(mAllGiftList.get(i).getGiftId() + "", "1", receiveUserId, Token);
         } else {
             anchorPresenter.sendGiftAddFriend(mDiamondList.get(i).getGiftId() + "", "1", receiveUserId, Token);
@@ -83,11 +90,11 @@ public class GiftDialog extends XBottomDialog implements AdapterView.OnItemClick
             List<GiftBean> giftBeans = new Gson().fromJson(baseBean.getJsonData(), new TypeToken<List<GiftBean>>() {
             }.getType());
             mAllGiftList.addAll(giftBeans);
-            for (GiftBean gift : giftBeans) {
+            for (GiftBean gift: giftBeans) {
                 if (gift.getAmountType().equals("1"))
                     mDiamondList.add(gift);
             }
-            giftAdapter = new GiftAdapter(activity);
+            GiftAdapter giftAdapter = new GiftAdapter(activity);
             gridView.setAdapter(giftAdapter);
             giftAdapter.setList(type.equals("1") ? mAllGiftList : mDiamondList);
         } else {
@@ -105,7 +112,7 @@ public class GiftDialog extends XBottomDialog implements AdapterView.OnItemClick
         if (baseBean.getCode().equals("0000")) {
             RxToast.normal("申请成功,请等待好友同意");
         } else {
-            RxToast.normal(activity,baseBean.getMsg()).show();
+            RxToast.normal(activity, baseBean.getMsg()).show();
         }
     }
 
@@ -120,8 +127,16 @@ public class GiftDialog extends XBottomDialog implements AdapterView.OnItemClick
             RxToast.normal(activity.getResources().getString(R.string.net_error));
         } else if (baseBean.getCode().equals("0000")) {
             RxToast.normal("赠送成功");
+            if (activity instanceof AVChatActivity) {
+                EventBus.getDefault().post(new VideoChatEvent(VideoChatEvent.GIT_SHOW));
+            }
         } else {
             RxToast.normal(baseBean.getMsg());
+            if (activity instanceof AVChatActivity) {
+                EventBus.getDefault().post(new VideoChatEvent(VideoChatEvent.GIT_SHOW
+                        , HttpHost.qiNiu + mAllGiftList.get(clickPosition).getGiftPicture()
+                        , mAllGiftList.get(clickPosition).getGiftName()));
+            }
         }
     }
 

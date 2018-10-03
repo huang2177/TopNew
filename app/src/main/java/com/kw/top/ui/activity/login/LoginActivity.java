@@ -3,7 +3,6 @@ package com.kw.top.ui.activity.login;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -57,8 +56,7 @@ import rx.schedulers.Schedulers;
  * desc  :
  */
 
-public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPresenter> implements LoginContract.View,
-        View.OnClickListener {
+public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPresenter> implements LoginContract.View {
 
     @BindView(R.id.tv_qh)
     EditText ed_qh;
@@ -336,17 +334,6 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
         return super.onKeyDown(keyCode, event);
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.tv_forget_Pwd:
-                startActivity(new Intent(this, ForgetPwdActivity.class));
-                break;
-            case R.id.tv_login:
-
-                break;
-        }
-    }
 
     //可以通过类implement方式实现AMapLocationListener接口，也可以通过创造接口类对象的方法实现
     //以下为后者的举例：

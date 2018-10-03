@@ -2,12 +2,8 @@ package com.kw.top.ui.activity.news;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.util.Log;
-import android.view.View;
 
-import com.kw.top.base.FriendBean;
+import com.kw.top.bean.FriendBean;
 import com.kw.top.redpacket.RedPacketAction;
 import com.kw.top.tools.ConstantValue;
 import com.kw.top.utils.SPUtils;
@@ -15,6 +11,8 @@ import com.netease.nim.uikit.api.model.session.SessionCustomization;
 import com.netease.nim.uikit.business.session.actions.BaseAction;
 import com.netease.nim.uikit.business.session.constant.Extras;
 import com.netease.nim.uikit.business.session.fragment.MessageFragment;
+import com.netease.nimlib.sdk.NIMClient;
+import com.netease.nimlib.sdk.msg.MsgService;
 import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
 import com.netease.nimlib.sdk.msg.model.IMMessage;
 

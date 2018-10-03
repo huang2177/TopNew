@@ -9,27 +9,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kw.top.R;
-import com.kw.top.base.FriendBean;
+import com.kw.top.bean.FriendBean;
 import com.kw.top.base.MyEaseBaseActivity;
-import com.kw.top.redpacket.RedPacketAction;
 import com.kw.top.tools.ConstantValue;
 import com.kw.top.ui.activity.task.ClubTaskListActivity;
 import com.kw.top.ui.fragment.find.HomePageDetailsActivity;
-import com.kw.top.utils.SPUtils;
-import com.netease.nim.uikit.api.model.session.SessionCustomization;
 import com.netease.nim.uikit.api.model.session.SessionEventListener;
-import com.netease.nim.uikit.business.session.actions.BaseAction;
-import com.netease.nim.uikit.business.session.constant.Extras;
-import com.netease.nim.uikit.business.session.fragment.MessageFragment;
 import com.netease.nim.uikit.impl.NimUIKitImpl;
-import com.netease.nimlib.sdk.avchat.model.AVChatAttachment;
-import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
 import com.netease.nimlib.sdk.msg.model.IMMessage;
-
-import java.util.Arrays;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

@@ -104,9 +104,6 @@ public class AnchorPresenter {
                 .subscribe(new Action1<BaseBean>() {
                     @Override
                     public void call(BaseBean baseBean) {
-                        if (!baseBean.isSuccess()) {
-                            return;
-                        }
                         anchorView.sendGiftResult(baseBean);
                     }
                 }, new Action1<Throwable>() {

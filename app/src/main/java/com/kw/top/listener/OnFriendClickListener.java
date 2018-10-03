@@ -2,7 +2,7 @@ package com.kw.top.listener;
 
 import android.view.View;
 
-import com.kw.top.base.FriendBean;
+import com.kw.top.bean.FriendBean;
 
 /**
  * author  ： zy

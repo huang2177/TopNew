@@ -1,14 +1,13 @@
 package com.kw.top.ui.fragment.find.videohelper;
 
-import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.util.Log;
 
-import com.kw.top.app.AppManager;
 import com.kw.top.tools.ConstantValue;
 import com.kw.top.ui.activity.user_center.MyAccountActivity;
+import com.kw.top.utils.RxToast;
 import com.kw.top.utils.SPUtils;
 import com.kw.top.view.GiftDialog;
 import com.kw.top.view.TipOffDialog;
@@ -16,7 +15,15 @@ import com.netease.nim.avchatkit.AVChatKit;
 import com.netease.nim.avchatkit.activity.AVChatActivity;
 import com.netease.nim.avchatkit.event.VideoChatEvent;
 import com.netease.nim.uikit.business.uinfo.UserInfoHelper;
+import com.netease.nimlib.sdk.NIMClient;
+import com.netease.nimlib.sdk.Observer;
+import com.netease.nimlib.sdk.RequestCallbackWrapper;
+import com.netease.nimlib.sdk.ResponseCode;
 import com.netease.nimlib.sdk.avchat.constant.AVChatType;
+import com.netease.nimlib.sdk.event.EventSubscribeService;
+import com.netease.nimlib.sdk.event.EventSubscribeServiceObserver;
+import com.netease.nimlib.sdk.event.model.Event;
+import com.netease.nimlib.sdk.event.model.EventSubscribeRequest;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -29,12 +36,12 @@ import java.util.List;
  * Created by huang on 2018/10/2 0002 10:51
  */
 public class VideoChatHelper extends Handler implements Runnable {
-    private static final long DELAYED = 1000;
+    private static final long DELAYED = 1000 * 60;
 
     private Context context;
 
-    private String account;
     private String roomNum;
+    private String anchorId;
     private String followType;
     private VideoChatView mChatView;
 
@@ -64,8 +71,8 @@ public class VideoChatHelper extends Handler implements Runnable {
      */
     public void createRoom(Context context, String anchorId, String followType) {
         init(context);
+        this.anchorId = anchorId;
         this.followType = followType;
-        this.account = ConstantValue.ACCOUNT_TEXT + anchorId;
 
         mChatView.createRoom(anchorId, SPUtils.getString(context, ConstantValue.KEY_USER_ID), token);
     }
@@ -102,8 +109,8 @@ public class VideoChatHelper extends Handler implements Runnable {
             removeCallbacks(this);
             post(this);
             AVChatKit.outgoingCall(context
-                    , String.valueOf(account)
-                    , UserInfoHelper.getUserDisplayName(account)
+                    , String.valueOf(ConstantValue.ACCOUNT_TEXT + anchorId)
+                    , UserInfoHelper.getUserDisplayName(ConstantValue.ACCOUNT_TEXT + anchorId)
                     , AVChatType.VIDEO.getValue()
                     , AVChatActivity.FROM_INTERNAL);
             EventBus.getDefault().post(new VideoChatEvent(VideoChatEvent.FOLLOW_SUCCESS, followType));
@@ -111,16 +118,20 @@ public class VideoChatHelper extends Handler implements Runnable {
         }
     }
 
+    private void promise() {
+        if (isInitVideo) {
+            EventBus.getDefault().post(new VideoChatEvent(VideoChatEvent.PROMISE_RECHARGE));
+        } else {
+            startChat();
+        }
+    }
+
     private void closeChat() {
         if (isInitVideo) {
             removeCallbacks(this);
             EventBus.getDefault().post(new VideoChatEvent(VideoChatEvent.CLOSE_ROOM));
-        }
-    }
-
-    private void promise() {
-        if (isInitVideo) {
-            EventBus.getDefault().post(new VideoChatEvent(VideoChatEvent.PROMISE_RECHARGE));
+        } else {
+            RxToast.normal("您的金币不足，请充值！");
         }
     }
 
@@ -152,7 +163,7 @@ public class VideoChatHelper extends Handler implements Runnable {
                     return;
                 }
                 if (giftDialog == null) {
-                    giftDialog = new GiftDialog(event.context, "0", "", token);
+                    giftDialog = new GiftDialog(event.context, "1", anchorId, token);
                 }
                 giftDialog.show();
                 break;

@@ -12,9 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.kw.top.R;
-import com.kw.top.base.FriendBean;
-import com.kw.top.listener.OnClickListener;
-import com.kw.top.listener.OnDeleteListener;
+import com.kw.top.bean.FriendBean;
 import com.kw.top.listener.OnFriendClickListener;
 import com.kw.top.listener.OnFriendDeleteListener;
 import com.kw.top.retrofit.HttpHost;

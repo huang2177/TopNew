@@ -32,6 +32,9 @@ import com.kw.top.utils.RxToast;
 import com.kw.top.utils.SPUtils;
 import com.kw.top.utils.StatusUtil;
 import com.kw.top.view.GiftDialog;
+import com.netease.nimlib.sdk.NIMClient;
+import com.netease.nimlib.sdk.event.EventSubscribeService;
+import com.netease.nimlib.sdk.event.model.Event;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 
@@ -198,11 +201,16 @@ public class HomePageDetailsActivity extends BaseActivity_ implements HomePageVi
     }
 
     public void follow() {
-        if (follow.equals("1")) {
-            homePageFollow.delaeteFollow(userId, getToken());
-        } else {
-            homePageFollow.addFollow(userId, getToken());
-        }
+//        if (follow.equals("1")) {
+//            homePageFollow.delaeteFollow(userId, getToken());
+//        } else {
+//            homePageFollow.addFollow(userId, getToken());
+//        }
+
+        Event event = new Event(1, 100000000, 60);
+        event.setConfig("hello");
+        event.setBroadcastOnlineOnly(true);
+        NIMClient.getService(EventSubscribeService.class).publishEvent(event);
     }
 
     public void showGifDialog(String type) {
@@ -300,8 +308,8 @@ public class HomePageDetailsActivity extends BaseActivity_ implements HomePageVi
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onStart() {
+        super.onStart();
         if (chatHelper != null) {
             chatHelper.onResume();
         }

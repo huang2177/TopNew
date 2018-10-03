@@ -35,7 +35,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/view_pager"
-        android:background="#282828"
-        ></com.kw.top.view.PinchImageViewPager>
+        android:background="#282828" />
 
 </LinearLayout>

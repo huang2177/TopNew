@@ -1,7 +1,5 @@
 package com.kw.top.bean;
 
-import com.kw.top.base.FriendBean;
-
 import java.util.List;
 
 /**
