@@ -1,7 +1,6 @@
-package com.kw.top.view;
+package com.kw.top.view.dialog;
 
 import android.app.Activity;
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.AdapterView;
@@ -69,13 +68,13 @@ public class GiftDialog extends XBottomDialog implements AdapterView.OnItemClick
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        dismiss();
         if (type.equals("1")) {
             clickPosition = i;
             anchorPresenter.sendGift(mAllGiftList.get(i).getGiftId() + "", "1", receiveUserId, Token);
         } else {
             anchorPresenter.sendGiftAddFriend(mDiamondList.get(i).getGiftId() + "", "1", receiveUserId, Token);
         }
+        dismiss();
     }
 
 
@@ -124,19 +123,16 @@ public class GiftDialog extends XBottomDialog implements AdapterView.OnItemClick
     @Override
     public void sendGiftResult(BaseBean baseBean) {
         if (baseBean == null) {
-            RxToast.normal(activity.getResources().getString(R.string.net_error));
+            RxToast.normal("赠送失败");
         } else if (baseBean.getCode().equals("0000")) {
             RxToast.normal("赠送成功");
-            if (activity instanceof AVChatActivity) {
-                EventBus.getDefault().post(new VideoChatEvent(VideoChatEvent.GIT_SHOW));
-            }
-        } else {
-            RxToast.normal(baseBean.getMsg());
             if (activity instanceof AVChatActivity) {
                 EventBus.getDefault().post(new VideoChatEvent(VideoChatEvent.GIT_SHOW
                         , HttpHost.qiNiu + mAllGiftList.get(clickPosition).getGiftPicture()
                         , mAllGiftList.get(clickPosition).getGiftName()));
             }
+        } else {
+            RxToast.normal(baseBean.getMsg());
         }
     }
 

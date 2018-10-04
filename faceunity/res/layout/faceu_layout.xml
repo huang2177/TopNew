@@ -106,7 +106,7 @@
             android:id="@+id/filter_recycle_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="220dp" />
+            android:layout_marginBottom="240dp" />
         <!--blur level select-->
         <LinearLayout
             android:id="@+id/blur_level_select_block"

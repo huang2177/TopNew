@@ -29,7 +29,7 @@ import java.util.Map;
  * 特殊布局需求可以自定义布局.
  */
 public class EasyAlertDialog extends Dialog {
-    private Context context;
+    protected Context context;
 
     public static final int NO_TEXT_COLOR = -99999999;
 

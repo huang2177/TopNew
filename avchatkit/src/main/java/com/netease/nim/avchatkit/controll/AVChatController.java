@@ -8,7 +8,6 @@ import android.widget.Toast;
 
 import com.netease.nim.avchatkit.AVChatKit;
 import com.netease.nim.avchatkit.R;
-import com.netease.nim.avchatkit.common.dialog.DialogMaker;
 import com.netease.nim.avchatkit.common.log.LogUtil;
 import com.netease.nim.avchatkit.common.widgets.MultiSelectDialog;
 import com.netease.nim.avchatkit.config.AVChatConfigs;
@@ -16,6 +15,7 @@ import com.netease.nim.avchatkit.constant.AVChatExitCode;
 import com.netease.nim.avchatkit.constant.CallStateEnum;
 import com.netease.nim.avchatkit.module.AVChatControllerCallback;
 import com.netease.nim.avchatkit.module.AVSwitchListener;
+import com.netease.nim.uikit.common.ui.dialog.DialogMaker;
 import com.netease.nimlib.sdk.ResponseCode;
 import com.netease.nimlib.sdk.avchat.AVChatCallback;
 import com.netease.nimlib.sdk.avchat.AVChatManager;

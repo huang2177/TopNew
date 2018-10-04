@@ -26,10 +26,8 @@ import com.kw.top.bean.BaseBean;
 import com.kw.top.bean.OrderInfoBean;
 import com.kw.top.retrofit.Api;
 import com.kw.top.tools.ComResultTools;
-import com.kw.top.ui.activity.login.LoginActivity;
 import com.kw.top.utils.RxToast;
-import com.kw.top.utils.SPUtils;
-import com.kw.top.view.RxDialog;
+import com.kw.top.view.dialog.RxDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

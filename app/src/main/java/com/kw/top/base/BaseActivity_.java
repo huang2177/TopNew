@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
-import com.gyf.barlibrary.ImmersionBar;
 import com.jaeger.library.StatusBarUtil;
 import com.kw.top.R;
 import com.kw.top.app.AppManager;
@@ -20,7 +19,7 @@ import com.kw.top.tools.ConstantValue;
 import com.kw.top.utils.NetworkUtils;
 import com.kw.top.utils.SPUtils;
 import com.kw.top.utils.ToastUtils;
-import com.kw.top.view.RxDialog;
+import com.kw.top.view.dialog.RxDialog;
 
 import pl.droidsonroids.gif.GifImageView;
 

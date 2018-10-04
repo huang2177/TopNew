@@ -87,6 +87,7 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        AppManager.getAppManager().finishAllActivity();
         super.onCreate(savedInstanceState);
         setContentView(getContentView());
         ButterKnife.bind(this);
@@ -216,7 +217,6 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
             //如果状态等于1  就是没有注册的 区完善资料
             if ("1".equals(loginBean.getRegisterState())) {
                 startActivity(SexActivity.class);
-                finish();
                 return;
             }
 
@@ -251,6 +251,7 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
                     startActivity(VideoVerifyActivity.class);
                     break;
             }
+            finish();
         } catch (Exception e) {
         }
     }

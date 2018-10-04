@@ -15,12 +15,13 @@ public class AppManager {
     private static Stack<Activity> activityStack;
     private volatile static AppManager instance;
 
-    public AppManager(){}
+    public AppManager() {
+    }
 
-    public static AppManager getAppManager(){
-        if (instance == null){
-            synchronized (AppManager.class){
-                if (instance == null){
+    public static AppManager getAppManager() {
+        if (instance == null) {
+            synchronized (AppManager.class) {
+                if (instance == null) {
                     instance = new AppManager();
                 }
             }
@@ -30,10 +31,11 @@ public class AppManager {
 
     /**
      * 添加Activity到堆栈
+     *
      * @param activity
      */
-    public void addActivity(Activity activity){
-        if (activityStack == null){
+    public void addActivity(Activity activity) {
+        if (activityStack == null) {
             activityStack = new Stack<>();
         }
         activityStack.add(activity);
@@ -41,10 +43,11 @@ public class AppManager {
 
     /**
      * 获取当前 Activity(堆栈中最后一个加入的)
+     *
      * @return
      */
-    public Activity getCurrentActivity(){
-        if (activityStack.size() == 0){
+    public Activity getCurrentActivity() {
+        if (activityStack.size() == 0) {
             return null;
         }
         Activity activity = activityStack.lastElement();
@@ -53,33 +56,37 @@ public class AppManager {
 
     /**
      * 结束制定 Activity
+     *
      * @param activity
      */
-    public void finishActivity(Activity activity){
-        if (null != activity && !activity.isFinishing()){
+    public void finishActivity(Activity activity) {
+        if (null != activity && !activity.isFinishing()) {
             activityStack.remove(activity);
-            activity.finish();;
+            activity.finish();
+            ;
             activity = null;
         }
     }
 
     /**
      * 移除指定 Activity
+     *
      * @param activity
      */
-    public void removeActivity(Activity activity){
-        if (null != activity){
+    public void removeActivity(Activity activity) {
+        if (null != activity) {
             activityStack.remove(activity);
         }
     }
 
     /**
      * 结束指定类名的Activity
+     *
      * @param cls
      */
-    public void finishActivity(Class<?> cls){
-        for (Activity activity : activityStack){
-            if (activity.getClass().equals(cls)){
+    public void finishActivity(Class<?> cls) {
+        for (Activity activity: activityStack) {
+            if (activity.getClass().equals(cls)) {
                 finishActivity(activity);
             }
         }
@@ -88,16 +95,19 @@ public class AppManager {
     /**
      * 结束所有的Activity
      */
-    public void finishAllActivity(){
-        for (int i=0, size = activityStack.size(); i < size; i++){
-            if (null != activityStack.get(i)){
+    public void finishAllActivity() {
+        if (activityStack == null || activityStack.isEmpty()) {
+            return;
+        }
+        for (int i = 0, size = activityStack.size(); i < size; i++) {
+            if (null != activityStack.get(i)) {
                 activityStack.get(i).finish();
             }
         }
         activityStack.clear();
     }
 
-    public void AppExit(){
+    public void AppExit() {
         try {
             finishAllActivity();
             android.os.Process.killProcess(android.os.Process.myPid());

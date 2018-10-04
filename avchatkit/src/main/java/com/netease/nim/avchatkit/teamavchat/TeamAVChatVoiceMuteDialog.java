@@ -9,9 +9,9 @@ import android.widget.LinearLayout;
 
 import com.netease.nim.avchatkit.AVChatKit;
 import com.netease.nim.avchatkit.R;
-import com.netease.nim.avchatkit.common.dialog.CustomAlertDialog;
 import com.netease.nim.avchatkit.teamavchat.adapter.TeamAVChatVoiceMuteAdapter;
 import com.netease.nim.avchatkit.teamavchat.module.TeamAVChatVoiceMuteItem;
+import com.netease.nim.uikit.common.ui.dialog.CustomAlertDialog;
 
 import java.util.ArrayList;
 import java.util.List;

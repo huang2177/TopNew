@@ -167,7 +167,6 @@ public class SettingActivity extends BaseActivity {
                     EventBus.getDefault().post(new AppLoginEvent(false));
                     SPUtils.clear(SettingActivity.this);
                     startActivity(LoginActivity.class);
-                    AppManager.getAppManager().finishAllActivity();
                     break;
             }
         }

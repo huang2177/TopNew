@@ -92,8 +92,10 @@ public class CustomAlertDialog extends AlertDialog {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                itemListenerList.get(position).onClick();
-                dismiss();
+                if (itemListenerList.get(position) != null) {
+                    itemListenerList.get(position).onClick();
+                    dismiss();
+                }
             }
         };
     }

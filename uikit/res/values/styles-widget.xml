@@ -46,8 +46,8 @@
         <item name="android:textStyle">bold</item>
         <item name="android:paddingLeft">@dimen/dialog_text_margin_horizontal</item>
         <item name="android:paddingRight">@dimen/dialog_text_margin_horizontal</item>
-        <item name="android:paddingTop">@dimen/dialog_padding_vertical</item>
-        <item name="android:paddingBottom">@dimen/dialog_padding_vertical</item>
+        <item name="android:paddingTop">@dimen/custom_dialog_padding_vertical</item>
+        <item name="android:paddingBottom">@dimen/custom_dialog_padding_vertical</item>
     </style>
 
     <style name="dialog_message_text_style">

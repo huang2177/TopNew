@@ -1,40 +1,30 @@
 package com.kw.top.ui.fragment.find.videohelper;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
-import android.util.Log;
-import android.view.WindowManager;
+import android.view.View;
 
+import com.kw.top.listener.OnItemClickListener;
 import com.kw.top.tools.ConstantValue;
 import com.kw.top.ui.activity.user_center.MyAccountActivity;
-import com.kw.top.utils.RxToast;
 import com.kw.top.utils.SPUtils;
-import com.kw.top.utils.ScreenUtil;
-import com.kw.top.view.GiftDialog;
-import com.kw.top.view.TipOffDialog;
+import com.kw.top.view.dialog.CommonDialog;
+import com.kw.top.view.dialog.GiftDialog;
+import com.kw.top.view.dialog.TipOffDialog;
 import com.netease.nim.avchatkit.AVChatKit;
 import com.netease.nim.avchatkit.activity.AVChatActivity;
 import com.netease.nim.avchatkit.event.VideoChatEvent;
 import com.netease.nim.uikit.business.uinfo.UserInfoHelper;
+import com.netease.nim.uikit.common.ui.dialog.CustomAlertDialog;
 import com.netease.nimlib.sdk.NIMClient;
-import com.netease.nimlib.sdk.Observer;
-import com.netease.nimlib.sdk.RequestCallbackWrapper;
-import com.netease.nimlib.sdk.ResponseCode;
 import com.netease.nimlib.sdk.avchat.constant.AVChatType;
-import com.netease.nimlib.sdk.event.EventSubscribeService;
-import com.netease.nimlib.sdk.event.EventSubscribeServiceObserver;
-import com.netease.nimlib.sdk.event.model.Event;
-import com.netease.nimlib.sdk.event.model.EventSubscribeRequest;
+import com.netease.nimlib.sdk.msg.MsgService;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import java.util.List;
 
 /**
  * Des: 直播界面相关 辅助类
@@ -118,7 +108,6 @@ public class VideoChatHelper extends Handler implements Runnable {
                     , UserInfoHelper.getUserDisplayName(ConstantValue.ACCOUNT_TEXT + anchorId)
                     , AVChatType.VIDEO.getValue()
                     , AVChatActivity.FROM_INTERNAL);
-            EventBus.getDefault().post(new VideoChatEvent(VideoChatEvent.FOLLOW_SUCCESS, followType));
         }
     }
 
@@ -148,6 +137,7 @@ public class VideoChatHelper extends Handler implements Runnable {
         switch (event.type) {
             case VideoChatEvent.OPEN_CHAT:
                 chatContext = event.context;
+                EventBus.getDefault().post(new VideoChatEvent(VideoChatEvent.FOLLOW_SUCCESS, followType));
                 break;
             case VideoChatEvent.CLOSE_ROOM_SUCCESS: //关闭直播
                 onDestroy();
@@ -190,30 +180,17 @@ public class VideoChatHelper extends Handler implements Runnable {
 //        }, 300);
     }
 
-    public void showRechargeDialog(Context context) {
+    private void showRechargeDialog(final Context context) {
         if (isChatFinished() && context instanceof AVChatActivity) {
             return;
         }
-        AlertDialog dialog = new AlertDialog.Builder(context)
-                .setTitle("提示信息")
-                .setMessage("您的金币不足，请充值！")
-                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        chatContext.startActivity(new Intent(chatContext, MyAccountActivity.class));
-                        dialog.dismiss();
-                    }
-                })
-                .create();
-        WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
-        params.width = ScreenUtil.getScreenWidth(context) * 4 / 5;
-        dialog.getWindow().setAttributes(params);
+        CommonDialog dialog = new CommonDialog(context);
+        dialog.setMessage("您的金币不足，请充值！", new OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                context.startActivity(new Intent(context, MyAccountActivity.class));
+            }
+        });
         dialog.show();
     }
 

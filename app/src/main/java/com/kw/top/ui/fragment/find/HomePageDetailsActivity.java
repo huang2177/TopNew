@@ -1,6 +1,5 @@
 package com.kw.top.ui.fragment.find;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -31,10 +30,7 @@ import com.kw.top.ui.fragment.find.bean.HomeInfoBean;
 import com.kw.top.utils.RxToast;
 import com.kw.top.utils.SPUtils;
 import com.kw.top.utils.StatusUtil;
-import com.kw.top.view.GiftDialog;
-import com.netease.nimlib.sdk.NIMClient;
-import com.netease.nimlib.sdk.event.EventSubscribeService;
-import com.netease.nimlib.sdk.event.model.Event;
+import com.kw.top.view.dialog.GiftDialog;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 
@@ -196,7 +192,7 @@ public class HomePageDetailsActivity extends BaseActivity_ implements HomePageVi
     private void call() {
         if (homeInfoBean != null) {
             chatHelper = new VideoChatHelper();
-            chatHelper.createRoom(this, userId, homeInfoBean.getFollow());
+            chatHelper.createRoom(this, userId, follow);
         }
     }
 

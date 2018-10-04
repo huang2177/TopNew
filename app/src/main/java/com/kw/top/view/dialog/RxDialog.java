@@ -1,4 +1,4 @@
-package com.kw.top.view;
+package com.kw.top.view.dialog;
 
 import android.app.Dialog;
 import android.content.Context;

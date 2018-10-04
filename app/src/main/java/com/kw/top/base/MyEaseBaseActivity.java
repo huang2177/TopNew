@@ -12,7 +12,7 @@ import com.kw.top.R;
 import com.kw.top.app.AppManager;
 import com.kw.top.tools.ConstantValue;
 import com.kw.top.utils.SPUtils;
-import com.kw.top.view.RxDialog;
+import com.kw.top.view.dialog.RxDialog;
 
 import pl.droidsonroids.gif.GifImageView;
 

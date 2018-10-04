@@ -2,6 +2,7 @@ package com.kw.top.ui.fragment.news;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.os.Handler;
@@ -28,12 +29,15 @@ import com.kw.top.bean.SBFriendsBean;
 import com.kw.top.bean.event.RefreshFriendEvent;
 import com.kw.top.listener.OnFriendClickListener;
 import com.kw.top.listener.OnFriendDeleteListener;
+import com.kw.top.listener.OnItemClickListener;
 import com.kw.top.retrofit.Api;
 import com.kw.top.ui.activity.login.LoginActivity;
 import com.kw.top.ui.activity.news.ChatActivity;
+import com.kw.top.ui.activity.user_center.MyAccountActivity;
 import com.kw.top.utils.RxToast;
 import com.kw.top.utils.SPUtils;
 import com.kw.top.view.UILetterListView;
+import com.kw.top.view.dialog.CommonDialog;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -266,20 +270,14 @@ public class FriendsListFragment extends MVPBaseFragment<NewsListContract.View, 
 
     @Override
     public void onDelete(View view, final String friendId) {
-        new AlertDialog.Builder(getContext()).setTitle("删除好友")
-                .setMessage("确认删除好友？")
-                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                }).setPositiveButton("删除", new DialogInterface.OnClickListener() {
+        CommonDialog dialog = new CommonDialog(getContext());
+        dialog.setMessage("确认删除好友？", new OnItemClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
+            public void onItemClick(View view, int position) {
                 deleteFriend(friendId);
             }
-        }).show();
+        });
+        dialog.show();
     }
 
     @Override
