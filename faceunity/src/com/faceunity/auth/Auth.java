@@ -17,7 +17,7 @@ public class Auth {
         try {
             return ReflectUtils.hasMethod(AUTH_CLASS_PATH, AUTH_METHOD_NAME, null);
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
 
         return false;

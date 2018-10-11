@@ -1,30 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/image_splash"
-    >
+    android:orientation="vertical">
 
     <ImageView
+        android:id="@+id/iv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/iv"
-        android:scaleType="fitXY"
-        />
+        android:scaleType="centerCrop" />
 
     <TextView
+        android:id="@+id/tv"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:id="@+id/tv"
-        android:textSize="15sp"
-        android:textColor="@color/white"
-        android:background="@drawable/oval_grey"
-        android:text="3"
-        android:padding="10dp"
-        android:gravity="center"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
-        />
+        android:layout_marginTop="10dp"
+        android:background="@drawable/oval_grey"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="3"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
 
 </RelativeLayout>

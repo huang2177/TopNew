@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -20,7 +21,6 @@ import com.kw.top.bean.BaseBean;
 import com.kw.top.bean.CircleNewsBean;
 import com.kw.top.listener.OnClickListener;
 import com.kw.top.retrofit.Api;
-import com.kw.top.ui.activity.active.ActiveDetailsActivity;
 import com.kw.top.ui.activity.login.LoginActivity;
 import com.kw.top.utils.RxToast;
 import com.kw.top.utils.SPUtils;
@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
+import cn.jpush.android.api.JPushInterface;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
 import rx.functions.Action1;
@@ -44,8 +45,6 @@ import rx.schedulers.Schedulers;
  */
 
 public class MyNewsActivity extends BaseActivity implements OnRefreshListener ,OnClickListener{
-
-
     ImageView mIvBack;
     TextView mTvTitle;
     TextView mTvTitleRight;
@@ -54,13 +53,13 @@ public class MyNewsActivity extends BaseActivity implements OnRefreshListener ,O
     SmartRefreshLayout mRefreshLayout;
     private List<CircleNewsBean.CommentListBean> mList = new ArrayList<>();
     private TopNewAdapter mAdapter;
-
     @Override
     public int getContentView() {
         return R.layout.activity_my_news;
     }
 
     public void initView() {
+
         mRecyclerView = findViewById(R.id.recycler_view);
         mRefreshLayout = findViewById(R.id.refresh_layout);
         mIvBack = findViewById(R.id.iv_back);
@@ -130,6 +129,8 @@ public class MyNewsActivity extends BaseActivity implements OnRefreshListener ,O
                     }
                 });
     }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -15,6 +15,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.FrameLayout;
 import android.widget.Toast;
@@ -26,7 +27,9 @@ import com.kw.top.base.MyEaseBaseActivity;
 import com.kw.top.bean.BaseBean;
 import com.kw.top.bean.FriendApplyBean;
 import com.kw.top.bean.VersionBean;
+import com.kw.top.bean.event.AppLoginEvent;
 import com.kw.top.bean.event.MsgCountEvent;
+import com.kw.top.redpacket.NimManger;
 import com.kw.top.retrofit.Api;
 import com.kw.top.tools.ConstantValue;
 import com.kw.top.tools.Logger;
@@ -37,6 +40,7 @@ import com.kw.top.ui.fragment.circle.CircleContentFragment;
 import com.kw.top.ui.fragment.find.FindFrament;
 import com.kw.top.ui.fragment.find.HomePageFragmnet;
 import com.kw.top.ui.fragment.news.NewsFragment;
+import com.kw.top.utils.RxToast;
 import com.kw.top.utils.SPUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -49,7 +53,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.jpush.android.api.JPushInterface;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
@@ -59,6 +65,7 @@ import rx.schedulers.Schedulers;
 public class NewMainActivity extends MyEaseBaseActivity implements TabLayout.OnTabSelectedListener {
 
 
+    public static boolean isForeground;
     @BindView(R.id.main_container)
     FrameLayout frameLayout;
     @BindView(R.id.tablayout)
@@ -72,12 +79,12 @@ public class NewMainActivity extends MyEaseBaseActivity implements TabLayout.OnT
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_main);
         ButterKnife.bind(this);
-        //ChatHelper.getInstance().init(this);
-//        EventBus.getDefault().register(this);
         initTab();
         initSdk();
-        // initIntent();
         VersionCode();
+        updateRegistrationId();   //更新极光id
+        isForeground = true;
+        NimManger.instance().updateUserState(ConstantValue.USER_ONLINE);
     }
 
     @Override
@@ -86,6 +93,7 @@ public class NewMainActivity extends MyEaseBaseActivity implements TabLayout.OnT
         showFragment(HomePageFragmnet.newInstance());
         tabLayout.getTabAt(0).select();
         VersionCode();
+        updateRegistrationId();   //更新极光id
     }
 
     /**
@@ -121,7 +129,6 @@ public class NewMainActivity extends MyEaseBaseActivity implements TabLayout.OnT
     }
 
 
-
     public void refreshUIWithMessage() {
         runOnUiThread(new Runnable() {
             public void run() {
@@ -154,6 +161,33 @@ public class NewMainActivity extends MyEaseBaseActivity implements TabLayout.OnT
         // }
     }
 
+    public void updateRegistrationId() {
+        final String registrationid = JPushInterface.getRegistrationID(this);
+        Api.getApiService().updateRegistrationId(registrationid, getToken())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        Log.e("-----registrationid", registrationid);
+                    }
+                })
+                .subscribe(new Action1<BaseBean>() {
+                    @Override
+                    public void call(BaseBean baseBean) {
+                        if (baseBean == null) {
+                            RxToast.normal("极光id更新失败");
+                        }
+
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+
+                    }
+                });
+    }
 
     /**
      * get unread event notification count, including application, accepted, etc
@@ -166,18 +200,12 @@ public class NewMainActivity extends MyEaseBaseActivity implements TabLayout.OnT
     }
 
 
-
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void refreshMsgNum(MsgCountEvent countEvent) {
         if (countEvent.isMsg())
             refreshUIWithMessage();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        //  EventBus.getDefault().unregister(this);
-    }
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
@@ -304,18 +332,17 @@ public class NewMainActivity extends MyEaseBaseActivity implements TabLayout.OnT
                 Toast.makeText(this, getResources().getString(R.string.back_again), Toast.LENGTH_SHORT).show();
                 mExitTime = System.currentTimeMillis();
             } else {
-                //MobclickAgent.onKillProcess(this);
+                isForeground = false;
+                NimManger.instance().onDestroy();
                 AppManager.getAppManager().finishAllActivity();
-                // finish();
             }
             return true;
         }
         return super.onKeyDown(keyCode, event);
     }
 
-
-    public static void logout(Context context, boolean b) {
-
+    public static void logout() {
+        //NimManger.instance().onLoginEvent(new AppLoginEvent(false));
     }
 
     @SuppressLint("MissingSuperCall")

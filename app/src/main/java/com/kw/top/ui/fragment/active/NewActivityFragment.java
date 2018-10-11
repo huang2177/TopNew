@@ -1,5 +1,6 @@
 package com.kw.top.ui.fragment.active;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.kw.top.bean.BaseBean;
 import com.kw.top.bean.TopListBean;
 import com.kw.top.retrofit.Api;
 import com.kw.top.retrofit.HttpHost;
+import com.kw.top.tools.ConstantValue;
 import com.kw.top.tools.GlideTools;
 import com.kw.top.tools.Logger;
 import com.kw.top.ui.activity.active.MarvellousActivity;
@@ -24,6 +26,7 @@ import com.kw.top.ui.activity.club.ClubActivity;
 import com.kw.top.ui.activity.find.FindDetailsActivity;
 import com.kw.top.ui.activity.login.LoginActivity;
 import com.kw.top.ui.activity.task.TopTaskActivity;
+import com.kw.top.ui.fragment.find.HomePageDetailsActivity;
 import com.kw.top.utils.RxToast;
 import com.kw.top.utils.SPUtils;
 
@@ -96,9 +99,15 @@ public class NewActivityFragment extends BaseFragment {
                 startActivity(TopListActivity.class);
                 break;
             case R.id.activity_slb_image:  //魅力榜图片
+               /* Intent intent = new Intent(getActivity(), HomePageDetailsActivity.class);
+                intent.putExtra(ConstantValue.KEY_USER_ID,mlblist.get(0).getUserId());
+                getActivity().startActivity(intent);*/
                 FindDetailsActivity.startActivity(getContext(), mlblist.get(0).getUserId());
                 break;
             case R.id.activity_mlb_image:  //实力榜图片
+                /*Intent intent1 = new Intent(getActivity(), HomePageDetailsActivity.class);
+                intent1.putExtra(ConstantValue.KEY_USER_ID,slblist.get(0).getUserId());
+                getActivity().startActivity(intent1);*/
                 FindDetailsActivity.startActivity(getContext(), slblist.get(0).getUserId());
                 break;
         }

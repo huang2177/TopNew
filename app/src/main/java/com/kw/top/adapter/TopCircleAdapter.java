@@ -2,6 +2,7 @@ package com.kw.top.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -30,12 +31,14 @@ import com.kw.top.R;
 import com.kw.top.bean.ImageBean;
 import com.kw.top.bean.TopCircleBean;
 import com.kw.top.retrofit.HttpHost;
+import com.kw.top.tools.ConstantValue;
 import com.kw.top.tools.GlideTools;
 import com.kw.top.ui.activity.ImageDetailsActivity;
 import com.kw.top.ui.activity.VideoPlayActivity;
 import com.kw.top.ui.activity.circle.UserCircleActivity;
 import com.kw.top.ui.activity.circle.WorldCircleDetailsActivity;
 import com.kw.top.ui.activity.find.FindDetailsActivity;
+import com.kw.top.ui.fragment.find.HomePageDetailsActivity;
 import com.kw.top.utils.DisplayUtils;
 
 import java.util.ArrayList;
@@ -55,15 +58,15 @@ public class TopCircleAdapter extends RecyclerView.Adapter<TopCircleAdapter.View
 
     private Activity mContext;
     private List<TopCircleBean> mList = new ArrayList<>();
-    private int mMaxWidth,maxHeight;
+    private int mMaxWidth, maxHeight;
     private int marginTop;
 
     public TopCircleAdapter(Activity context, List<TopCircleBean> list) {
         this.mContext = context;
         this.mList = list;
-        mMaxWidth = DisplayUtils.dip2px(mContext,150);
-        maxHeight = DisplayUtils.dip2px(mContext,230);
-        marginTop = DisplayUtils.dip2px(mContext,15);
+        mMaxWidth = DisplayUtils.dip2px(mContext, 150);
+        maxHeight = DisplayUtils.dip2px(mContext, 230);
+        marginTop = DisplayUtils.dip2px(mContext, 15);
     }
 
     @NonNull
@@ -84,11 +87,11 @@ public class TopCircleAdapter extends RecyclerView.Adapter<TopCircleAdapter.View
         holder.mTvZanNum.setText("获得了" + dataBean.getThumbsUpNum() + "个赞");
 
         Glide.with(mContext)
-                .load(HttpHost.qiNiu+dataBean.getHeadImg())
+                .load(HttpHost.qiNiu + dataBean.getHeadImg())
                 .apply(GlideTools.getHeadOptions())
                 .into(holder.mCiHead);
         final List<ImageBean> mImageList = dataBean.getDynamicList();
-        if (mImageList.size()>1){
+        if (mImageList.size() > 1) {
             holder.mIvCircle.setVisibility(View.GONE);
             holder.mRecyclerView.setVisibility(View.VISIBLE);
             holder.mIvVideo.setVisibility(View.GONE);
@@ -96,41 +99,41 @@ public class TopCircleAdapter extends RecyclerView.Adapter<TopCircleAdapter.View
             CircleImageAdapter imageAdapter = new CircleImageAdapter(mContext, mImageList);
             holder.mRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 3));
             holder.mRecyclerView.setAdapter(imageAdapter);
-        }else if (mImageList.size()==1){
+        } else if (mImageList.size() == 1) {
             holder.mIvCircle.setVisibility(View.VISIBLE);
             holder.mRecyclerView.setVisibility(View.GONE);
             final ImageBean imageBean = mImageList.get(0);
-            if (imageBean.getPicOrVideoType().equals("0")){
+            if (imageBean.getPicOrVideoType().equals("0")) {
                 holder.mIvVideo.setVisibility(View.VISIBLE);
                 holder.mIvCircle.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        VideoPlayActivity.startActivity(mContext,HttpHost.qiNiu + imageBean.getDynamicPic());
+                        VideoPlayActivity.startActivity(mContext, HttpHost.qiNiu + imageBean.getDynamicPic());
                     }
                 });
-            }else {
+            } else {
                 holder.mIvVideo.setVisibility(View.GONE);
                 holder.mIvCircle.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        ImageDetailsActivity.startActivity(mContext,0,mImageList);
+                        ImageDetailsActivity.startActivity(mContext, 0, mImageList);
                     }
                 });
             }
-            Log.e("tag","========= top circle  "+ HttpHost.qiNiu + imageBean.getDynamicPic());
+            Log.e("tag", "========= top circle  " + HttpHost.qiNiu + imageBean.getDynamicPic());
             Glide.with(mContext)
                     .asBitmap()
-                    .load(HttpHost.qiNiu+imageBean.getDynamicPic())
+                    .load(HttpHost.qiNiu + imageBean.getDynamicPic())
                     .apply(GlideTools.getOptions())
                     .into(new SimpleTarget<Bitmap>() {
                         @Override
                         public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) holder.mIvCircle.getLayoutParams();
                             params.width = mMaxWidth;
-                            int height = mMaxWidth*resource.getHeight()/resource.getWidth();
-                            if ( height >maxHeight){
+                            int height = mMaxWidth * resource.getHeight() / resource.getWidth();
+                            if (height > maxHeight) {
                                 params.height = maxHeight;
-                            }else {
+                            } else {
                                 params.height = height;
                             }
                             holder.mIvCircle.setLayoutParams(params);
@@ -141,29 +144,32 @@ public class TopCircleAdapter extends RecyclerView.Adapter<TopCircleAdapter.View
 
         //设置margin
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) holder.mRlImage.getLayoutParams();
-        if (TextUtils.isEmpty(dataBean.getTextContent())){
-            params.setMargins(0,-marginTop,0,0);
-        }else {
-            params.setMargins(0,marginTop,0,0);
+        if (TextUtils.isEmpty(dataBean.getTextContent())) {
+            params.setMargins(0, -marginTop, 0, 0);
+        } else {
+            params.setMargins(0, marginTop, 0, 0);
         }
         holder.mRlImage.setLayoutParams(params);
 
         holder.mCiHead.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FindDetailsActivity.startActivity(mContext,dataBean.getUserId());
+
+                Intent intent = new Intent(mContext, HomePageDetailsActivity.class);
+                intent.putExtra(ConstantValue.KEY_USER_ID, dataBean.getUserId());
+                mContext.startActivity(intent);
             }
         });
         holder.mLlItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                WorldCircleDetailsActivity.startActivity(mContext,dataBean.getDynamicId());
+                WorldCircleDetailsActivity.startActivity(mContext, dataBean.getDynamicId());
             }
         });
         holder.mRecyclerView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_UP){
+                if (event.getAction() == MotionEvent.ACTION_UP) {
                     holder.mLlItem.performClick();
                 }
                 return false;
@@ -203,9 +209,10 @@ public class TopCircleAdapter extends RecyclerView.Adapter<TopCircleAdapter.View
         RecyclerView mRecyclerView;
         @BindView(R.id.iv_video)
         ImageView mIvVideo;
+
         public ViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 

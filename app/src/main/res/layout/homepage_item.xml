@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="10dp"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -49,7 +49,8 @@
                         android:paddingRight="8dp"
                         android:text="22岁"
                         android:textColor="@color/white"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:visibility="gone" />
 
                     <TextView
                         android:id="@+id/tv_lable2"
@@ -62,7 +63,8 @@
                         android:paddingRight="8dp"
                         android:text="上海 "
                         android:textColor="@color/white"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:visibility="gone" />
 
                     <TextView
                         android:id="@+id/tv_lable3"
@@ -75,7 +77,8 @@
                         android:paddingRight="8dp"
                         android:text="天蝎座"
                         android:textColor="@color/white"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:visibility="gone" />
 
 
                 </LinearLayout>
@@ -91,9 +94,9 @@
                     android:gravity="center"
                     android:paddingLeft="8dp"
                     android:paddingRight="8dp"
-                    android:text="在线"
                     android:textColor="#15d118"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:visibility="visible" />
 
 
             </LinearLayout>

@@ -22,6 +22,7 @@ import com.kw.top.retrofit.Api;
 import com.kw.top.tools.ComResultTools;
 import com.kw.top.tools.CommandTools;
 import com.kw.top.tools.ConstantValue;
+import com.kw.top.tools.Logger;
 import com.kw.top.tools.QiniuUpLoadManager;
 import com.kw.top.ui.activity.person_info.EditInfoActivity;
 import com.kw.top.utils.RxToast;
@@ -111,6 +112,9 @@ public class UpPictureActivity extends BaseActivity implements OnDeleteListener,
     }
 
 
+    /**
+     * 获得七牛云文件上传Token
+     */
     private void getQiniuToken() {
         Api.getApiService().getUpToken(getToken())
                 .subscribeOn(Schedulers.io())
@@ -130,7 +134,7 @@ public class UpPictureActivity extends BaseActivity implements OnDeleteListener,
                             Log.e("tag", "=============  token " + token);
                             upPictoQiniu(token);
                         } else {
-                            ComResultTools.resultData(UpPictureActivity.this,baseBean);
+                            ComResultTools.resultData(UpPictureActivity.this, baseBean);
                         }
                     }
                 }, new Action1<Throwable>() {
@@ -160,13 +164,14 @@ public class UpPictureActivity extends BaseActivity implements OnDeleteListener,
                             e.printStackTrace();
                         }
                         Log.e("tag", "================  reskey " + resKey);
+                        //todo  这里上传图片错误了
                         mUrls.add(resKey);
                         if (count == mList.size()) {
                             upImage(new Gson().toJson(mUrls));
                         }
 
                     } else {
-                        Log.i("qiniu", "===============Upload Fail");
+                        Log.i("qiniu", "===============Upload  ");
                         //如果失败，这里可以把info信息上报自己的服务器，便于后面分析上传错误原因
                         RxToast.normal("上传失败,请重新上传");
                     }
@@ -200,7 +205,7 @@ public class UpPictureActivity extends BaseActivity implements OnDeleteListener,
                         mProgressDialog.dismiss();
                         RxToast.normal("图片上传成功");
                         Log.e("tag", "============= 上传成功 " + baseBean.getData().toString());
-                        EditInfoActivity.startActivity(UpPictureActivity.this,false);
+                        EditInfoActivity.startActivity(UpPictureActivity.this, false);
                     }
                 }, new Action1<Throwable>() {
                     @Override

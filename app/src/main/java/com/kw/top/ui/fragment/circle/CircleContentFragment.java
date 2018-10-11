@@ -89,15 +89,6 @@ public class CircleContentFragment extends BaseFragment implements OnRefreshList
 
     public static CircleContentFragment fragment;
 
-   /* public static CircleContentFragment onNewInstance(String top_type) {
-        CircleContentFragment fragment = new CircleContentFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("TYPE", top_type);
-        fragment.setArguments(bundle);
-        return fragment;
-    }*/
-
-
     public static CircleContentFragment newInstance() {
         if (fragment == null) {
             fragment = new CircleContentFragment();

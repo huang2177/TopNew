@@ -10,13 +10,11 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/status_color"
+            android:background="#575757"
             android:orientation="vertical">
-
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -53,7 +51,6 @@
                         android:gravity="center"
                         android:paddingLeft="8dp"
                         android:paddingRight="8dp"
-                        android:text="在线"
                         android:textColor="#15d118"
                         android:textSize="12sp" />
 
@@ -313,7 +310,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
-                    android:text="职业："
+                    android:text="体重："
                     android:textColor="#cccccc"
                     android:textSize="14.0sp" />
 
@@ -346,7 +343,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
-                    android:text="生日："
+                    android:text="年龄："
                     android:textColor="#cccccc"
                     android:textSize="14.0sp" />
 
@@ -379,7 +376,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
-                    android:text="生活品质："
+                    android:text="职业："
                     android:textColor="#cccccc"
                     android:textSize="14.0sp" />
 
@@ -412,7 +409,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
-                    android:text="饮酒习惯："
+                    android:text="兴趣爱好："
                     android:textColor="#cccccc"
                     android:textSize="14.0sp" />
 
@@ -445,7 +442,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
-                    android:text="年收入："
+                    android:text="个性签名："
                     android:textColor="#cccccc"
                     android:textSize="14.0sp" />
 
@@ -470,7 +467,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="45dp">
+                android:layout_height="45dp"
+                android:visibility="gone">
 
 
                 <TextView
@@ -493,6 +491,11 @@
                     android:textColor="@color/yellow_DEAC6A"
                     android:textSize="14.0sp" />
             </RelativeLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="60dp" />
         </LinearLayout>
 
 
@@ -500,34 +503,79 @@
 
 
     <LinearLayout
+        android:id="@+id/video_layout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#444"
+        android:background="#505050"
         android:gravity="center">
 
-        <ImageView
-            android:id="@+id/image_add"
+
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/ic_add_fr" />
+            android:gravity="center">
 
+            <TextView
+                android:id="@+id/image_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/anchor_shape"
+                android:drawableLeft="@drawable/ic_anchor_add"
+                android:drawablePadding="8dp"
+                android:paddingBottom="4dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="4dp"
+                android:text="添加好友"
+                android:textColor="@color/colorWhite"
+                android:textSize="12.0sp" />
 
-        <ImageView
-            android:id="@+id/iamge_lw"
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/ic_add_lw" />
+            android:gravity="center">
 
-        <ImageView
-            android:id="@+id/iamge_sp"
+            <TextView
+                android:id="@+id/iamge_lw"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/anchor_shape"
+                android:drawableLeft="@drawable/ic_anchor_gift"
+                android:drawablePadding="8dp"
+                android:paddingBottom="4dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="4dp"
+                android:text="赠送礼物"
+                android:textColor="@color/colorWhite"
+                android:textSize="12.0sp" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/ic_add_sp" />
+            android:gravity="center">
 
-
+            <TextView
+                android:id="@+id/iamge_sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/anchor_shape_yellow"
+                android:drawableLeft="@drawable/ic_anchor_video"
+                android:drawablePadding="8dp"
+                android:paddingBottom="4dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="4dp"
+                android:text="与TA视频"
+                android:textColor="@color/colorWhite"
+                android:textSize="11.0sp" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

@@ -117,6 +117,12 @@ public class HomeInfoBean {
          * job : 模特
          * profit : 10
          * age : 21
+         * interest
+         * objective
+         * drink
+         * weight
+         * birthday
+         * stature
          */
 
         private String birthday;
@@ -127,7 +133,6 @@ public class HomeInfoBean {
         private String smoke;
         private String userId;
         private String drink;
-        private String objective;
         private String constellation;
         private String grade;
         private String stature;
@@ -135,6 +140,56 @@ public class HomeInfoBean {
         private String job;
         private String profit;
         private String age;
+        private String userState;
+        private String weight;
+        private String interest;
+        private String objective;
+        private String sex;
+
+        public String getSex() {
+            return sex;
+        }
+
+        public void setSex(String sex) {
+            this.sex = sex;
+        }
+
+        public void setInterest(String interest) {
+            this.interest = interest;
+        }
+
+        public String getInterest() {
+            return interest;
+        }
+
+        public void setWeight(String weight) {
+            this.weight = weight;
+        }
+
+        public String getWeight() {
+            return weight;
+        }
+
+        public void setUserState(String userState) {
+            this.userState = userState;
+        }
+
+        //1.在线,3.活跃,5.在聊,7.勿扰,9.离线
+        public String getUserState() {
+            switch (userState) {
+                case "1":
+                    return "在线";
+                case "3":
+                    return "活跃";
+                case "5":
+                    return "在聊";
+                case "7":
+                    return "勿扰";
+                case "9":
+                    return "离线";
+            }
+            return "在线";
+        }
 
         public String getBirthday() {
             return birthday;

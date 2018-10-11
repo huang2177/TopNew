@@ -134,8 +134,7 @@
         <activity android:name=".ui.activity.login.HeartBeatGril1" />
         <activity
             android:name=".ui.activity.login.SexActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppSplash" />
+            android:screenOrientation="portrait" />
         <activity android:name=".ui.activity.user_center.InviteRecordActivity" />
         <activity android:name=".ui.activity.user_center.InviteFriendActivity" />
         <activity android:name=".ui.activity.user_center.MyGiftActivity" />
@@ -242,7 +241,6 @@
             android:windowSoftInputMode="adjustResize|stateHidden">
 
         </activity>
-        <activity android:name=".base.MyEaseBaseActivity" />
 
         <service android:name="com.amap.api.location.APSService">
 
@@ -286,6 +284,9 @@
         <activity android:name=".ui.fragment.find.HomePageDetailsActivity" />
         <activity android:name=".ui.fragment.find.RankingListActivity" />
         <activity android:name=".ui.fragment.find.RuleActivity" />
+        <activity android:name=".ui.activity.login.GirlInfoActivity" />
+        <activity android:name=".ui.fragment.find.SearchActivity" />
+        <activity android:name=".ui.activity.person_info.ModifyInfoActivity" />
 
 
         <!-- Required SDK 核心功能-->

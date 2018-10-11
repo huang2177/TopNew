@@ -11,6 +11,7 @@ import com.kw.top.ui.activity.news.ChatActivity;
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.business.recent.RecentContactsCallback;
 import com.netease.nim.uikit.business.recent.RecentContactsFragment;
+import com.netease.nim.uikit.impl.cache.NimUserInfoCache;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.avchat.model.AVChatAttachment;
 import com.netease.nimlib.sdk.msg.MsgService;
@@ -43,9 +44,9 @@ public class RecentSessionFragment extends RecentContactsFragment implements Rec
 
     @Override
     public void onItemClick(RecentContact recent) {
-        UserInfo userInfo = NimUIKit.getUserInfoProvider().getUserInfo(recent.getContactId());
+        UserInfo userInfo = NimUserInfoCache.getInstance().getUserInfo(recent.getFromAccount());
         if (userInfo != null && getActivity() != null) {
-            FriendBean data = new FriendBean(userInfo.getAvatar(), recent.getFromNick(), recent.getContactId());
+            FriendBean data = new FriendBean(userInfo.getAvatar(), userInfo.getName(), userInfo.getAccount());
             ChatActivity.startActivity(getContext(), data);
         }
     }

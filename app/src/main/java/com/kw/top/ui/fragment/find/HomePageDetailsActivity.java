@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -14,6 +15,7 @@ import com.google.gson.JsonSyntaxException;
 import com.kw.top.R;
 import com.kw.top.base.BaseActivity_;
 import com.kw.top.bean.BaseBean;
+import com.kw.top.tools.Logger;
 import com.kw.top.ui.fragment.find.videohelper.VideoChatHelper;
 import com.netease.nim.avchatkit.event.VideoChatEvent;
 import com.kw.top.retrofit.HttpHost;
@@ -87,6 +89,8 @@ public class HomePageDetailsActivity extends BaseActivity_ implements HomePageVi
     TextView tvState;
     @BindView(R.id.tv_follow)
     TextView tvFollow;
+    @BindView(R.id.video_layout)
+    LinearLayout layVidoe;
 
 
     private String userId;
@@ -108,6 +112,8 @@ public class HomePageDetailsActivity extends BaseActivity_ implements HomePageVi
     private String follow;
     private GiftDialog giftDialog;
     private VideoChatHelper chatHelper;
+    private String sex, userState;
+    ;
 
     @Override
     public int getContentView() {
@@ -190,6 +196,10 @@ public class HomePageDetailsActivity extends BaseActivity_ implements HomePageVi
      * 视频
      */
     private void call() {
+        if (userState.equals("5") || userState.equals("7") || userState.equals("9")) {
+            RxToast.normal("用户忙");
+            return;
+        }
         if (homeInfoBean != null) {
             chatHelper = new VideoChatHelper();
             chatHelper.createRoom(this, userId, follow);
@@ -202,10 +212,6 @@ public class HomePageDetailsActivity extends BaseActivity_ implements HomePageVi
         } else {
             homePageFollow.addFollow(userId, getToken());
         }
-//        Event event = new Event(1, 100000000, 60);
-//        event.setConfig("hello");
-//        event.setBroadcastOnlineOnly(true);
-//        NIMClient.getService(EventSubscribeService.class).publishEvent(event);
     }
 
     public void showGifDialog(String type) {
@@ -247,19 +253,27 @@ public class HomePageDetailsActivity extends BaseActivity_ implements HomePageVi
                 tvFans.setText(homeInfoBean.getFollowNum().getFollowNum() + "粉丝");
                 tvJinb.setText(homeInfoBean.getUserInfoMap().getProfit() + "T币/分钟");
                 tvSg.setText(homeInfoBean.getUserInfoMap().getStature() + "cm");
-                tvJob.setText(homeInfoBean.getUserInfoMap().getJob());
-                tvShengRi.setText(homeInfoBean.getUserInfoMap().getBirthday());
-                tvShpz.setText(homeInfoBean.getUserInfoMap().getQualityLife());
-                tvYjxg.setText(homeInfoBean.getUserInfoMap().getDrink());
-                tvNsr.setText(homeInfoBean.getUserInfoMap().getYearIncome());
-                tvZzc.setText(homeInfoBean.getUserInfoMap().getTotalAssets());
-                if (homeInfoBean.getFollow().equals("1")) {
-                    tvFollow.setText("已关注");
-                } else {
-                    tvFollow.setText("关注");
-                }
-                follow = homeInfoBean.getFollow();   //是否关注
+                tvJob.setText(homeInfoBean.getUserInfoMap().getWeight() + "kg");
+                tvShengRi.setText(homeInfoBean.getUserInfoMap().getAge());
+                tvShpz.setText(homeInfoBean.getUserInfoMap().getJob());
+                tvYjxg.setText(homeInfoBean.getUserInfoMap().getInterest());
+                tvNsr.setText(homeInfoBean.getUserInfoMap().getObjective());
 
+                tvZzc.setText(homeInfoBean.getUserInfoMap().getTotalAssets());
+                tvState.setText(homeInfoBean.getUserInfoMap().getUserState());
+                sex = homeInfoBean.getUserInfoMap().getSex();  //用户性别
+                userState = homeInfoBean.getUserInfoMap().getUserState();
+
+                Logger.e("----sex---", SPUtils.getString(this, ConstantValue.KEY_SEX));
+                Logger.e("-----sex---", sex);
+                if (sex.equals(SPUtils.getString(this, ConstantValue.KEY_SEX))) {
+                    layVidoe.setVisibility(View.GONE);
+                } else {
+                    layVidoe.setVisibility(View.VISIBLE);
+                }
+
+                follow = homeInfoBean.getFollow();   //是否关注
+                tvFollow.setText(follow.equals("1") ? "已关注" : "关注");
             } catch (JsonSyntaxException e) {
                 e.printStackTrace();
             }

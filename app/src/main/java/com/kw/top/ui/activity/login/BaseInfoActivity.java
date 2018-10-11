@@ -26,8 +26,11 @@ import com.kw.top.retrofit.Api;
 import com.kw.top.tools.ComResultTools;
 import com.kw.top.tools.CommandTools;
 import com.kw.top.tools.ConstantValue;
+import com.kw.top.tools.Logger;
 import com.kw.top.tools.QiniuUpLoadManager;
 import com.kw.top.ui.activity.NewMainActivity;
+import com.kw.top.ui.activity.login.presenter.RegisterView;
+import com.kw.top.ui.activity.login.presenter.UpSinglePresenter;
 import com.kw.top.utils.RxToast;
 import com.kw.top.utils.SPUtils;
 import com.luck.picture.lib.PictureSelector;
@@ -60,7 +63,7 @@ import rx.schedulers.Schedulers;
  * des   : 登录 -- 填写基本信息
  */
 
-public class BaseInfoActivity extends BaseActivity implements View.OnClickListener {
+public class BaseInfoActivity extends BaseActivity implements View.OnClickListener, RegisterView {
 
     ImageView mIvBack;
     TextView mTvTitle;
@@ -77,6 +80,8 @@ public class BaseInfoActivity extends BaseActivity implements View.OnClickListen
     private String sex;
     private boolean userPrivate;//身份保密
     private byte[] datas = null;
+    private UpSinglePresenter presenter;
+    private String headImg;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, BaseInfoActivity.class);
@@ -89,6 +94,7 @@ public class BaseInfoActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void initView() {
+        presenter = new UpSinglePresenter(this, this);
         sex = SPUtils.getString(this, ConstantValue.KEY_SEX, "");
         userPrivate = SPUtils.getBoolean(this, ConstantValue.KEY_PRIVATE, false);
         if (userPrivate) {
@@ -132,64 +138,22 @@ public class BaseInfoActivity extends BaseActivity implements View.OnClickListen
                 String weChat = mEtWechat.getText().toString().trim();
                 if (TextUtils.isEmpty(nickName)) {
                     RxToast.normal("请填写昵称");
-                } else if (TextUtils.isEmpty(weChat)) {
-                    RxToast.normal("请填写微信号");
-                } else if (TextUtils.isEmpty(mResKey)) {
-                    if (userPrivate) {
-                        getQiniuToken();
-                    } else {
-                        RxToast.normal("请上传头像");
-                    }
-                } else {
-                    setWeiChat(nickName, weChat);
+                    return;
                 }
+                if (TextUtils.isEmpty(weChat)) {
+                    RxToast.normal("请填写微信号");
+                    return;
+                }
+                if (TextUtils.isEmpty(headImg)) {
+                    RxToast.normal("请上传头像");
+                    return;
+                }
+                presenter.manRegister(nickName, weChat, headImg, getToken());
                 break;
             case R.id.iv_back:
                 finish();
                 break;
         }
-    }
-
-    private void setWeiChat(String nickName, String weChat) {
-        showProgressDialog();
-        Api.getApiService().addNickNameAndWx(nickName, weChat, mResKey, getToken())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .unsubscribeOn(Schedulers.io())
-                .doOnSubscribe(new Action0() {
-                    @Override
-                    public void call() {
-
-                    }
-                })
-                .subscribe(new Action1<BaseBean>() {
-                    @Override
-                    public void call(BaseBean baseBean) {
-                        hideProgressDialog();
-                        if (baseBean.isSuccess()) {
-                            RxToast.normal("进入TOP");
-                            if (sex.equals("0")) {
-                                if (userPrivate) {
-                                    startActivity(new Intent(BaseInfoActivity.this, NewMainActivity.class));
-                                    finish();
-                                } else {
-                                    showHint();
-                                }
-                            } else {
-                                startActivity(new Intent(BaseInfoActivity.this, NewMainActivity.class));
-                                finish();
-                            }
-                        } else {
-                            ComResultTools.resultData(BaseInfoActivity.this, baseBean);
-                        }
-                    }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        hideProgressDialog();
-                        RxToast.normal("设置失败");
-                    }
-                });
     }
 
     private void showHint() {
@@ -232,150 +196,56 @@ public class BaseInfoActivity extends BaseActivity implements View.OnClickListen
             if (list.size() > 0) {
                 localMedia = list.get(0);
                 path = localMedia.getCutPath();
-                getQiniuToken();
+                Glide.with(BaseInfoActivity.this).load(path).into(mCiHead);
+                presenter.getQiniuToken(getToken(), path);
+
             }
         }
     }
 
-    private void getQiniuToken() {
-        showProgressDialog();
-        Api.getApiService().getUpToken(getToken())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .unsubscribeOn(Schedulers.io())
-                .subscribe(new Action1<BaseBean>() {
-                    @Override
-                    public void call(BaseBean baseBean) {
-                        if (baseBean.isSuccess()) {
-                            String qiniuToken = (String) baseBean.getData();
-                            Log.e("tag", "=============  token " + qiniuToken);
-                            if (userPrivate && TextUtils.isEmpty(path)) {
-                                upPictoQiniuBybyte(qiniuToken);
-                            } else {
-                                upPictoQiniu(qiniuToken);
-                            }
-                        } else {
-                            ComResultTools.resultData(BaseInfoActivity.this, baseBean);
-                        }
-                    }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        hideProgressDialog();
-                        RxToast.normal(getResources().getString(R.string.net_error));
-                    }
-                });
+
+    /**
+     * 上传单张图片
+     *
+     * @param resKey
+     */
+    @Override
+    public void UpPicSuccsee(String resKey) {
+        headImg = resKey;
+        Logger.e("---resKey---", resKey);
     }
 
-    private void upPictoQiniu(String qiniuToken) {
-        String key = CommandTools.getAndroidId(BaseApplication.getInstance()) + SystemClock.currentThreadTimeMillis();
-        QiniuUpLoadManager.getInstance().uploadFile(path, key, qiniuToken, new UpCompletionHandler() {
-            @Override
-            public void complete(String key, ResponseInfo info, JSONObject response) {
-                //res包含hash、key等信息，具体字段取决于上传策略的设置
-                if (info.isOK()) {
-                    String resKey = "";
-                    try {
-                        resKey = response.getString("key");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    upImage(resKey);
+    /**
+     * 上传多张图片
+     *
+     * @param listkey
+     */
+    @Override
+    public void UpMorePicSuccess(List<String> listkey) {
 
-                } else {
-                    Log.i("qiniu", "===============Upload Fail");
-                    //如果失败，这里可以把info信息上报自己的服务器，便于后面分析上传错误原因
-                    hideProgressDialog();
-                    RxToast.normal("上传失败,请重新上传");
-                }
-                Log.i("qiniu", "===================" + key + ",\r\n " + info + ",\r\n " + response);
-            }
-
-        }, new UploadOptions(null, null, false, new UpProgressHandler() {
-            @Override
-            public void progress(String key, double percent) {
-
-            }
-        }, new UpCancellationSignal() {
-            @Override
-            public boolean isCancelled() {
-                return false;
-            }
-        }));
     }
 
-    private void upPictoQiniuBybyte(String qiniuToken) {
-        String key = CommandTools.getAndroidId(BaseApplication.getInstance()) + SystemClock.currentThreadTimeMillis();
-        QiniuUpLoadManager.getInstance().uploadFileBytes(datas, key, qiniuToken, new UpCompletionHandler() {
-            @Override
-            public void complete(String key, ResponseInfo info, JSONObject response) {
-                //res包含hash、key等信息，具体字段取决于上传策略的设置
-                if (info.isOK()) {
-                    String resKey = "";
-                    try {
-                        resKey = response.getString("key");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    upImage(resKey);
+    /**
+     * 请求女生资料
+     *
+     * @param baseBean
+     */
+    @Override
+    public void UpGirlInfoSuccess(BaseBean baseBean) {
 
-                } else {
-                    Log.i("qiniu", "===============Upload Fail");
-                    //如果失败，这里可以把info信息上报自己的服务器，便于后面分析上传错误原因
-                    hideProgressDialog();
-                    RxToast.normal("上传失败,请重新上传");
-                }
-                Log.i("qiniu", "===================" + key + ",\r\n " + info + ",\r\n " + response);
-            }
-
-        }, new UploadOptions(null, null, false, new UpProgressHandler() {
-            @Override
-            public void progress(String key, double percent) {
-
-            }
-        }, new UpCancellationSignal() {
-            @Override
-            public boolean isCancelled() {
-                return false;
-            }
-        }));
     }
 
-    private void upImage(final String resKey) {
-        Api.getApiService().upPhoto(resKey, getToken())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .unsubscribeOn(Schedulers.io())
-                .doOnSubscribe(new Action0() {
-                    @Override
-                    public void call() {
-                    }
-                })
-                .subscribe(new Action1<BaseBean>() {
-                    @Override
-                    public void call(BaseBean baseBean) {
-                        hideProgressDialog();
-                        mResKey = resKey;
-                        SPUtils.saveString(BaseInfoActivity.this, ConstantValue.KEY_HEAD, resKey);
-                        if (userPrivate) {
-                            String name = mEtNikename.getText().toString().trim();
-                            String wechat = mEtWechat.getText().toString().trim();
-                            if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(wechat)) {
-                                setWeiChat(name, wechat);
-                            }
-                            Glide.with(BaseInfoActivity.this).load(localMedia.getCutPath()).into(mCiHead);
-                        } else {
-                            RxToast.normal("设置成功 ");
-                            Glide.with(BaseInfoActivity.this).load(localMedia.getCutPath()).into(mCiHead);
-                        }
-                    }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        hideProgressDialog();
-                        RxToast.normal("上传失败");
-                    }
-                });
-    }
+    /**
+     * 请求男生资料
+     *
+     * @param baseBean
+     */
+    @Override
+    public void UpSingInfoSuccess(BaseBean baseBean) {
+        RxToast.normal("资料完善成功");
 
+        Intent intent = new Intent(this, NewMainActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

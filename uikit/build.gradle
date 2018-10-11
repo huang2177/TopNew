@@ -42,5 +42,6 @@ dependencies {
     // 音视频需要
     api 'com.netease.nimlib:chatroom:5.6.1'
     api 'com.netease.nimlib:lucene:5.6.1'
+    api 'com.netease.nimlib:avchat:5.6.1'
 
 }

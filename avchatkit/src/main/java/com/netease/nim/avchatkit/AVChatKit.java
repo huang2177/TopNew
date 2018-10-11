@@ -1,8 +1,11 @@
 package com.netease.nim.avchatkit;
 
 import android.app.Notification;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseArray;
 
@@ -17,6 +20,7 @@ import com.netease.nim.avchatkit.receiver.PhoneCallStateObserver;
 import com.netease.nim.avchatkit.teamavchat.activity.TeamAVChatActivity;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.Observer;
+import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.RequestCallbackWrapper;
 import com.netease.nimlib.sdk.ResponseCode;
 import com.netease.nimlib.sdk.avchat.AVChatManager;
@@ -26,8 +30,12 @@ import com.netease.nimlib.sdk.event.EventSubscribeService;
 import com.netease.nimlib.sdk.event.EventSubscribeServiceObserver;
 import com.netease.nimlib.sdk.event.model.Event;
 import com.netease.nimlib.sdk.event.model.EventSubscribeRequest;
+import com.netease.nimlib.sdk.uinfo.UserService;
+import com.netease.nimlib.sdk.uinfo.model.NimUserInfo;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -206,24 +214,46 @@ public class AVChatKit {
     private static Observer<AVChatData> inComingCallObserver = new Observer<AVChatData>() {
         @Override
         public void onEvent(final AVChatData data) {
-            String extra = data.getExtra();
-            Log.e("Extra", "Extra Message->" + extra);
-            if (PhoneCallStateObserver.getInstance().getPhoneCallState() != PhoneCallStateObserver.PhoneCallStateEnum.IDLE
-                    || AVChatProfile.getInstance().isAVChatting()
-                    || TeamAVChatProfile.sharedInstance().isTeamAVChatting()
-                    || AVChatManager.getInstance().getCurrentChatId() != 0) {
-                LogUtil.i(TAG, "reject incoming call data =" + data.toString() + " as local phone is not idle");
-                AVChatManager.getInstance().sendControlCommand(data.getChatId(), AVChatControlCommand.BUSY, null);
-                return;
-            }
-            // 有网络来电打开AVChatActivity
-            AVChatProfile.getInstance().setAVChatting(true);
-            AVChatProfile.getInstance().launchActivity(data, userInfoProvider.getUserDisplayName(data.getAccount()), AVChatActivity.FROM_BROADCASTRECEIVER);
-            if (mCallListener != null) {
-                mCallListener.inComingCall();
+            Log.e("Extra", "Extra Message->" + data.getExtra());
+            String userName = userInfoProvider.getUserDisplayName(data.getAccount());
+            if (TextUtils.isEmpty(userName) || TextUtils.equals("Top", userName)) {
+                List<String> accounts = Collections.singletonList(data.getAccount());
+                NIMClient.getService(UserService.class).fetchUserInfo(accounts).setCallback(new RequestCallbackWrapper<List<NimUserInfo>>() {
+                    @Override
+                    public void onResult(int code, List<NimUserInfo> result, Throwable exception) {
+                        if (ResponseCode.RES_SUCCESS != code || result.size() <= 0) {
+                            return;
+                        }
+                        NimUserInfo userInfo = result.get(0);
+                        if (userInfo != null) {
+                            launchActivity(data, userInfo.getName());
+                        }
+                    }
+                });
+            } else {
+                launchActivity(data, userName);
             }
         }
     };
+
+    @Nullable
+    private static void launchActivity(AVChatData data, String userName) {
+        if (PhoneCallStateObserver.getInstance().getPhoneCallState() != PhoneCallStateObserver.PhoneCallStateEnum.IDLE
+                || AVChatProfile.getInstance().isAVChatting()
+                || TeamAVChatProfile.sharedInstance().isTeamAVChatting()
+                || AVChatManager.getInstance().getCurrentChatId() != 0) {
+            LogUtil.i(TAG, "reject incoming call data =" + data.toString() + " as local phone is not idle");
+            AVChatManager.getInstance().sendControlCommand(data.getChatId(), AVChatControlCommand.BUSY, null);
+            return;
+        }
+        // 有网络来电打开AVChatActivity
+        AVChatProfile.getInstance().setAVChatting(true);
+        AVChatProfile.getInstance().launchActivity(data, userName, AVChatActivity.FROM_BROADCASTRECEIVER);
+        if (mCallListener != null) {
+            mCallListener.inComingCall();
+        }
+    }
+
 
     public interface InComingCallListener {
         void inComingCall();

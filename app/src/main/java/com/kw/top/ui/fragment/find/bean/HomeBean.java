@@ -29,6 +29,37 @@ public class HomeBean {
     private String starNum;
     private String age;
     private String objective;
+    private String userState;
+    private String job;
+
+    public String getJob() {
+        return job;
+    }
+
+    public void setJob(String job) {
+        this.job = job;
+    }
+
+    public void setUserState(String userState) {
+        this.userState = userState;
+    }
+
+    //1.在线,3.活跃,5.在聊,7.勿扰,9.离线
+    public String getUserState() {
+        switch (userState) {
+            case "1":
+                return "在线";
+            case "3":
+                return "活跃";
+            case "5":
+                return "在聊";
+            case "7":
+                return "勿扰";
+            case "9":
+                return "离线";
+        }
+        return "在线";
+    }
 
 
     public String getObjective() {

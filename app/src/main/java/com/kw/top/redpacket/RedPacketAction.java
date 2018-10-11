@@ -20,16 +20,14 @@ import java.util.Map;
 public class RedPacketAction extends BaseAction {
     private static final int REQUEST_CODE_RED_PACKET = 8;
     private String name;
-    private String userId;
     private String headUrl;
     private String account;
 
 
-    public RedPacketAction(String headUrl, String name, String userId, String account) {
+    public RedPacketAction(String headUrl, String name, String account) {
         super(R.drawable.message_plus_rp_selector, R.string.red_packet);
         this.account = account;
         this.headUrl = headUrl;
-        this.userId = userId;
         this.name = name;
     }
 

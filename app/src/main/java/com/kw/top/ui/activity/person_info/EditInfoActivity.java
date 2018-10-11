@@ -26,7 +26,6 @@ import com.kw.top.bean.event.UserAvatarEvent;
 import com.kw.top.tools.ComResultTools;
 import com.kw.top.tools.ConstantValue;
 import com.kw.top.ui.activity.login.BaseInfoActivity;
-import com.kw.top.ui.activity.login.LoginActivity;
 import com.kw.top.utils.RxToast;
 import com.kw.top.utils.SPUtils;
 import com.kw.top.utils.TimeUtils;

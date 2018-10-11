@@ -38,11 +38,17 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private int maxWidth;
     private OnItemClickListener listener;
 
-    public HomePageAdapter(Context mContext, List<HomeBean> list) {
+    public HomePageAdapter(Context mContext) {
         this.mContext = mContext;
-        this.list = list;
         maxWidth = DisplayUtils.getScreenWidth(mContext) - DisplayUtils.dip2px(mContext, 20);
     }
+
+
+    public void setHomeList(List<HomeBean> list) {
+        this.list = list;
+        notifyDataSetChanged();
+    }
+
 
     @NonNull
     @Override
@@ -71,23 +77,6 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 mContext.startActivity(intent);
             }
         });
-
-        /*Glide.with(mContext)
-                .asBitmap()
-                .load(HttpHost.qiNiu + list.get(position).getHeadImg())
-                .apply(GlideTools.getOptions())
-                .into(new SimpleTarget<Bitmap>() {
-                    @Override
-                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) viewHodler.imageView.getLayoutParams();
-                        params.height = maxWidth * resource.getHeight() / resource.getWidth();
-                        params.width = maxWidth;
-                        viewHodler.imageView.setLayoutParams(params);
-                        viewHodler.imageView.setImageBitmap(resource);
-                    }
-                });*/
-
-
         Glide.with(mContext)
                 .asBitmap()
                 .load(HttpHost.qiNiu + list.get(position).getHeadImg())
@@ -141,6 +130,7 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             viewHodler.textView2.setText(list.get(position).getProfit() + "T币/分钟");
             viewHodler.textView.setText(list.get(position).getNickName());
             viewHodler.textView1.setText(list.get(position).getObjective());
+            viewHodler.tvState.setText(list.get(position).getUserState());
         }
 
     }

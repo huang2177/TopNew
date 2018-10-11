@@ -7,9 +7,11 @@
     android:paddingTop="20dp">
 
     <LinearLayout
+        android:id="@+id/care_root"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/image_video_avatar_bg">
+        android:background="@drawable/image_video_avatar_bg"
+        android:visibility="gone">
 
         <com.netease.nim.avchatkit.common.imageview.HeadImageView
             android:id="@+id/avchat_video_avatar"
@@ -56,13 +58,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="40dp"
             android:layout_marginRight="116dp"
             android:background="@drawable/shape_r45_ff2b73"
-            android:paddingBottom="3dp"
+            android:paddingBottom="4dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:paddingTop="3dp"
+            android:paddingTop="4dp"
             android:visibility="gone">
 
             <TextView
@@ -77,7 +79,7 @@
             <ImageView
                 android:id="@+id/avchat_video_gift_img"
                 android:layout_width="wrap_content"
-                android:layout_height="28dp"
+                android:layout_height="33dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="5dp"
                 android:scaleType="fitXY" />

@@ -111,7 +111,7 @@ public class BaseApplication extends Application {
         AVChatOptions avChatOptions = new AVChatOptions() {
             @Override
             public void logout(Context context) {
-                NewMainActivity.logout(context, true);
+                NewMainActivity.logout();
             }
         };
         AVChatKit.InComingCallListener callListener = new AVChatKit.InComingCallListener() {
@@ -144,7 +144,7 @@ public class BaseApplication extends Application {
      * 初始化极光
      */
     private void initJPush() {
-        JPushInterface.setDebugMode(true);
+        JPushInterface.setDebugMode(false);
         JPushInterface.init(this);
     }
 

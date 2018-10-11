@@ -2,6 +2,7 @@ package com.kw.top.redpacket;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.kw.top.base.EaseTokenBean;
 import com.kw.top.bean.BaseBean;
@@ -48,6 +49,7 @@ import rx.schedulers.Schedulers;
  */
 
 public class NimManger implements MsgForwardFilter, MsgRevokeFilter {
+    private String token;
     private Context mContext;
     private static final NimManger ourInstance = new NimManger();
 
@@ -57,7 +59,6 @@ public class NimManger implements MsgForwardFilter, MsgRevokeFilter {
 
     public void init(Context context) {
         mContext = context;
-        //onAvatarEvent(null);
         NimUIKit.setMsgRevokeFilter(this);
         NimUIKit.setMsgForwardFilter(this);
         EventBus.getDefault().register(this);
@@ -120,6 +121,8 @@ public class NimManger implements MsgForwardFilter, MsgRevokeFilter {
                             AVChatKit.setAccount(account);
                             AVChatKit.setUserInfoProvider(new UserInfoProviderImpl());
                             SPUtils.saveString(mContext, ConstantValue.NET_EASE_TOKEN, param.getToken());
+
+                            updateUserState(ConstantValue.USER_ONLINE);
                         } else {
                             RxToast.normal("登录云信失败");
                         }
@@ -141,6 +144,7 @@ public class NimManger implements MsgForwardFilter, MsgRevokeFilter {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onLoginEvent(AppLoginEvent event) {
         if (event.isLogin()) {
+            token = event.getToken();
             netEaseToken(event.getToken());
         } else {
             netEaseLogOut();
@@ -148,6 +152,7 @@ public class NimManger implements MsgForwardFilter, MsgRevokeFilter {
             DataCacheManager.clearDataCache();
             FriendDataCache.getInstance().clear();
             NimUserInfoCache.getInstance().clear();
+            updateUserState(ConstantValue.USER_OFFLINE);
         }
     }
 
@@ -165,7 +170,39 @@ public class NimManger implements MsgForwardFilter, MsgRevokeFilter {
         NIMClient.getService(UserService.class).updateUserInfo(fields);
     }
 
+    /***
+     * 更新用户在线状态
+     */
+    public void updateUserState(String state) {
+        if (TextUtils.isEmpty(token)) {
+            token = SPUtils.getString(mContext, ConstantValue.KEY_TOKEN);
+        }
+        Api.getApiService().updateUserState(state, token)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<BaseBean>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(BaseBean baseBean) {
+                        if (baseBean.isSuccess()) {
+                            Log.e("----", "用户在线状态更新成功！");
+                        }
+                    }
+                });
+    }
+
     public void onDestroy() {
+        updateUserState(ConstantValue.USER_OFFLINE);
         EventBus.getDefault().unregister(this);
     }
 
@@ -177,7 +214,7 @@ public class NimManger implements MsgForwardFilter, MsgRevokeFilter {
 
         @Override
         public String getUserDisplayName(String account) {
-            return UserInfoHelper.getUserDisplayName(account);
+            return UserInfoHelper.getUserName(account);
         }
     }
 }

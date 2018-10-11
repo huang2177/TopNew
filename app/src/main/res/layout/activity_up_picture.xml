@@ -33,7 +33,7 @@
         android:layout_below="@+id/rl_add"
         android:layout_marginTop="30dp"
         android:layout_marginLeft="40dp"
-        ></android.support.v7.widget.RecyclerView>
+        />
 
     <TextView
         android:layout_width="282dp"

@@ -18,24 +18,17 @@ public interface ConstantValue {
     int MENU_FLAG_ACTIVE = 6;//世界活动
     int MENU_FLAG_NEWS = 7;//消息
     int MENU_FLAG_SETTING = 8;//设置
-    int MENU_FLAG_CENTER =9;//个人中心
+    int MENU_FLAG_CENTER = 9;//个人中心
 
 
     //SharedPreferencesUtils key
     String KEY_TOKEN = "TOKEN";
     String KEY_PHONE = "PHONE";
-    String KEY_ALIAS = "ALIAS";
-    String KEY_PWD   = "PWD";
-    String KEY_REGISTER = "REGISTER";
-    String KEY_GYM  = "GYM";
-    String KEY_USER_BESN ="USER_BESN";
-    String KEY_PHOTO = "PHOTO";
     String KEY_SEX = "SEX";
     String KEY_NAME = "NAME";
     String KEY_HEAD = "HEAD";
-    String KEY_ACCOUNT ="CHAT_NUM";
-    String KEY_CHAT_PWD ="CHAR_PWD";
-    String KEY_INVITE_URL ="INVITE_URL";
+    String KEY_ACCOUNT = "CHAT_NUM";
+    String KEY_CHAT_PWD = "CHAR_PWD";
     String KEY_USER_ID = "USER_ID";
     String KEY_PROVE_STATE = "proveState";
     String KEY_VIP_GRADE = "vip_grade";
@@ -45,28 +38,25 @@ public interface ConstantValue {
     //跳转Key
     String JUMP_PICKER_VIEW = "picker_view";
     int JUMP_RELEASE_IMAGE = 11;
+    int JUMP_RELEASE_IMAGES = 12;
 
     //地址选择器等级
-    String GRADE_1 ="grade1";
-    String GRADE_2 ="grade2";
-    String GRADE_3 ="grade3";
+    String GRADE_1 = "grade1";
+    String GRADE_2 = "grade2";
+    String GRADE_3 = "grade3";
 
-    //文件路径
-    String IMAGE_RELEASE = "ylke/image/";
 
     //一页数据条数
     String ONE_PAGE_NUM = "20";
 
-
-    //环信 userName  TOPAccountNumber + ID
-    String CHAT_USER_NAME = "TOPAccountNumber";
-    String CHAT_PWD = "TOPAccountPassword";
-
-    String VIP = "vip";
-    String HEAD_URL = "head_url";
-    String NICK_NAME = "nick_name";//自定义扩展消息
-
     String NET_EASE_TOKEN = "Net_Ease_Token";//网易Token
     String RED_PACKET_ID = "red_packet_id";
     String ACCOUNT_TEXT = "topaccountnumber";
+
+    //用户在线状态 1.在线,3.活跃,5.在聊,7.勿扰,9.离线
+    String USER_ONLINE = "1";    //在线
+    String USER_ACTIVE = "3";    //活跃
+    String USER_CHATING = "5"; //在聊
+    String USER_UN_DISTURB = "7";//勿扰
+    String USER_OFFLINE = "9";   //离线
 }

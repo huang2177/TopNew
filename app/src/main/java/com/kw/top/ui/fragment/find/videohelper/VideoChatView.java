@@ -2,6 +2,7 @@ package com.kw.top.ui.fragment.find.videohelper;
 
 import com.kw.top.bean.BaseBean;
 import com.kw.top.retrofit.Api;
+import com.kw.top.tools.Logger;
 import com.kw.top.ui.fragment.find.bean.RoomNumBean;
 import com.kw.top.ui.fragment.find.bean.WatchStateBean;
 import com.kw.top.utils.RxToast;
@@ -40,6 +41,27 @@ public class VideoChatView {
                     @Override
                     public void call(Throwable throwable) {
                         RxToast.normal("打开视频聊天失败！");
+                    }
+                });
+    }
+
+
+    public void updateCallNum(String userId, String token) {
+        Api.getApiService().updateCallNum(userId, token)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(new Action1<BaseBean>() {
+                    @Override
+                    public void call(BaseBean baseBean) {
+                        if (baseBean.isSuccess()) {
+                            Logger.e("-------", "更新用户被呼叫次数成功");
+                        }
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        RxToast.normal("请求失败！");
                     }
                 });
     }

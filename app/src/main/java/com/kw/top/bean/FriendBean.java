@@ -32,15 +32,6 @@ public class FriendBean implements Serializable {
         this.friendAccount = friendAccount;
     }
 
-    public FriendBean(String headImg, String nickName, String grade, String myAccount, String friendsId, String friendAccount) {
-        this.headImg = headImg;
-        this.nickName = nickName;
-        this.grade = grade;
-        this.myAccount = myAccount;
-        this.friendsId = friendsId;
-        this.friendAccount = friendAccount;
-    }
-
     public String getHeadImg() {
         return headImg;
     }

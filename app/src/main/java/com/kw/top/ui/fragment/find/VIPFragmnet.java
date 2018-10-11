@@ -1,7 +1,9 @@
 package com.kw.top.ui.fragment.find;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -12,6 +14,7 @@ import com.kw.top.base.BaseFragment;
 import com.kw.top.bean.BaseBean;
 import com.kw.top.retrofit.Api;
 import com.kw.top.retrofit.HttpHost;
+import com.kw.top.tools.ConstantValue;
 import com.kw.top.tools.GlideTools;
 import com.kw.top.ui.activity.login.LoginActivity;
 import com.kw.top.ui.fragment.find.adapter.RanKingAdapter;
@@ -23,16 +26,14 @@ import com.kw.top.view.XListView;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
-/**
- * Created by Administrator on 2018/9/30.
- */
 
-public class VIPFragmnet extends BaseFragment {
+public class VIPFragmnet extends BaseFragment implements AdapterView.OnItemClickListener {
 
 
     @BindView(R.id.vip_listview)
@@ -113,6 +114,7 @@ public class VIPFragmnet extends BaseFragment {
             ranKingAdapter = new RanKingAdapter(getActivity());
             listView.setAdapter(ranKingAdapter);
             ranKingAdapter.setData(rankingBeanList);
+            listView.setOnItemClickListener(this);
         } else {
 
             RxToast.normal(getResources().getString(R.string.login_out));
@@ -120,5 +122,19 @@ public class VIPFragmnet extends BaseFragment {
             startActivity(LoginActivity.class);
             getActivity().finish();
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent = new Intent(getActivity(), HomePageDetailsActivity.class);
+        intent.putExtra(ConstantValue.KEY_USER_ID, rankingBeanList.get(position + 1).getUserId());
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.ranking_vip_head)
+    public void OnClick() {
+        Intent intent = new Intent(getActivity(), HomePageDetailsActivity.class);
+        intent.putExtra(ConstantValue.KEY_USER_ID, rankingBeanList.get(0).getUserId());
+        startActivity(intent);
     }
 }

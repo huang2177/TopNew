@@ -1,26 +1,25 @@
 package com.kw.top.ui.fragment.find.videohelper;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
-import android.view.View;
+import android.view.WindowManager;
 
-import com.kw.top.listener.OnItemClickListener;
+import com.kw.top.redpacket.NimManger;
 import com.kw.top.tools.ConstantValue;
 import com.kw.top.ui.activity.user_center.MyAccountActivity;
 import com.kw.top.utils.SPUtils;
-import com.kw.top.view.dialog.CommonDialog;
+import com.kw.top.utils.ScreenUtil;
 import com.kw.top.view.dialog.GiftDialog;
 import com.kw.top.view.dialog.TipOffDialog;
 import com.netease.nim.avchatkit.AVChatKit;
 import com.netease.nim.avchatkit.activity.AVChatActivity;
 import com.netease.nim.avchatkit.event.VideoChatEvent;
 import com.netease.nim.uikit.business.uinfo.UserInfoHelper;
-import com.netease.nim.uikit.common.ui.dialog.CustomAlertDialog;
-import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.avchat.constant.AVChatType;
-import com.netease.nimlib.sdk.msg.MsgService;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -69,7 +68,10 @@ public class VideoChatHelper extends Handler implements Runnable {
         this.anchorId = anchorId;
         this.followType = followType;
 
+        //创建直播间
         mChatView.createRoom(anchorId, SPUtils.getString(context, ConstantValue.KEY_USER_ID), token);
+        //更新用户被呼叫次数成功
+        mChatView.updateCallNum(anchorId, token);
     }
 
     /***
@@ -142,6 +144,7 @@ public class VideoChatHelper extends Handler implements Runnable {
             case VideoChatEvent.CLOSE_ROOM_SUCCESS: //关闭直播
                 onDestroy();
                 mChatView.closeRoom(roomNum, token);
+                NimManger.instance().updateUserState(ConstantValue.USER_ONLINE);
                 break;
             case VideoChatEvent.TIP_OFF:  // 举报dialog
                 if (isChatFinished()) {
@@ -180,17 +183,30 @@ public class VideoChatHelper extends Handler implements Runnable {
 //        }, 300);
     }
 
-    private void showRechargeDialog(final Context context) {
+    public void showRechargeDialog(final Context context) {
         if (isChatFinished() && context instanceof AVChatActivity) {
             return;
         }
-        CommonDialog dialog = new CommonDialog(context);
-        dialog.setMessage("您的金币不足，请充值！", new OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                context.startActivity(new Intent(context, MyAccountActivity.class));
-            }
-        });
+        AlertDialog dialog = new AlertDialog.Builder(context)
+                .setTitle("提示信息")
+                .setMessage("您的金币不足，请充值！")
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        context.startActivity(new Intent(context, MyAccountActivity.class));
+                        dialog.dismiss();
+                    }
+                })
+                .create();
+        WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
+        params.width = ScreenUtil.getScreenWidth(context) * 4 / 5;
+        dialog.getWindow().setAttributes(params);
         dialog.show();
     }
 

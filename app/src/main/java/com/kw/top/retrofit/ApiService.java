@@ -56,6 +56,9 @@ public interface ApiService {
     @POST("api/videoController/getYunXinToken")
     Observable<BaseBean<EaseTokenBean>> EaseToken(@Query("token") String token);
 
+    @POST("api/videoController/updateUserState")
+    Observable<BaseBean> updateUserState(@Query("userState") String userState
+            , @Query("token") String token);
 
     @POST("api/userController/getBackPassword")
     Observable<BaseBean> changePwd(@Query("phone") String phone, @Query("phoneCode") String phoneCode,
@@ -555,7 +558,11 @@ public interface ApiService {
      * @return
      */
     @POST("api/videoController/getAllUserList")
-    Observable<BaseBean<List<HomeBean>>> getAllUserList(@Query("type") String type, @Query("nowPage") String nowPage, @Query("pageNum") String pageNum, @Query("token") String token);
+    Observable<BaseBean<List<HomeBean>>> getAllUserList(@Query("type") String type
+            , @Query("nickName") String nickName
+            , @Query("nowPage") String nowPage
+            , @Query("pageNum") String pageNum
+            , @Query("token") String token);
 
 
     /**
@@ -609,6 +616,18 @@ public interface ApiService {
             , @Query("audienceId") String audienceId
             , @Query("token") String token);
 
+
+    /**
+     * 更新用户被呼叫次数
+     *
+     * @param anchorId
+     * @param token
+     * @return
+     */
+    @POST("api/videoController/updateCallNum")
+    Observable<BaseBean> updateCallNum(@Query("userId") String anchorId
+            , @Query("token") String token);
+
     /**
      * 关闭房间
      */
@@ -622,4 +641,35 @@ public interface ApiService {
     @POST("api/videoController/isAdequate")
     Observable<BaseBean<WatchStateBean>> isAdequate(@Query("roomNum") String roomNum
             , @Query("token") String token);
+
+
+    /**
+     * 更新极光id
+     *
+     * @param token
+     * @return
+     */
+    @POST("api/videoController/updateRegistrationId")
+    Observable<BaseBean> updateRegistrationId(@Query("registrationId") String registrationId
+            , @Query("token") String token);
+
+
+    /**
+     * 填写女生资料
+     *
+     * @param map
+     * @return
+     */
+    @POST("api/userController/addGirlData")
+    Observable<BaseBean> addGirlData(@QueryMap() Map<String, String> map);
+
+
+    /**
+     * t填写男生资料
+     *
+     * @return
+     */
+    @POST("api/userController/addNicknameAndWX")
+    Observable<BaseBean> addNicknameAndWX(@Query("headImg") String headImg, @Query("nickName") String nickName, @Query("weChatNum") String weChatNum, @Query("token") String token);
+
 }

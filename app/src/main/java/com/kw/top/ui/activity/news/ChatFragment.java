@@ -48,22 +48,15 @@ public class ChatFragment extends MessageFragment {
     public Bundle getIMChartParams() {
         Bundle bundle = new Bundle();
         FriendBean bean = (FriendBean) getArguments().getSerializable("data");
-        SessionCustomization customization = new SessionCustomization();
-        redPacketAction = new RedPacketAction(bean.getHeadImg(), bean.getNickName(), bean.getFriendsId(), bean.getFriendAccount());
-        customization.actions = Arrays.<BaseAction>asList(redPacketAction);
-        bundle.putSerializable(Extras.EXTRA_TYPE, SessionTypeEnum.P2P);
-        bundle.putSerializable(Extras.EXTRA_CUSTOMIZATION, customization);
-        bundle.putSerializable(Extras.EXTRA_ACCOUNT, bean.getFriendAccount());
+        if (bean != null) {
+            SessionCustomization customization = new SessionCustomization();
+            redPacketAction = new RedPacketAction(bean.getHeadImg(), bean.getNickName(), bean.getFriendAccount());
+            customization.actions = Arrays.<BaseAction>asList(redPacketAction);
+            bundle.putSerializable(Extras.EXTRA_TYPE, SessionTypeEnum.P2P);
+            bundle.putSerializable(Extras.EXTRA_CUSTOMIZATION, customization);
+            bundle.putSerializable(Extras.EXTRA_ACCOUNT, bean.getFriendAccount());
+        }
         return bundle;
-    }
-
-    @Override
-    public boolean sendMessage(IMMessage message) {
-        Map<String, Object> map = new HashMap<>();
-        map.put(SPUtils.getString(getContext(), ConstantValue.KEY_ACCOUNT)
-                , SPUtils.getString(getContext(), ConstantValue.KEY_USER_ID));
-        message.setRemoteExtension(map);
-        return super.sendMessage(message);
     }
 
     @Override

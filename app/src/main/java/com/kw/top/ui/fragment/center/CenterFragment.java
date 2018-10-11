@@ -7,10 +7,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -21,10 +24,12 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.kw.top.R;
+import com.kw.top.app.AppManager;
 import com.kw.top.base.MVPBaseFragment;
 import com.kw.top.bean.BaseBean;
 import com.kw.top.bean.PersonCenterBean;
 import com.kw.top.bean.UserinfoBean;
+import com.kw.top.bean.event.AppLoginEvent;
 import com.kw.top.bean.event.CenterCouponEvent;
 import com.kw.top.bean.event.UserAvatarEvent;
 import com.kw.top.retrofit.Api;
@@ -34,7 +39,10 @@ import com.kw.top.tools.ConstantValue;
 import com.kw.top.tools.GlideTools;
 import com.kw.top.tools.Logger;
 import com.kw.top.ui.activity.MainActivity;
+import com.kw.top.ui.activity.circle.UserCircleActivity;
+import com.kw.top.ui.activity.login.LoginActivity;
 import com.kw.top.ui.activity.person_info.EditInfoActivity;
+import com.kw.top.ui.activity.person_info.ModifyInfoActivity;
 import com.kw.top.ui.activity.user_center.InviteFriendActivity;
 import com.kw.top.ui.activity.user_center.MyAccountActivity;
 import com.kw.top.ui.activity.user_center.MyGiftActivity;
@@ -71,26 +79,31 @@ public class CenterFragment extends MVPBaseFragment<CenterContract.View, CenterP
 
     @BindView(R.id.ci_head)
     CircleImageView mCiHead;
-    @BindView(R.id.tv_diamond_num)
-    TextView mTvDiamondNum;
-    @BindView(R.id.rl_my_account)
-    RelativeLayout mRlMyAccount;
-    @BindView(R.id.tv_gift_num)
-    TextView mTvGiftNum;
-    @BindView(R.id.rl_my_gift)
-    RelativeLayout mRlMyGift;
-    @BindView(R.id.rl_inform_center)
-    RelativeLayout mRlInformCenter;
-    @BindView(R.id.rl_invite_friend)
-    RelativeLayout mRlInviteFriend;
-    @BindView(R.id.rl_conn_service)
-    RelativeLayout mRlConnService;
     @BindView(R.id.ci_name)
     TextView tv_name;
-    @BindView(R.id.info_leave)
-    ImageView image_leave;
+    @BindView(R.id.home_tv_state)
+    TextView tvState;
+    @BindView(R.id.home_tv_fans)
+    TextView tvFans;
+    @BindView(R.id.home_tv_jiazhi)
+    TextView tvJiazhi;
+    @BindView(R.id.home_tv_tb)
+    TextView tvTb;
+    @BindView(R.id.home_man_lay)
+    LinearLayout layMan;
+    @BindView(R.id.home_girl_lay)
+    LinearLayout layGirl;
+    @BindView(R.id.home_man_follow)
+    TextView tvManFollow;
+    @BindView(R.id.home_man_tb)
+    TextView tvManTb;
+
     private LocalMedia localMedia;
+    private int allDiamon;//账户余额
+
+
     public static CenterFragment fragemnt;
+    private String sex;
 
     public static CenterFragment newInstance() {
         if (fragemnt == null) {
@@ -112,7 +125,16 @@ public class CenterFragment extends MVPBaseFragment<CenterContract.View, CenterP
 
     @Override
     public void initView(View view, Bundle savedInstanceState) {
-        String head = SPUtils.getString(getContext(), ConstantValue.KEY_HEAD, "");
+        sex = SPUtils.getString(getActivity(), ConstantValue.KEY_SEX);
+        if (sex.equals("0")) {        //区分男女
+            tvState.setVisibility(View.VISIBLE);
+            layGirl.setVisibility(View.VISIBLE);
+            layMan.setVisibility(View.GONE);
+        } else {
+            tvState.setVisibility(View.GONE);
+            layGirl.setVisibility(View.GONE);
+            layMan.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -125,8 +147,7 @@ public class CenterFragment extends MVPBaseFragment<CenterContract.View, CenterP
         getData();
     }
 
-    @OnClick({R.id.ci_head, R.id.rl_my_account, R.id.rl_my_gift, R.id.rl_inform_center
-            , R.id.rl_invite_friend, R.id.rl_conn_service, R.id.rl_invite_setting, R.id.ci_bianji})
+    @OnClick({R.id.ci_head, R.id.ci_bianji, R.id.home_tv_pyq, R.id.home_tv_qb, R.id.home_tv_fcjh, R.id.home_tv_meiyan, R.id.home_tv_yqhy, R.id.home_tv_out})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ci_head:
@@ -146,46 +167,27 @@ public class CenterFragment extends MVPBaseFragment<CenterContract.View, CenterP
                         .showCropGrid(false)// 是否显示裁剪矩形网格
                         .forResult(ConstantValue.JUMP_RELEASE_IMAGE);
                 break;
-            case R.id.rl_my_account:
+            case R.id.ci_bianji:
+                getActivity().startActivity(new Intent(getActivity(), ModifyInfoActivity.class));
+               // EditInfoActivity.startActivityForesult(getActivity(), true, 101);
+                break;
+            case R.id.home_tv_pyq:       //朋友圈
+                UserCircleActivity.startActivity(getActivity(), SPUtils.getString(getActivity(), ConstantValue.KEY_USER_ID));
+                break;
+            case R.id.home_tv_qb:       //钱包
                 startActivity(new Intent(getActivity(), MyAccountActivity.class));
                 break;
-            case R.id.rl_my_gift:
-                startActivity(new Intent(getActivity(), MyGiftActivity.class));
-                break;
-            case R.id.rl_inform_center:
-                startActivity(NoticeCenterActivity.class);
-                break;
-            case R.id.rl_invite_friend:
+            case R.id.home_tv_fcjh:    //分成计划
                 startActivity(new Intent(getContext(), InviteFriendActivity.class));
                 break;
-            case R.id.rl_conn_service:
-                new AlertDialog.Builder(getActivity())
-                        .setMessage("TOP官方微信：wozuimeihahha")
-                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .setPositiveButton("复制", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                //获取剪贴板管理器：
-                                ClipboardManager cm = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
-                                // 创建普通字符型ClipData
-                                ClipData mClipData = ClipData.newPlainText("Label", "wozuimeihahha");
-                                // 将ClipData内容放到系统剪贴板里。
-                                cm.setPrimaryClip(mClipData);
-                                dialog.dismiss();
-                                RxToast.normal("客服微信已复制到剪切板");
-                            }
-                        }).show();
+            case R.id.home_tv_meiyan:  //美颜设置
                 break;
-            case R.id.rl_invite_setting:
-                startActivity(SettingActivity.class);
+            case R.id.home_tv_yqhy:   //联系客服
+                showDialog();
                 break;
-            case R.id.ci_bianji:
-                EditInfoActivity.startActivityForesult(getActivity(), true, 101);
+            case R.id.home_tv_out:   //退出登录
+                showProgressDialog();
+                mHandler1.sendEmptyMessage(1);
                 break;
         }
     }
@@ -276,6 +278,9 @@ public class CenterFragment extends MVPBaseFragment<CenterContract.View, CenterP
         }
     }
 
+    /**
+     * 获取用户基本资料
+     */
     @SuppressLint("SetTextI18n")
     private void getData() {
         showProgressDialog();
@@ -297,14 +302,17 @@ public class CenterFragment extends MVPBaseFragment<CenterContract.View, CenterP
                                 e.printStackTrace();
                             }
                             Glide.with(getActivity()).load(HttpHost.qiNiu + personCenterBean.getHeadImg()).apply(GlideTools.getHeadOptions()).into(mCiHead);
+
+                            allDiamon = (int) Double.parseDouble(personCenterBean.getJewelSum());
                             tv_name.setText(personCenterBean.getNickName() + "");
-                            GlideTools.setVipResourceS(image_leave, Integer.parseInt(personCenterBean.getGrade()));
-                            mTvDiamondNum.setText((int) Double.parseDouble(personCenterBean.getJewelSum()) + "");
-                            mTvGiftNum.setText("累计获得：" + personCenterBean.getCouponsSum());
+                            tvState.setText(personCenterBean.getUserState());
+                            tvFans.setText(personCenterBean.getFansSum() + "");
+                            tvJiazhi.setText(personCenterBean.getProfit() + "T/Min");
+                            tvTb.setText(allDiamon + "");
+                            tvManFollow.setText(personCenterBean.getFollowSum() + "");
+                            tvManTb.setText(allDiamon + "");
 
                         } else {
-
-
                             ComResultTools.resultData(getContext(), baseBean);
                         }
                     }
@@ -314,5 +322,54 @@ public class CenterFragment extends MVPBaseFragment<CenterContract.View, CenterP
                         hideProgressDialog();
                     }
                 });
+    }
+
+
+    /**
+     * 退出登录
+     */
+    @SuppressLint("HandlerLeak")
+    private Handler mHandler1 = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            hideProgressDialog();
+            switch (msg.what) {
+                case 0:
+                    RxToast.normal("退出登陆失败");
+                    break;
+                case 1:
+                    EventBus.getDefault().post(new AppLoginEvent(false));
+                    SPUtils.clear(getActivity());
+                    startActivity(LoginActivity.class);
+                    AppManager.getAppManager().finishAllActivity();
+                    break;
+            }
+        }
+    };
+
+
+    private void showDialog() {
+        new AlertDialog.Builder(getActivity())
+                .setMessage("TOP官方微信：wozuimeihahha")
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setPositiveButton("复制", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //获取剪贴板管理器：
+                        ClipboardManager cm = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                        // 创建普通字符型ClipData
+                        ClipData mClipData = ClipData.newPlainText("Label", "wozuimeihahha");
+                        // 将ClipData内容放到系统剪贴板里。
+                        cm.setPrimaryClip(mClipData);
+                        dialog.dismiss();
+                        RxToast.normal("客服微信已复制到剪切板");
+                    }
+                }).show();
     }
 }

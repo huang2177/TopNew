@@ -28,8 +28,8 @@ public class QiniuUpLoadManager {
 //                .zone(FixedZone.zone0)        // 设置区域，指定不同区域的上传域名、备用域名、备用IP。
             .build();
 
-    public static QiniuUpLoadManager getInstance(){
-        if (instance == null){
+    public static QiniuUpLoadManager getInstance() {
+        if (instance == null) {
             instance = new QiniuUpLoadManager();
         }
         return instance;
@@ -42,12 +42,21 @@ public class QiniuUpLoadManager {
         }
     }
 
-    public void uploadFile(String path, String key, String token, UpCompletionHandler upCompletionHandler, UploadOptions uploadOptions){
-        mUploadManager.put(path,key,token,upCompletionHandler,uploadOptions);
+    /**
+     * 上传文件
+     *
+     * @param path
+     * @param key
+     * @param token
+     * @param upCompletionHandler
+     * @param uploadOptions
+     */
+    public void uploadFile(String path, String key, String token, UpCompletionHandler upCompletionHandler, UploadOptions uploadOptions) {
+        mUploadManager.put(path, key, token, upCompletionHandler, uploadOptions);
     }
 
-    public void uploadFileBytes(byte[] bytes, String key, String token, UpCompletionHandler upCompletionHandler, UploadOptions uploadOptions){
-        mUploadManager.put(bytes,key,token,upCompletionHandler,uploadOptions);
+    public void uploadFileBytes(byte[] bytes, String key, String token, UpCompletionHandler upCompletionHandler, UploadOptions uploadOptions) {
+        mUploadManager.put(bytes, key, token, upCompletionHandler, uploadOptions);
     }
 
 }

@@ -47,7 +47,7 @@ public class UserInfoHelper {
         if (userInfo != null && !TextUtils.isEmpty(userInfo.getName())) {
             return userInfo.getName();
         } else {
-            return account;
+            return "Top";
         }
     }
 

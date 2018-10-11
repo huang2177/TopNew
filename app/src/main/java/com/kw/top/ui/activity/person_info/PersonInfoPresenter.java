@@ -84,7 +84,7 @@ public class PersonInfoPresenter extends BasePresenterImpl<PersonInfoContract.Vi
                 list.add("女");
                 break;
             case 2:             //获得身高列表
-                for (int i = 140; i <= 250; i++) {
+                for (int i = 160; i <= 250; i++) {
                     list.add(i + "");
                 }
                 break;

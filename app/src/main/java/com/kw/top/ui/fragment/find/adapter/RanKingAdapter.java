@@ -70,7 +70,8 @@ public class RanKingAdapter extends BaseAdapter {
                 .into(viewHodler.hade);
         viewHodler.tvPostion.setText("NO." + (i + 2));
         viewHodler.tvName.setText(list.get(i + 1).getNickName());
-        viewHodler.tvNum.setText(list.get(i + 1).getGiftAmountSum());
+        int allDiamon = (int) Double.parseDouble(list.get(i + 1).getGiftAmountSum());
+        viewHodler.tvNum.setText(allDiamon + "");
         return view;
     }
 

@@ -8,9 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import com.google.gson.reflect.TypeToken;
 import com.kw.top.R;
 import com.kw.top.base.BaseFragment;
 import com.kw.top.bean.BaseBean;
@@ -43,12 +41,8 @@ import rx.schedulers.Schedulers;
 
 import static com.scwang.smartrefresh.layout.constant.SpinnerStyle.FixedBehind;
 
-/**
- * Created by shibing on 2018/9/24.
- */
 
 public class HomePageFragmnet extends BaseFragment implements OnItemClickListener, OnRefreshListener, OnLoadMoreListener, OnBannerListener {
-
 
     @BindView(R.id.banner)
     Banner banner;
@@ -68,7 +62,7 @@ public class HomePageFragmnet extends BaseFragment implements OnItemClickListene
 
     private List<HomeBean> beanList;
 
-    private List<HomeBean> RefreshList;
+    private List<HomeBean> refreshList;
 
     public static HomePageFragmnet pageFragmnet;
     private List<Integer> listBanner;
@@ -90,7 +84,7 @@ public class HomePageFragmnet extends BaseFragment implements OnItemClickListene
 
     @Override
     public void initData() {
-        getHonePageData("01", nowPage + "", pageNum + "", getToken());
+        getHonePageData("02", nowPage + "", pageNum + "", getToken());
     }
 
     @Override
@@ -106,18 +100,17 @@ public class HomePageFragmnet extends BaseFragment implements OnItemClickListene
         mRefreshLayout.setOnRefreshListener(this);
         mRefreshLayout.setOnLoadMoreListener(this);
         mRefreshLayout.setRefreshFooter(new ClassicsFooter(getActivity()).setSpinnerStyle(FixedBehind));
-        RefreshList = new ArrayList<>();
+        refreshList = new ArrayList<>();
     }
 
 
     /**
-     * 默认展示第一个
+     * 默认展示第二个
      */
     private void initDefault() {
-        tv_gz.setBackgroundResource(R.drawable.shape_homepage_left);
-        tv_zr.setBackgroundResource(R.drawable.shape_gray_homepage);
+        tv_gz.setBackgroundResource(R.drawable.shape_homepage_gray_left);
+        tv_zr.setBackgroundResource(R.drawable.shape_homepage);
         tv_zx.setBackgroundResource(R.drawable.shape_homepage_gray_right);
-
     }
 
 
@@ -146,8 +139,7 @@ public class HomePageFragmnet extends BaseFragment implements OnItemClickListene
                 getHonePageData(type, nowPage + "", pageNum + "", getToken());
                 break;
             case R.id.home_search:
-                //TipOffDialog reportDialog = new TipOffDialog(getActivity());
-                //reportDialog.show();
+                startActivity(new Intent(getActivity(), SearchActivity.class));
                 break;
         }
     }
@@ -180,7 +172,7 @@ public class HomePageFragmnet extends BaseFragment implements OnItemClickListene
      */
     private void getHonePageData(String type, String nowPage, String pageNum, String token) {
         showProgressDialog();
-        Api.getApiService().getAllUserList(type, nowPage, pageNum, token)
+        Api.getApiService().getAllUserList(type, "", nowPage, pageNum, token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
@@ -208,14 +200,14 @@ public class HomePageFragmnet extends BaseFragment implements OnItemClickListene
                 beanList = baseBean.getData();
 
                 if (nowPage == 1) {
-                    RefreshList.clear();
-                    RefreshList.addAll(beanList);
+                    refreshList.clear();
+                    refreshList.addAll(beanList);
                     mRefreshLayout.finishRefresh();
-                    adapter = new HomePageAdapter(getActivity(), RefreshList);
+                    adapter = new HomePageAdapter(getActivity());
                     recyclerView.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
+                    adapter.setHomeList(refreshList);
                 } else {
-                    RefreshList.addAll(beanList);
+                    refreshList.addAll(beanList);
                     mRefreshLayout.finishLoadMore();
                     adapter.notifyDataSetChanged();
                 }

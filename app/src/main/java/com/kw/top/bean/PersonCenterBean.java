@@ -21,6 +21,64 @@ public class PersonCenterBean {
     private String grade;
     private String jewelSum;
     private double couponsSum;
+    private int fansSum;
+    private String profit;
+    private int followSum;
+    private String sex;
+    private String userState;
+
+    //1.在线,3.活跃,5.在聊,7.勿扰,9.离线
+    public String getUserState() {
+        switch (userState) {
+            case "1":
+                return "在线";
+            case "3":
+                return "活跃";
+            case "5":
+                return "在聊";
+            case "7":
+                return "勿扰";
+            case "9":
+                return "离线";
+        }
+        return "在线";
+    }
+
+    public void setUserState(String userState) {
+        this.userState = userState;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public int getFansSum() {
+        return fansSum;
+    }
+
+    public void setFansSum(int fansSum) {
+        this.fansSum = fansSum;
+    }
+
+    public int getFollowSum() {
+        return followSum;
+    }
+
+    public void setFollowSum(int followSum) {
+        this.followSum = followSum;
+    }
+
+    public String getProfit() {
+        return profit;
+    }
+
+    public void setProfit(String profit) {
+        this.profit = profit;
+    }
 
     public String getHeadImg() {
         return headImg;

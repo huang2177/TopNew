@@ -36,6 +36,7 @@ import com.kw.top.retrofit.Api;
 import com.kw.top.tools.CommandTools;
 import com.kw.top.tools.FileTools;
 import com.kw.top.tools.QiniuUpLoadManager;
+import com.kw.top.ui.activity.NewMainActivity;
 import com.kw.top.utils.DisplayUtils;
 import com.kw.top.utils.RxToast;
 import com.kw.top.utils.SPUtils;
@@ -78,7 +79,7 @@ public class VideoVerifyActivity extends BaseActivity {
         return R.layout.activity_video_verify2;
     }
 
-    private void initView(){
+    private void initView() {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(getContentView());
@@ -94,6 +95,7 @@ public class VideoVerifyActivity extends BaseActivity {
         mTvHint3 = findViewById(R.id.tv_hint3);
         num = (int) ((Math.random() * 9 + 1) * 1000);
         mTvNumb.setText(num + "");
+        mTvTitleRight.setVisibility(View.GONE);
         mTvTitleRight.setText("身份保密");
         mTvTitle.setText("视频认证");
         initData();
@@ -384,8 +386,11 @@ public class VideoVerifyActivity extends BaseActivity {
                     @Override
                     public void call(BaseBean baseBean) {
                         hideProgressDialog();
-                        RxToast.normal("上传成功");
-                        startActivity(UpPictureActivity.class);
+                        RxToast.normal("上传成功,请等待审核");
+                        Intent intent = new Intent(VideoVerifyActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                        //startActivity(UpPictureActivity.class);
                     }
                 }, new Action1<Throwable>() {
                     @Override

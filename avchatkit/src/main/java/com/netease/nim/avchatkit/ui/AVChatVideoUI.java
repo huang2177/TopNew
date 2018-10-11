@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Rect;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
@@ -17,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.netease.nim.avchatkit.AVChatKit;
 import com.netease.nim.avchatkit.R;
 import com.netease.nim.avchatkit.common.imageview.HeadImageView;
@@ -84,6 +86,7 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
     private View refuse_receive;
     private TextView refuseTV;
     private TextView receiveTV;
+    private LinearLayout careRoot;
     //底部控制按钮
     private View bottomRoot;
     private FrameLayout giftView;
@@ -119,7 +122,7 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
     private String largeAccount; // 显示在大图像的用户id
     private String smallAccount; // 显示在小图像的用户id
 
-    private Context context;
+    private Activity context;
     private View root;
     private AVChatController avChatController;
     private boolean isReleasedVideo = false;
@@ -130,7 +133,7 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
         void onTouch();
     }
 
-    public AVChatVideoUI(Context context, View root, AVChatData avChatData, String displayName,
+    public AVChatVideoUI(Activity context, View root, AVChatData avChatData, String displayName,
                          AVChatController avChatController, TouchZoneCallback touchZoneCallback) {
         this.root = root;
         this.context = context;
@@ -155,12 +158,12 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
         View surfaceView = root.findViewById(R.id.avchat_surface_layout);
         if (surfaceView != null) {
             touchLayout = surfaceView.findViewById(R.id.touch_zone);
-            touchLayout.setOnTouchListener(touchListener);
+//            touchLayout.setOnTouchListener(touchListener);
 
             smallSizePreviewLayout = (LinearLayout) surfaceView.findViewById(R.id.small_size_preview);
             smallSizePreviewCoverImg = (ImageView) surfaceView.findViewById(R.id.smallSizePreviewCoverImg);
             smallSizePreviewFrameLayout = (FrameLayout) surfaceView.findViewById(R.id.small_size_preview_layout);
-            smallSizePreviewFrameLayout.setOnClickListener(this);
+            //smallSizePreviewFrameLayout.setOnClickListener(this);
 
             largeSizePreviewCoverLayout = surfaceView.findViewById(R.id.notificationLayout);
             largeSizePreviewLayout = (LinearLayout) surfaceView.findViewById(R.id.large_size_preview);
@@ -175,8 +178,8 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
         public boolean onTouch(View v, MotionEvent event) {
             if (event.getAction() == MotionEvent.ACTION_UP && touchZoneCallback != null) {
                 touchZoneCallback.onTouch();
+                setBottomRoot();
             }
-
             return true;
         }
     };
@@ -220,6 +223,7 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
         View videoRoot = root.findViewById(R.id.avchat_video_layout);
         topRoot = videoRoot.findViewById(R.id.avchat_video_top_control);
         topCareTV = topRoot.findViewById(R.id.avchat_video_care);
+        careRoot = topRoot.findViewById(R.id.care_root);
         topHeadImg = topRoot.findViewById(R.id.avchat_video_avatar);
         topNickNameTV = topRoot.findViewById(R.id.avchat_video_name);
         middleGiftShowTV = topRoot.findViewById(R.id.avchat_video_gift_show);
@@ -271,8 +275,9 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
         receiveTV.setText(R.string.avchat_pickup);
         setTopRoot(false);
         setMiddleRoot(true);
-        setBottomRoot(false);
         setFaceUnityRoot(false);
+
+        giftView.setVisibility(View.GONE);
     }
 
     //去电
@@ -287,7 +292,6 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
         setRefuseReceive(false);
         setTopRoot(false);
         setMiddleRoot(true);
-        setBottomRoot(false);
         setFaceUnityRoot(false);
 
         avChatController.doCalling(account, AVChatType.VIDEO, new AVChatControllerCallback<AVChatData>() {
@@ -317,9 +321,10 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
 
         setTopRoot(true);
         setMiddleRoot(false);
-        setBottomRoot(true);
         setFaceUnityRoot(false);
         showNoneCameraPermissionView(false);
+
+        touchLayout.setOnTouchListener(touchListener);
     }
 
     // 小图像surface view 初始化
@@ -330,7 +335,7 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
         // 设置画布，加入到自己的布局中，用于呈现视频图像
         AVChatManager.getInstance().setupLocalVideoRender(null, false, AVChatVideoScalingType.SCALE_ASPECT_BALANCED);
         AVChatManager.getInstance().setupLocalVideoRender(smallRender, false, AVChatVideoScalingType.SCALE_ASPECT_BALANCED);
-        addIntoSmallSizePreviewLayout(smallRender);
+        //addIntoSmallSizePreviewLayout(smallRender);
 
         smallSizePreviewFrameLayout.bringToFront();
         localRender = smallRender;
@@ -361,6 +366,11 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
         }
         addIntoLargeSizePreviewLayout(largeRender);
         remoteRender = largeRender;
+
+        if (mIsInComingCall) {
+            switchTemp();
+        }
+        closeSmallSizePreview();
     }
 
     private void addIntoLargeSizePreviewLayout(SurfaceView surfaceView) {
@@ -402,8 +412,11 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
         middleRoot.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
-    private void setBottomRoot(boolean visible) {
-        bottomRoot.setVisibility(visible ? View.VISIBLE : View.GONE);
+    private void setBottomRoot() {
+        bottomRoot.setVisibility(bottomRoot.getVisibility() == View.GONE ? View.VISIBLE : View.GONE);
+        if (!mIsInComingCall) {
+            careRoot.setVisibility(careRoot.getVisibility() == View.GONE ? View.VISIBLE : View.GONE);
+        }
         if (bottomRootHeight == 0) {
             bottomRootHeight = bottomRoot.getHeight();
         }
@@ -425,7 +438,7 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
     private void switchAndSetLayout() {
         localPreviewInSmallSize = !localPreviewInSmallSize;
         largeSizePreviewCoverLayout.setVisibility(View.GONE);
-        smallSizePreviewCoverImg.setVisibility(View.GONE);
+        smallSizePreviewCoverImg.setVisibility(View.VISIBLE);
         if (isPeerVideoOff) {
             peerVideoOff();
         }
@@ -471,7 +484,7 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
         } else if (i == R.id.avchat_video_care) {
             doCare();
         } else if (i == R.id.small_size_preview_layout) {
-            switchTemp();
+            //switchTemp();
         }
     }
 
@@ -567,12 +580,20 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
         if (localPreviewInSmallSize) {
             largeSizePreviewCoverLayout.setVisibility(View.GONE);
         } else {
-            smallSizePreviewCoverImg.setVisibility(View.GONE);
+            //smallSizePreviewCoverImg.setVisibility(View.GONE);
         }
     }
 
     // 关闭小窗口
     private void closeSmallSizePreview() {
+        RequestOptions requestOptions = new RequestOptions()
+                .centerCrop()
+                .placeholder(R.drawable.avchat_close_video_send)
+                .error(R.drawable.avchat_close_video_send);
+        Glide.with(context)
+                .load(AVChatKit.getUserInfoProvider().getUserInfo(account).getAvatar())
+                .apply(requestOptions)
+                .into(smallSizePreviewCoverImg);
         smallSizePreviewCoverImg.setVisibility(View.VISIBLE);
     }
 
@@ -631,12 +652,21 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
 
     //展示已送的礼物
     private void showGift(VideoChatEvent event) {
+        if (context.isFinishing() || context.isDestroyed()) {
+            return;
+        }
         middleGiftRoot.setVisibility(View.VISIBLE);
         Glide.with(context).load(event.giftUrl).into(middleGiftShowIV);
         if (mIsInComingCall) {
-            middleGiftShowTV.setText(displayName + "赠送了" + event.giftName);
+            middleGiftShowTV.setText(displayName + "赠送您了" + event.giftName + "礼物!!!");
         } else {
             middleGiftShowTV.setText("赠送" + displayName + event.giftName);
         }
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                middleGiftRoot.setVisibility(View.GONE);
+            }
+        }, 4000);
     }
 }
