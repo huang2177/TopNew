@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/avchat_incoming_control"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:baselineAligned="false"
+    android:visibility="visible"
+    android:layout_marginBottom="20dp">
+
+    <FrameLayout
+        android:id="@+id/fl_avchat_video_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/ic_video_hang_up_bg">
+
+        <ImageView
+            android:id="@+id/avchat_video_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_video_hang_up" />
+    </FrameLayout>
+
+
+    <FrameLayout
+        android:id="@+id/fl_avchat_video_gif"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/fl_avchat_video_logout"
+        android:layout_marginRight="20dp"
+        android:layout_toLeftOf="@+id/fl_avchat_video_filter"
+        android:background="@drawable/ic_video_gif_bg">
+
+        <ImageView
+            android:id="@+id/avchat_video_gif"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_video_gif" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_avchat_video_filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/fl_avchat_video_logout"
+        android:layout_marginRight="20dp"
+        android:layout_toLeftOf="@+id/fl_avchat_video_tip_off"
+        android:background="@drawable/ic_video_filter_bg">
+
+        <ImageView
+            android:id="@+id/avchat_video_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_video_filter" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_avchat_video_tip_off"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/fl_avchat_video_logout"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/ic_video_filter_bg">
+
+        <ImageView
+            android:id="@+id/avchat_video_tip_off"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_video_tip_off" />
+    </FrameLayout>
+
+</RelativeLayout>

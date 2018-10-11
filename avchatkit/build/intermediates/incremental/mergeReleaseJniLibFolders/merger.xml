@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="D:\code\TopNew1\TopNew\avchatkit\libs"><file name="armeabi-v7a/librts_network.so" path="D:\code\TopNew1\TopNew\avchatkit\libs\armeabi-v7a\librts_network.so"/></source></dataSet><dataSet config="release"><source path="D:\code\TopNew1\TopNew\avchatkit\src\release\jniLibs"/></dataSet></merger>
